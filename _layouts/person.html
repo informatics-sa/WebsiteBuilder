@@ -1,0 +1,72 @@
+---
+layout: default
+usechartjs: false
+---
+
+<div class="row mt-3">
+    <h2>{{ page.full_name }}</h2>
+    <div class="col-md-3 col-sm-12 p-1">
+        <ul>
+            {% if page.graduation %}
+            <li>{{ site.data[page.lang].graduation }}: {{ page.graduation }}</li>
+            {% endif %}
+            {% if page.codeforces %}
+            <li>{{ site.data[page.lang].codeforces }}: <a href="https://codeforces.com/profile/{{ page.codeforces }}">@{{ page.codeforces }}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    {% if page.participations.count > 0 %}
+    <div class="col-md-6 col-sm-12 p-1">
+        <table class="table table-bordered">
+            <thead>
+                <th>{{ site.data[page.lang].participations }}</th>
+            </thead>
+            <tbody>
+                {% for i in (1..page.participations.count) %}
+                <tr style="background-color: var(--medal-{{ page.participations[i].award }});">
+                    <td style="background-color: inherit;">
+                        <a href="{% if page.lang != site.data.build.primary_lang %}/{{ page.lang }}{% endif %}/olympiads/{{ page.participations[i].olympiad }}/{{ page.participations[i].year }}">
+                            {% if page.lang == "en" %} 
+                                {{ page.participations[i].enname }} 
+                            {% else %}
+                                {{ page.participations[i].arname }}
+                            {% endif %}
+
+                            ({{ page.participations[i].olympiad | upcase }} {{ page.participations[i].year }})
+                        </a>
+
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% if page.exams %}
+<div class="row debug-only justify-content-center">
+    <div class="col-6">
+        <details>
+            <summary>{{ site.data[page.lang].view_exams_record }}</summary>
+            <table class="table table-striped">
+                <thead>
+                    <th>{{ site.data[page.lang].name }}</th>
+                    <th>{{ site.data[page.lang].date }}</th>
+                    <th>{{ site.data[page.lang].sum }}</th>
+                    <th>{{ site.data[page.lang].rank }}</th>
+                </thead>
+                <tbody>
+                    {% for i in (1..page.exams.count) %}
+                    <tr>
+                        <td><a href="{% if page.lang != site.data.build.primary_lang %}/{{ page.lang }}{% endif %}/exams/{{ page.exams[i].exam.id }}">{{ page.exams[i].exam.name }}</a></td>
+                        <td>{{ page.exams[i].exam.date }}</td>
+                        <td>{{ page.exams[i].sum | round: 2 }}</td>
+                        <td>{{ page.exams[i].rank }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </details>
+    </div>
+</div>
+{% endif %}

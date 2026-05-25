@@ -1,0 +1,175 @@
+---
+id: participations
+layout: default
+---
+<table class="table table-bordered table-striped">
+    <thead>
+        {% if page.lang == "ar" %}
+        <th width="5%">السنة</th>
+        <th>الأولمبياد</th>
+        <th>تاريخ المشاركة</th>
+        <th>المكان</th>
+        <th>الجوائز</th>
+        {% else %}
+        <th width="5%">Year</th>
+        <th>Olympiad</th>
+        <th>Date</th>
+        <th>Country</th>
+        <th>Awards</th>
+        {% endif %}
+    </thead>
+    <tbody>
+        {% for year in (page.start_year..page.last_year) reversed %}
+            {% for idx in (1..page[year].count) %}
+                {% capture olyid %}{{page[year][idx].name}}_{{year}}{% endcapture %}
+                <tr>
+                    {% if idx == 1 %}
+                    <td class="text-center" style="vertical-align: middle;" rowspan="{{ page[year].count }}">{{ year }}</td>
+                    {% endif %}
+                    <td>
+                        <a href="{% if page.lang != site.data.build.primary_lang %}/{{ page.lang }}{% endif %}/olympiads/{{page[year][idx].name}}/{{year}}">
+                            {% if page.lang == "en" %}  
+                                {{ page[year][idx].enname }}
+                            {% else %}
+                                {{ page[year][idx].arname }}
+                            {% endif %}
+
+                            ({{ page[year][idx].name | upcase }})
+                        </a>
+                    </td>
+                    <td>
+                        <input type="hidden" id="olstart-{{olyid}}" value="{{ page[year][idx].start }}">
+                        <input type="hidden" id="olend-{{olyid}}" value="{{ page[year][idx].end }}">
+                        {% if page[year][idx].start == page[year][idx].end %}
+                            {{ page[year][idx].start }}
+                        {% else %}
+                            {{ page[year][idx].start }} - {{ page[year][idx].end }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if page.lang == 'ar' %}
+                            {{ page[year][idx].country_arname }}
+                        {% else %}
+                            {{ page[year][idx].country_enname }}
+                        {% endif %}
+                        
+                        {% if page[year][idx].online %}
+                        <span class="badge bg-secondary">
+                            {% if page.lang == 'ar' %}
+                            عن بعد 🌐
+                            {% else %}
+                            Online 🌐
+                            {% endif %}
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td id="olawards-{{olyid}}">
+                        {{ page[year][idx].awards }}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+function refresh_tags() {
+    // Get current date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
+    
+    // Get language from page (assuming it's available in the page context)
+    const isArabic = document.documentElement.lang === 'ar';
+    
+    // Helper function to calculate days difference
+    function daysDifference(date1, date2) {
+        const diffTime = Math.abs(date2 - date1);
+        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    }
+    
+    // Helper function to parse date string (format: YYYY-MM-DD)
+    function parseDate(dateStr) {
+        if (!dateStr) return null;
+        
+        // Parse YYYY-MM-DD format (ISO 8601)
+        // TODO: Use native functions of this instead of hardcoding
+        const parts = dateStr.split('-');
+        if (parts.length !== 3) return null;
+        
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // JavaScript months are 0-based
+        const day = parseInt(parts[2], 10);
+        
+        const parsedDate = new Date(year, month, day);
+        
+        return isNaN(parsedDate.getTime()) ? null : parsedDate;
+    }
+    
+    // Helper function to create badge HTML
+    function createBadge(text, type = 'info') {
+        const badgeClass = type === 'warning' ? 'bg-warning' : 
+                          type === 'success' ? 'bg-success' : 
+                          type === 'info' ? 'bg-info' : 'bg-secondary';
+        return `<span class="badge ${badgeClass} ms-2">${text}</span>`;
+    }
+    
+    // Process each olympiad
+    const allOlympiads = document.querySelectorAll('[id^="olstart-"]');
+    
+    function arabicDaysStr(days) {
+        if (days == 0) return "اليوم";
+        if (days == 1) return "بعد يوم";
+        if (days == 2) return "بعد يومين";
+        if (days <= 10) return `بعد ${days} أيام`;
+        return `بعد ${days} يوم`;
+    }
+
+    function englishDaysStr(days) {
+        if (days == 0) return "today";
+        return `in ${days} day${days == 1 ? '' : 's'}`;
+    }
+
+    allOlympiads.forEach(function(startElement) {
+        const olyid = startElement.id.replace('olstart-', '');
+        const endElement = document.getElementById('olend-' + olyid);
+        const awardsElement = document.getElementById('olawards-' + olyid);
+        
+        if (!endElement || !awardsElement) return;
+        
+        const startDateStr = startElement.value;
+        const endDateStr = endElement.value;
+        const awards = awardsElement.textContent.trim();
+        
+        const startDate = parseDate(startDateStr);
+        const endDate = parseDate(endDateStr);
+        
+        if (!startDate || !endDate) return;
+        
+        let badgeHtml = '';
+        
+        // Check olympiad status
+        if (today < startDate) {
+            // Not started yet
+            const daysToStart = daysDifference(today, startDate);
+            const text = isArabic ? 
+                `سيبدأ ${arabicDaysStr(daysToStart)}` :
+                `Will start ${englishDaysStr(daysToStart)}`;
+            badgeHtml = createBadge(text, 'info');
+            
+        } else if (today >= startDate && today <= endDate) {
+            // Currently running
+            const daysToEnd = daysDifference(today, endDate);
+            const text = isArabic ? 
+                `سينتهي ${arabicDaysStr(daysToEnd)}` :
+                `Will finish ${englishDaysStr(daysToEnd)}`;
+            badgeHtml = createBadge(text, 'warning');
+            
+        }
+        
+        // Add the badge to the awards cell
+        if (badgeHtml) {
+            awardsElement.innerHTML += badgeHtml;
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', refresh_tags);
+</script>
