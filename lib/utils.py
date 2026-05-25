@@ -5,6 +5,8 @@ LANGS = ['ar', 'en']
 BLOCKED_FLAGS = ['se']
 
 def load_secret_json(filename):
+    return {}
+    # TEMP
     with open(f'./lib/Database/{filename}.json', 'r', encoding='utf-8') as f:
         return json.load(f)
 
