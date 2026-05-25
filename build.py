@@ -410,7 +410,7 @@ def build_tst_index():
             'exam_names': en_exam_names
         })
 
-    write_text('./root/_data/tst.yml', format_yml({
+    write_text(f'{ROOT_DIR}/_data/tst.yml', format_yml({
         'min_year': mn_year,
         'max_year': mx_year
     }))
@@ -454,7 +454,7 @@ def build_exams():
 
 import subprocess
 def build_data_vairables():
-    write_text('./root/_data/build.yml', format_yml({
+    write_text(f'{ROOT_DIR}/_data/build.yml', format_yml({
         'last_update': datetime.datetime.now().strftime('%Y/%-m/%-d %-H:%-M:%-S'),
         'commit_index': subprocess.getoutput('git rev-list --count main'),
         'commit_id': subprocess.getoutput('git log --format="%H" -n 1'),
@@ -462,7 +462,7 @@ def build_data_vairables():
         'primary_lang': LANGS[0]
     }))
     for lang, texts in translations.items():
-        write_text(f'./root/_data/{lang}.yml', format_yml(texts))
+        write_text(f'{ROOT_DIR}/_data/{lang}.yml', format_yml(texts))
 
 def main():
     test_utils()
