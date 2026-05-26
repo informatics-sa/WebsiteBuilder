@@ -6,6 +6,16 @@ from lib.utils import * # target to remove this.
 import datetime
 import math
 
+settings = load_json('settings')
+
+if settings.get('old_id_system', False):
+    from helper import update_participations, sort_by_date, generate_members, update_exams
+    generate_members()
+    update_participations()
+    update_exams()
+    sort_by_date()
+    print("Applied old ID system")
+
 
 countries = get_countries()
 members = get_members()
@@ -461,6 +471,7 @@ def build_data_vairables():
         'jekyll_version': subprocess.getoutput('bundle exec jekyll --version'),
         'primary_lang': LANGS[0]
     }))
+    write_text(f'{ROOT_DIR}/_data/settings.yml', format_yml(settings))
     for lang, texts in translations.items():
         write_text(f'{ROOT_DIR}/_data/{lang}.yml', format_yml(texts))
 
@@ -485,8 +496,9 @@ def main():
     build_members()
     print("Built members")
 
-    build_members_index()
-    print("Built members index")
+    if not settings.get('disable_members_index', False):
+        build_members_index()
+        print("Built members index")
 
     build_olympiads_index()
     print("Built olympiads index")
@@ -500,11 +512,12 @@ def main():
     build_participations_index()
     print("Built participations index")
 
-    build_tst_index()
-    print("Built TST index")
-
-    build_exams()
-    print("Built exams")
+    if settings.get('enable_exams_and_tsts', False):
+        build_tst_index()
+        print("Built TST index")
+    
+        build_exams()
+        print("Built exams")
 
     write_page('compare', {
         '$title': 'compare_students',
