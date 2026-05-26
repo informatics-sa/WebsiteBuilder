@@ -323,8 +323,15 @@ def build_tst_index():
                 exam_index += 1
                 if eid not in exams:
                     continue
-                ar_exam_names[eid] = exams[eid]['arname']
-                en_exam_names[eid] = exams[eid]['enname']
+
+                # TODO: Fix this
+                if settings.get('exams_mono_name', False):
+                    ar_exam_names[eid] = exams[eid]['name']
+                    en_exam_names[eid] = exams[eid]['name']
+                else:
+                    ar_exam_names[eid] = exams[eid]['arname']
+                    en_exam_names[eid] = exams[eid]['enname']
+                
                 for uid, res in exams[eid]['participants'].items():
                     if uid in members:
                         # if members[uid]['level'] < 0:
