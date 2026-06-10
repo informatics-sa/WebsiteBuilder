@@ -1,6 +1,6 @@
 import os, json
 
-ROOT_DIR = './'
+ROOT_DIR = './root'
 LANGS = ['ar', 'en']
 BLOCKED_FLAGS = ['se']
 
