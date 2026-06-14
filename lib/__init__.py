@@ -1,5 +1,6 @@
 from .utils import *
 
+
 def get_countries():
     countries = {}
     for country in load_json('countries'):
@@ -38,18 +39,8 @@ def get_members():
             })
 
     for eid, exam in get_exams().items():
-        standings = sorted(
-            map(sum, exam['participants'].values()),
-            reverse=True
-        )
         for member_id, scores in exam['participants'].items():
-            members[member_id]['exams'].append({
-                "exam": exam.copy(),
-                "scores": scores,
-                "sum": sum(scores),
-                "rank": standings.index(sum(scores)) + 1
-            })
-            del members[member_id]['exams'][-1]['exam']['participants']
+            members[member_id]['exams'].append(scores)
     
     return members
     
@@ -61,12 +52,12 @@ def get_olympiads():
         olympiads[olympiad['id']]['silver'] = 0
         olympiads[olympiad['id']]['bronze'] = 0
         olympiads[olympiad['id']]['hm'] = 0
-        olympiads[olympiad['id']]['participations'] = []
+        olympiads[olympiad['id']]['participations'] = 0
 
     for participation in load_json('participations'):
-        olympiads[participation['name']]['participations'].append(participation)
+        olympiads[participation['name']]['participations'] += 1
         for award in participation['participants'].values():
-            if award is not None:
+            if award != None:
                olympiads[participation['name']][award] += 1
                 
     return olympiads
@@ -87,8 +78,8 @@ def get_participations():
         enparts = []
         awards = ''
         for mem_id, award in participation['participants'].items():
-            parts.append({'id': mem_id, 'name': members[mem_id]['arname'], 'award': award})
-            enparts.append({'id': mem_id, 'name': members[mem_id]['enname'], 'award': award})
+            parts.append({'id': mem_id, 'name': members[mem_id]['arname'], 'award': award_emoji(award, dashing_none=True)})
+            enparts.append({'id': mem_id, 'name': members[mem_id]['enname'], 'award': award_emoji(award, dashing_none=True)})
             awards += award_emoji(award)
         participation['awards'] = awards
         participation['ar_participants'] = parts

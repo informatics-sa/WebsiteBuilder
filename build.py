@@ -59,18 +59,28 @@ def build_contact():
         }
         realcontact['admins'].append(person)
 
-    write_page('contact', {
+    written = {
         'layout': 'contact',
-        '$title': 'contact',
+        'lang': 'ar',
+        'title': translations['ar']['contact'],
         'maintainers': realcontact['maintainers'],
         'admins': realcontact['admins'],
         'developers': realcontact['developers']
-    })
+    }
+    write_file('./contact.html', written)
+    written['lang'] = 'en'
+    written['title'] = translations['en']['contact']
+    write_file('en/contact.html', written)
 
 def build_hall_of_fame():
     official_olympiads = list(
         filter(lambda x: x is not None,
             [id if oly['official'] else None for id, oly in olympiads.items()]
+        )
+    )
+    all_olympiads = list(
+        filter(lambda x: x is not None,
+            [id for id, oly in olympiads.items()]
         )
     )
 
@@ -135,14 +145,24 @@ def build_hall_of_fame():
             'hm': stats['hm'],
         })
 
-    write_page('hall-of-fame', {
+    write_file('./hall-of-fame.html', {
         'layout': 'halloffame',
-        '$title': 'hall_of_fame',
+        'lang': 'ar',
+        'title': translations['ar']['hall_of_fame'],
+        'hof': hof,
+        'all_hof': all_hof
+    })
+
+    write_file('en/hall-of-fame.html', {
+        'layout': 'halloffame',
+        'lang': 'en',
+        'title': translations['en']['hall_of_fame'],
         'hof': hof,
         'all_hof': all_hof
     })
 
 def build_home():
+    # Needs a discussion about official/nonofficial
     stats = {
         'gold': 0,
         'silver': 0,
@@ -161,21 +181,38 @@ def build_home():
         stats['silver'] += olympiad['silver']
         stats['bronze'] += olympiad['bronze']
         stats['hm'] += olympiad['hm']
-        stats['participations'] += len(olympiad['participations'])
+        stats['participations'] += olympiad['participations']
 
-    write_page('index', {
-        '$title': 'website_name',
-        '$description': 'website_description',
+    write_file('./index.html', {
+        'title': translations['ar']['website_name'],
+        'description': translations['ar']['website_description'],
         'id': 'home',
+        'lang': 'ar',
+        'layout': 'home',
+        'stats': stats
+    })
+    write_file('en/index.html', {
+        'title': translations['en']['website_name'],
+        'description': translations['en']['website_description'],
+        'id': 'home',
+        'lang': 'en',
         'layout': 'home',
         'stats': stats
     })
 
 def build_images():
     images = load_json('images')
-    write_page('images', {
+
+    write_file('./images.html', {
         'layout': 'images',
-        '$title': 'images',
+        'lang': 'ar',
+        'title': translations['ar']['images'],
+        'images': images
+    })
+    write_file('en/images.html', {
+        'layout': 'images',
+        'lang': 'en',
+        'title': translations['en']['images'],
         'images': images
     })
 
@@ -188,8 +225,7 @@ def build_members():
             'full_name': member['arname'],
             'graduation': member['graduation'],
             'codeforces': member['codeforces'],
-            'participations': member['participations'],
-            'exams': member['exams']
+            'participations': member['participations']
         })
 
         write_file(f'en/members/{member_id}.html', {
@@ -210,32 +246,37 @@ def build_members_index():
         if 1 <= member['level'] <= 4:
             levels[member['level']].append(member)
 
-    write_page('members/index', {
+    write_file("./members/index.html", {
         'layout': 'members',
-        '$title': 'members_list',
+        'lang': 'ar',
+        'title': translations['ar']['members_list'],
         'levels': levels
     })
-
-def build_olympiads_index():
-    write_page('olympiads/index', {
-        'layout': 'olympiads',
-        '$title': 'olympiads',
-        'olympiads': list(olympiads.values())
-    })
-    
+    write_file("en/members/index.html", {
+        'layout': 'members',
+        'lang': 'en',
+        'title': translations['en']['members_list'],
+        'levels': levels
+    } )
 
 def build_olympiads():
-    for id, oly in olympiads.items():
-        write_page(f'olympiads/{id}/index', {
-            'layout': 'olympiad',
-            'title': id,
-            'olympiad': oly,
-            'participations': []
-        })
+    write_file('./olympiads.html', {
+        'layout': 'olympiads',
+        'lang': 'ar',
+        'title': translations['ar']['olympiads'],
+        'olympiads': list(olympiads.values())
+    })
+    write_file('en/olympiads.html', {
+        'layout': 'olympiads',
+        'lang': 'en',
+        'title': translations['en']['olympiads'],
+        'olympiads': list(olympiads.values())
+    })
 
 def build_participations():
     for participation in participations:
-        write_file(f'olympiads/{participation["name"]}/{participation["year"]}.html', {
+        filename = f"{participation['name']}_{participation['year']}"
+        write_file(f'participations/{filename}.html', {
             'layout': 'participation',
             'lang': 'ar',
             'title': f"{participation['name'].upper()} {participation['year']}",
@@ -246,11 +287,10 @@ def build_participations():
             'country_arname': participation['country_arname'],
             'country_enname': participation['country_enname'],
             'participants': participation['ar_participants'],
-            'scores': participation.get('scores', None),
             'website': participation['website'],
             'online': participation['online'] if 'online' in participation else False
         })
-        write_file(f'en/olympiads/{participation["name"]}/{participation["year"]}.html', {
+        write_file(f'en/participations/{filename}.html', {
             'layout': 'participation',
             'lang': 'en',
             'title': f"{participation['name'].upper()} {participation['year']}",
@@ -261,39 +301,56 @@ def build_participations():
             'country_arname': participation['country_arname'],
             'country_enname': participation['country_enname'],
             'participants': participation['en_participants'],
-            'scores': participation.get('scores', None),
             'website': participation['website'],
             'online': participation['online'] if 'online' in participation else False
         })
 
 def build_participations_index():
-    _olympiads = {}
-    _min_year = 3000
-    _max_year = 2000
-    for participation in participations:
-        year = participation['year']
-        _min_year = min(year, _min_year)
-        _max_year = max(year, _max_year)
-        if year not in _olympiads:
-            _olympiads[year] = []
-
-        _olympiads[year].append(participation)
-
-    written = {
-        'layout': 'participations',
-        '$title': 'participations',
-        'start_year': _min_year,
-        'last_year': _max_year
+    stats = {
+        'total_participations': len(participations),
+        'total_gold': 0,
+        'total_silver': 0,
+        'total_bronze': 0,
+        'total_hm': 0,
+        'total_awards': 0
     }
 
-    for year, lst in _olympiads.items():
-        written[year] = lst
+    page = {
+        'layout': 'participations',
+        'lang': 'ar',
+        'title': translations['ar']['participations'],
+        'olympiads': list(get_olympiads().keys()),
+        'stats': stats
+    }
 
-    write_page("participations/index", written)
+    min_year = 3000
+    max_year = 2000
+    for participation in participations:
+        for award in participation['participants'].values():
+            if award:
+                stats[f'total_{award}'] += 1
+                stats['total_awards'] += 1
+        year = participation['year']
+        min_year = min(year, min_year)
+        max_year = max(year, max_year)
+        if year not in page:
+            page[year] = []
+
+        page[year].append(participation)
+    page['start_year'] = min_year
+    page['last_year'] = max_year
+
+    write_file('participations/index.html', page)
+    page['lang'] = 'en'
+    page['title'] = translations['en']['participations']
+    write_file('en/participations/index.html', page)
 
 def build_tst_index():
     tsts = load_json('tsts')
     exams = load_json('exams')
+
+
+    
 
     arname = {}
     enname = {}
@@ -313,7 +370,6 @@ def build_tst_index():
 
             tsts[oly] = {
                 'exams': tst[oly]['exams'],
-                'weighted': type(tst[oly]['exams']) is dict,
                 'participants_count': olympiads[oly]['participants_count'],
                 'lists': None,
             }
@@ -323,15 +379,8 @@ def build_tst_index():
                 exam_index += 1
                 if eid not in exams:
                     continue
-
-                # TODO: Fix this
-                if settings.get('exams_mono_name', False):
-                    ar_exam_names[eid] = exams[eid]['name']
-                    en_exam_names[eid] = exams[eid]['name']
-                else:
-                    ar_exam_names[eid] = exams[eid]['arname']
-                    en_exam_names[eid] = exams[eid]['enname']
-                
+                ar_exam_names[eid] = exams[eid]['name'] 
+                en_exam_names[eid] = exams[eid]['name']
                 for uid, res in exams[eid]['participants'].items():
                     if uid in members:
                         # if members[uid]['level'] < 0:
@@ -344,12 +393,9 @@ def build_tst_index():
                         # arname[uid] = uid
                         # enname[uid] = uid
                     if uid not in lists:
-                        lists[uid] = {'grades': [0]*(len(tst[oly]['exams'])+1)}
-                    weight = tsts[oly]['exams'][eid] if tsts[oly]['weighted'] else 1.0
-                    lists[uid]['grades'][0] += weight * sum(res)
-                    lists[uid]['grades'][exam_index] = sum(res)
-                    if lists[uid]['grades'][0] == math.floor(lists[uid]['grades'][0]):
-                        lists[uid]['grades'][0] = int(lists[uid]['grades'][0])
+                        lists[uid] = [0]*(len(tst[oly]['exams'])+1)
+                    lists[uid][0] += sum(res)
+                    lists[uid][exam_index] = sum(res)
 
             if 'female_only' in tst[oly] and tst[oly]['female_only'] == True:
                 to_be_removed = []
@@ -374,16 +420,6 @@ def build_tst_index():
                 for uid in to_be_removed:
                     del lists[uid]
 
-            if 'min_birthdate' in tst[oly]:
-                eligibility_date = datetime.date.fromisoformat(tst[oly]['min_birthdate'])
-                to_be_removed = []
-                for uid in lists:
-                    if is_older(uid, eligibility_date):
-                        to_be_removed.append(uid)
-
-                for uid in to_be_removed:
-                    del lists[uid]
-
             if 'execluded' in tst[oly]:
                 for uid in tst[oly]['execluded']:
                     if uid in lists:
@@ -392,22 +428,10 @@ def build_tst_index():
                 for uid in tst['_general_execluded']:
                     if uid in lists:
                         del lists[uid]
-            lists = dict(sorted(lists.items(), key=lambda person: (-person[1]['grades'][0])))
-            
-            max_team_size = olympiads[oly]['participants_count']
-            top = list(lists)[0:max_team_size]
-            for team_member in top:
-                lists[team_member]['background_color'] = '82f482'
-
-            if max_team_size < len(lists) and lists[top[max_team_size - 1]]['grades'][0] == lists[list(lists)[max_team_size]]['grades'][0]:
-                for uid in lists.keys():
-                    if lists[uid]['grades'][0] == lists[top[max_team_size - 1]]['grades'][0]:
-                        lists[uid]['background_color'] = 'fff717'
+            lists = dict(sorted(lists.items(), key=lambda person: (-person[1][0])))
 
             tsts[oly]['lists'] = lists
-            if tsts[oly]['weighted']:
-                tsts[oly]['exams'] = list(map(lambda x: {x[0]: x[1]}, tsts[oly]['exams'].items()))
-
+        
         write_file(f'./tst/{year}.html', {
             'lang': 'ar',
             'layout': 'tst',
@@ -427,16 +451,23 @@ def build_tst_index():
             'exam_names': en_exam_names
         })
 
-    write_text(f'{ROOT_DIR}/_data/tst.yml', format_yml({
+    write_text('./root/_data/tst.yml', format_yml({
         'min_year': mn_year,
         'max_year': mx_year
     }))
-
-    write_page('tst/index', {
-        '$title': 'team_selection_tests',
+    write_file('tst/index.html', {
+        'lang': 'ar',
+        'title': translations['ar']['team_selection_tests'],
         'layout': 'tstindex',
         'min_year': mn_year,
-        'max_year': mx_year
+        'max_year': mx_year,
+    })
+    write_file('en/tst/index.html', {
+        'lang': 'en',
+        'title': translations['en']['team_selection_tests'],
+        'layout': 'tstindex',
+        'min_year': mn_year,
+        'max_year': mx_year,
     })
 
 def build_exams():
@@ -471,21 +502,17 @@ def build_exams():
 
 import subprocess
 def build_data_vairables():
-    write_text(f'{ROOT_DIR}/_data/build.yml', format_yml({
+    write_text('./root/_data/build.yml', format_yml({
         'last_update': datetime.datetime.now().strftime('%Y/%-m/%-d %-H:%-M:%-S'),
         'commit_index': subprocess.getoutput('git rev-list --count main'),
         'commit_id': subprocess.getoutput('git log --format="%H" -n 1'),
-        'jekyll_version': subprocess.getoutput('bundle exec jekyll --version'),
-        'primary_lang': LANGS[0]
+        'jekyll_version': subprocess.getoutput('bundle exec jekyll --version')
     }))
-    write_text(f'{ROOT_DIR}/_data/settings.yml', format_yml(settings))
-    for lang, texts in translations.items():
-        write_text(f'{ROOT_DIR}/_data/{lang}.yml', format_yml(texts))
 
 def main():
     test_utils()
 
-    build_data_vairables()
+    build_data_vairables()   
     print("Built _data/build.yml")
 
     build_contact()
@@ -503,12 +530,8 @@ def main():
     build_members()
     print("Built members")
 
-    if not settings.get('disable_members_index', False):
-        build_members_index()
-        print("Built members index")
-
-    build_olympiads_index()
-    print("Built olympiads index")
+    # build_members_index()
+    # print("Built members index")
 
     build_olympiads()
     print("Built olympiads")
@@ -519,25 +542,11 @@ def main():
     build_participations_index()
     print("Built participations index")
 
-    if settings.get('enable_exams_and_tsts', False):
-        build_tst_index()
-        print("Built TST index")
-    
-        build_exams()
-        print("Built exams")
+    build_tst_index()
+    print("Built TST index")
 
-    write_page('compare', {
-        '$title': 'compare_students',
-        'layout': 'compare'
-    })
-    print("Built compare page")
-
-    write_page('stats', {
-        '$title': 'stats',
-        'layout': 'stats'
-    })
-    print("Built statistics page")
-
+    build_exams()
+    print("Built exams")
 
 if __name__ == '__main__':
     main()

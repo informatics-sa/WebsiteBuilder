@@ -2,9 +2,10 @@ from lib import *
 from lib.utils import *
 
 
+
 def update_participations():
     members = load_json('people')
-    with open(f'{ROOT_DIR}/data/participations.old.json', encoding='utf-8') as f:
+    with open('./root/data/participations.old.json', encoding='utf-8') as f:
         parts_str = f.read()
     for mem in members:
         oid = mem['id']
@@ -14,7 +15,7 @@ def update_participations():
 
 def update_exams():
     members = load_json('people')
-    with open(f'{ROOT_DIR}/data/exams.old.json', encoding='utf-8') as f:
+    with open('./root/data/exams.old.json', encoding='utf-8') as f:
         parts_str = f.read()
     for v in members:
         oid = v['id']
