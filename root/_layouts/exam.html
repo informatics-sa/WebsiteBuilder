@@ -47,34 +47,35 @@ layout: default
         </div>
     </div>
 </div>
-
-<table sortable class="table table-striped table-bordered" sortable>
-    <thead>
+<div class="table-responsive">
+    <table sortable class="table table-striped table-bordered" sortable>
+        <thead>
         <th width="5%">#</th>
         <th sort-value="string">{{site.data[page.lang].name}}</th>
         <th sort-value="num" sort-state="desc" width="5%" class="text-center">{{site.data[page.lang].sum}}</th>
-        {% for probidx in (1..page.exam.problems.count) %}
+            {% for probidx in (1..page.exam.problems.count) %}
         <th sort-value="num" width="10%" class="text-center">{{ page.exam.problems[probidx] }}</th>
-        {% endfor %}
-    </thead>
-    <tbody>
-        {% for usr in page.exam.participants%}
-        <tr>
-            <td>{{ forloop.index }}</td>
-            <td>
-                {% assign uid = usr[0] %}
-                <a href="{%if page.lang=="en"%}/en{%endif%}/members/{{ uid }}">
-                    {{ page.names[uid] }}
-                </a>
-            </td>
-            <td class="text-center"><b>{{ page.sums[uid] | round: 3 }}</b></td>
-            {% for idx in (1..page.exam.problems.count) %}
-            <td class="text-center">{{ page.exam.participants[uid][idx] | round: 3 }}</td>
             {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for usr in page.exam.participants%}
+            <tr>
+                <td>{{ forloop.index }}</td>
+                <td>
+                    {% assign uid = usr[0] %}
+                    <a href="{%if page.lang=='en'%}/en{%endif%}/members/{{ uid }}">
+                        {{ page.names[uid] }}
+                    </a>
+                </td>
+            <td class="text-center"><b>{{ page.sums[uid] | round: 3 }}</b></td>
+                {% for idx in (1..page.exam.problems.count) %}
+            <td class="text-center">{{ page.exam.participants[uid][idx] | round: 3 }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <script src="/resources/sortable.js"></script>
 <script src="/resources/modal_settings.js"></script>

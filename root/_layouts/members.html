@@ -21,34 +21,36 @@ layout: default
 <div class="tab-content" id="nav-tabContent">
     {% for lvl in (1..4) %}
         <div class="tab-pane fade {% if forloop.index == 1 %} show active {% endif %}" id="nav-{{lvl}}" role="tabpanel" aria-labelledby="nav-{{lvl}}-tab" tabindex="0">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    {% if page.lang == "en" %} 
-                    <th>Name</th>
-                    <th>Codeforces</th>
-                    <th>Participations count</th>
-                    {% else %}
-                    <th>الاسم</th>
-                    <th>كودفورسيس</th>
-                    <th>عدد المشاركات</th>
-                    {% endif %}
-                </thead>
-                <tbody>
-                    {% for i in (1..page.levels[lvl].count) %}
-                    <tr>
-                        <td>
-                            {% if page.lang == "en" %}
-                            <a href="/en/members/{{ page.levels[lvl][i].iid }}">{{ page.levels[lvl][i].enname }}</a>
-                            {% else %}
-                            <a href="/members/{{ page.levels[lvl][i].iid }}">{{ page.levels[lvl][i].arname }}</a>
-                            {% endif %}
-                        </td>
-                        <td><a href="https://codeforces.com/profile/{{ page.levels[lvl][i].codeforces }}">@{{ page.levels[lvl][i].codeforces }}</a></td>
-                        <td>{{ page.levels[lvl][i].participations.count }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        {% if page.lang == "en" %} 
+                        <th>Name</th>
+                        <th>Codeforces</th>
+                        <th>Participations count</th>
+                        {% else %}
+                        <th>الاسم</th>
+                        <th>كودفورسيس</th>
+                        <th>عدد المشاركات</th>
+                        {% endif %}
+                    </thead>
+                    <tbody>
+                        {% for i in (1..page.levels[lvl].count) %}
+                        <tr>
+                            <td>
+                                {% if page.lang == "en" %}
+                                <a href="/en/members/{{ page.levels[lvl][i].iid }}">{{ page.levels[lvl][i].enname }}</a>
+                                {% else %}
+                                <a href="/members/{{ page.levels[lvl][i].iid }}">{{ page.levels[lvl][i].arname }}</a>
+                                {% endif %}
+                            </td>
+                            <td><a href="https://codeforces.com/profile/{{ page.levels[lvl][i].codeforces }}">@{{ page.levels[lvl][i].codeforces }}</a></td>
+                            <td>{{ page.levels[lvl][i].participations.count }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     {% endfor %}
 </div>

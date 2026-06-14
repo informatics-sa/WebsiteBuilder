@@ -2,174 +2,416 @@
 id: participations
 layout: default
 ---
-<table class="table table-bordered table-striped">
-    <thead>
-        {% if page.lang == "ar" %}
-        <th width="5%">السنة</th>
-        <th>الأولمبياد</th>
-        <th>تاريخ المشاركة</th>
-        <th>المكان</th>
-        <th>الجوائز</th>
-        {% else %}
-        <th width="5%">Year</th>
-        <th>Olympiad</th>
-        <th>Date</th>
-        <th>Country</th>
-        <th>Awards</th>
-        {% endif %}
-    </thead>
-    <tbody>
-        {% for year in (page.start_year..page.last_year) reversed %}
-            {% for idx in (1..page[year].count) %}
-                {% capture olyid %}{{page[year][idx].name}}_{{year}}{% endcapture %}
-                <tr>
-                    {% if idx == 1 %}
-                    <td class="text-center" style="vertical-align: middle;" rowspan="{{ page[year].count }}">{{ year }}</td>
-                    {% endif %}
-                    <td>
-                        <a href="{% if page.lang != site.data.build.primary_lang %}/{{ page.lang }}{% endif %}/olympiads/{{page[year][idx].name}}/{{year}}">
-                            {% if page.lang == "en" %}  
-                                {{ page[year][idx].enname }}
-                            {% else %}
-                                {{ page[year][idx].arname }}
-                            {% endif %}
 
-                            ({{ page[year][idx].name | upcase }})
-                        </a>
-                    </td>
-                    <td>
-                        <input type="hidden" id="olstart-{{olyid}}" value="{{ page[year][idx].start }}">
-                        <input type="hidden" id="olend-{{olyid}}" value="{{ page[year][idx].end }}">
-                        {% if page[year][idx].start == page[year][idx].end %}
-                            {{ page[year][idx].start }}
+<style>
+
+.year-cell {
+    border-right: 3px solid rgba(0, 0, 0, 0);
+    font-weight: bold;
+    --bs-table-bg: var(--bs-body-bg);
+}
+
+.row-even{ 
+    --bs-table-bg: rgba(var(--bs-emphasis-color-rgb), 0.05);
+}
+.row-odd{ 
+    --bs-table-bg: var(--bs-body-bg);
+}
+
+.btn:focus-visible,
+.btn:hover {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+}
+
+.btn.active:focus-visible,
+.btn.active:hover {
+    background-color: var(--bs-success);
+    border-color: inherit;
+    color: inherit;
+}
+
+</style>
+
+<div class="container-fluid px-3 px-lg-4">
+
+    <div class="row g-3 g-lg-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-gold" id="goldMedals">{{ page.stats.total_gold }}</span>
+                            <div class="stats-icon medal-gold">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-silver" id="silverMedals">{{ page.stats.total_silver }}</span>
+                            <div class="stats-icon medal-silver">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-bronze" id="bronzeMedals">{{ page.stats.total_bronze }}</span>
+                            <div class="stats-icon medal-bronze">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-hm" id="honorableMentions">{{ page.stats.total_hm }}</span>
+                            <div class="stats-icon medal-hm">
+                                <i class="bi bi-hm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold text-success d-block" id="totalMedals">{{ page.stats.total_awards }}</span>
+                            <i class="bi-people text-success"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card  mb-4">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            <span data-ar="تصفية حسب المسابقة:" data-en="Filter by Competition:">
+                                {% if page.lang == "ar" %}تصفية حسب المسابقة:{% else %}Filter by Competition:{% endif %}
+                            </span>
+                        </label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <button class="btn btn-outline-success btn-sm active filter-btn" data-filter="all">{% if page.lang == "ar" %}الكل{% else %}All{% endif %}</button>
+                            {% for oo in (1..page.olympiads.count) %}
+                            <button class="btn btn-outline-success btn-sm filter-btn" data-filter="{{ page.olympiads[oo] | upcase }}">{{ page.olympiads[oo] | upcase }}</button>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted" id="resultsCount">
+                            <span data-ar="عرض جميع النتائج" data-en="Showing all results">
+                                {% if page.lang == "ar" %}عرض جميع النتائج{% else %}Showing all results{% endif %} ({{ page.stats.total_participations }})
+                            </span>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card overflow-hidden mb-4">
+        <div class="table-responsive">
+            <table class="table mb-0" id="participationTable">
+                <thead class="table-dark">
+                    <tr>
+                        {% if page.lang == "ar" %}
+                        <th scope="col" class="text-center" width="8%">السنة</th>
+                        <th scope="col">الأولمبياد</th>
+                        <th scope="col">تاريخ المشاركة</th>
+                        <th scope="col">المكان</th>
+                        <th scope="col">الجوائز</th>
                         {% else %}
-                            {{ page[year][idx].start }} - {{ page[year][idx].end }}
+                        <th scope="col" class="text-center" width="8%">Year</th>
+                        <th scope="col">Olympiad</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Country</th>
+                        <th scope="col">Awards</th>
                         {% endif %}
-                    </td>
-                    <td>
-                        {% if page.lang == 'ar' %}
-                            {{ page[year][idx].country_arname }}
-                        {% else %}
-                            {{ page[year][idx].country_enname }}
-                        {% endif %}
-                        
-                        {% if page[year][idx].online %}
-                        <span class="badge bg-secondary">
-                            {% if page.lang == 'ar' %}
-                            عن بعد 🌐
-                            {% else %}
-                            Online 🌐
-                            {% endif %}
-                        </span>
-                        {% endif %}
-                    </td>
-                    <td id="olawards-{{olyid}}">
-                        {{ page[year][idx].awards }}
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endfor %}
-    </tbody>
-</table>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for year in (page.start_year..page.last_year) reversed %}
+                        {% for idx in (1..page[year].count) %}
+                            {% capture olyid %}{{page[year][idx].name}}_{{year}}{% endcapture %}
+                            <tr class="participation-row" 
+                                data-year="{{ year }}"
+                                data-competition="{{ page[year][idx].name | upcase }}"
+                                data-country="{% if page.lang == 'ar' %}{{ page[year][idx].country_arname }}{% else %}{{ page[year][idx].country_enname }}{% endif %}"
+                                data-name="{% if page.lang == 'en' %}{{ page[year][idx].enname }}{% else %}{{ page[year][idx].arname }}{% endif %}">
+                                
+                                {% if idx == 1 %}
+                                <td class="text-center year-cell year-{{ year }} align-middle fw-bold" rowspan="{{ page[year].count }}">{{ year }}</td>
+                                {% else %}
+                                <td class="d-none text-center year-cell year-{{ year }} align-middle fw-bold" rowspan="{{ page[year].count }}">{{ year }}</td>
+                                {% endif %}
+                                
+                                <td>
+                                    <a href="{% if page.lang == 'en' %}/en{% endif %}/olympiads/{{page[year][idx].name}}/{{year}}" class="text-decoration-none fw-semibold">
+                                        
+                                        {% if page.lang == "en" %}  
+                                            {{ page[year][idx].enname }}
+                                        {% else %}
+                                            {{ page[year][idx].arname }}
+                                        {% endif %}
+                                        <span class="small text-muted">
+                                            ({{ page[year][idx].name | upcase }})
+                                        </span>
+                                    </a>
+                                    <!-- <div class="small text-muted"></div> -->
+                                </td>
+                                
+                                <td>
+                                    <input type="hidden" id="olstart-{{olyid}}" value="{{ page[year][idx].start }}">
+                                    <input type="hidden" id="olend-{{olyid}}" value="{{ page[year][idx].end }}">
+                                    {% if page[year][idx].start == page[year][idx].end %}
+                                        {{ page[year][idx].start }}
+                                    {% else %}
+                                        {{ page[year][idx].start }} - {{ page[year][idx].end }}
+                                    {% endif %}
+                                </td>
+                                
+                                <td>
+                                    {% if page.lang == 'ar' %}
+                                        {{ page[year][idx].country_arname }}
+                                    {% else %}
+                                        {{ page[year][idx].country_enname }}
+                                    {% endif %}
+                                    
+                                    {% if page[year][idx].online %}
+                                    <span class="badge bg-secondary ms-2">
+                                        {% if page.lang == 'ar' %}
+                                        عن بعد 🌐
+                                        {% else %}
+                                        Online 🌐
+                                        {% endif %}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                
+                                <td class="awards-cell" style="font-size: 18px;" id="olawards-{{olyid}}">
+                                    {% assign medals = page[year][idx].awards | split: '' %}
+                                    {% for medal in medals %}
+                                        {% if medal == '🥇' %}
+                                            <span class="bi-award-fill medal-gold "></span>
+                                        {% elsif medal == '🥈' %}
+                                            <span class="bi-award-fill medal-silver "></span>
+                                        {% elsif medal == '🥉' %}
+                                            <span class="bi-award-fill medal-bronze "></span>
+                                        {% elsif medal == '📜' %}
+                                            <span class="bi-hm medal-hm "></span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
 <script>
-function refresh_tags() {
-    // Get current date
+let allRows = [];
+let filteredRows = [];
+let activeFilters = new Set(['all']);
+let filterButtons = [];
+
+function init() {
+    allRows = Array.from(document.querySelectorAll('.participation-row'));
+    filteredRows = [...allRows];
+    filterButtons = document.querySelectorAll('.filter-btn');
+    setupEventListeners();
+    updateDateBadges();
+    applyFilters();
+}
+
+function updateStats() {
+    let gold = 0, silver = 0, bronze = 0, honorable = 0;
+    filteredRows.forEach(row => {
+        const cell = row.querySelector('.awards-cell');
+        gold += cell.querySelectorAll('.medal-gold').length;
+        silver += cell.querySelectorAll('.medal-silver').length;
+        bronze += cell.querySelectorAll('.medal-bronze').length;
+        honorable += cell.querySelectorAll('.medal-hm').length;
+    });
+    
+    // document.getElementById('totalCompetitions').textContent = filteredRows.length;
+    document.getElementById('goldMedals').textContent = gold;
+    document.getElementById('silverMedals').textContent = silver;
+    document.getElementById('bronzeMedals').textContent = bronze;
+    document.getElementById('honorableMentions').textContent = honorable;
+    document.getElementById('totalMedals').textContent = gold + silver + bronze + honorable;
+}
+
+function updateResultsCount() {
+    const count = filteredRows.length;
+    const total = allRows.length;
+    const isArabic = document.documentElement.lang === 'ar' || '{{ page.lang }}' === 'ar';
+    
+    document.getElementById('resultsCount').innerHTML = count === total ? 
+        `<span data-ar="عرض جميع النتائج (${total})" data-en="Showing all results (${total})">${isArabic ? `عرض جميع النتائج (${total})` : `Showing all results (${total})`}</span>` :
+        `<span data-ar="عرض ${count} من ${total} نتيجة" data-en="Showing ${count} of ${total} results">${isArabic ? `عرض ${count} من ${total} نتيجة` : `Showing ${count} of ${total} results`}</span>`;
+}
+
+function applyFilters() {
+    filteredRows = allRows.filter(row => {
+        return activeFilters.has('all') || activeFilters.has(row.dataset.competition);
+    });
+
+    // First, hide all rows
+    allRows.forEach(row => {
+        row.style.display = 'none';
+    });
+
+    // Hide all year cells initially
+    document.querySelectorAll('.year-cell').forEach(cell => {
+        cell.style.display = 'none';
+        cell.removeAttribute('rowspan');
+    });
+
+    // Group filtered rows by year and show them with proper year cell handling
+    const yearGroups = {};
+    filteredRows.forEach(row => {
+        const year = row.dataset.year;
+        if (!yearGroups[year]) {
+            yearGroups[year] = [];
+        }
+        yearGroups[year].push(row);
+    });
+
+    // Show filtered rows and set up year cells properly
+    Object.keys(yearGroups).forEach(year => {
+        const yearRows = yearGroups[year];
+        yearRows.forEach((row, index) => {
+            row.style.display = '';
+            const yearCell = row.querySelector('.year-cell');
+            
+            if (index === 0) {
+                // First row of the year - show the year cell with proper rowspan
+                yearCell.style.display = '';
+                yearCell.setAttribute('rowspan', yearRows.length);
+                yearCell.classList.remove('d-none');
+            } else {
+                // Other rows - hide their year cells
+                yearCell.style.display = 'none';
+                yearCell.classList.add('d-none');
+            }
+        });
+    });
+
+    updateStats();
+    updateResultsCount();
+
+    let colorIndex = 0;
+    filteredRows.forEach(row => {
+        row.classList.remove('row-even', 'row-odd');
+        row.classList.add(colorIndex % 2 === 0 ? 'row-even' : 'row-odd');
+        colorIndex++;
+    });
+
+}
+
+function setupEventListeners() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            console.log(btn);
+            const filter = btn.dataset.filter;
+            
+            if (filter === 'all') {
+                // Remove all other filters
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                activeFilters.clear();
+                activeFilters.add('all');
+            }
+            else {
+                // Remove "all" if another filter is selected
+                const allButton = document.querySelector('[data-filter="all"]');
+                allButton.classList.remove('active');
+                activeFilters.delete('all');
+                
+                // Change filter state
+                if (activeFilters.has(filter)) {
+                    activeFilters.delete(filter);
+                    e.currentTarget.classList.remove('active');
+                } else {
+                    activeFilters.add(filter);
+                    e.currentTarget.classList.add('active');
+                }
+                
+                // If nothing is selected pick "all"
+                if (activeFilters.size === 0) {
+                    allButton.classList.add('active');
+                    activeFilters.add('all');
+                }
+            }
+            
+            applyFilters();
+        });
+    });
+}
+
+function updateDateBadges() {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to start of day for accurate comparison
+    today.setHours(0, 0, 0, 0);
     
-    // Get language from page (assuming it's available in the page context)
-    const isArabic = document.documentElement.lang === 'ar';
-    
-    // Helper function to calculate days difference
-    function daysDifference(date1, date2) {
-        const diffTime = Math.abs(date2 - date1);
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    }
-    
-    // Helper function to parse date string (format: YYYY-MM-DD)
     function parseDate(dateStr) {
-        if (!dateStr) return null;
-        
-        // Parse YYYY-MM-DD format (ISO 8601)
-        // TODO: Use native functions of this instead of hardcoding
-        const parts = dateStr.split('-');
+        const parts = dateStr.split('/');
         if (parts.length !== 3) return null;
-        
-        const year = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10) - 1; // JavaScript months are 0-based
-        const day = parseInt(parts[2], 10);
-        
-        const parsedDate = new Date(year, month, day);
-        
-        return isNaN(parsedDate.getTime()) ? null : parsedDate;
+        return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
     }
     
-    // Helper function to create badge HTML
-    function createBadge(text, type = 'info') {
-        const badgeClass = type === 'warning' ? 'bg-warning' : 
-                          type === 'success' ? 'bg-success' : 
-                          type === 'info' ? 'bg-info' : 'bg-secondary';
-        return `<span class="badge ${badgeClass} ms-2">${text}</span>`;
+    function daysDiff(date1, date2) {
+        return Math.ceil(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
     }
     
-    // Process each olympiad
-    const allOlympiads = document.querySelectorAll('[id^="olstart-"]');
+    function arabicDays(days) {
+        return days === 1 ? 'يوم' : days === 2 ? 'يومين' : days <= 10 ? `${days} أيام` : `${days} يوم`;
+    }
     
-    function arabicDaysStr(days) {
-        if (days == 0) return "اليوم";
-        if (days == 1) return "بعد يوم";
-        if (days == 2) return "بعد يومين";
-        if (days <= 10) return `بعد ${days} أيام`;
-        return `بعد ${days} يوم`;
-    }
-
-    function englishDaysStr(days) {
-        if (days == 0) return "today";
-        return `in ${days} day${days == 1 ? '' : 's'}`;
-    }
-
-    allOlympiads.forEach(function(startElement) {
-        const olyid = startElement.id.replace('olstart-', '');
-        const endElement = document.getElementById('olend-' + olyid);
-        const awardsElement = document.getElementById('olawards-' + olyid);
+    const isArabic = document.documentElement.lang === 'ar' || '{{ page.lang }}' === 'ar';
+    
+    document.querySelectorAll('[id^="olstart-"]').forEach(startEl => {
+        const olyid = startEl.id.replace('olstart-', '');
+        const endEl = document.getElementById('olend-' + olyid);
+        const awardsEl = document.getElementById('olawards-' + olyid);
         
-        if (!endElement || !awardsElement) return;
+        if (!endEl || !awardsEl) return;
         
-        const startDateStr = startElement.value;
-        const endDateStr = endElement.value;
-        const awards = awardsElement.textContent.trim();
-        
-        const startDate = parseDate(startDateStr);
-        const endDate = parseDate(endDateStr);
+        const startDate = parseDate(startEl.value);
+        const endDate = parseDate(endEl.value);
         
         if (!startDate || !endDate) return;
         
         let badgeHtml = '';
-        
-        // Check olympiad status
         if (today < startDate) {
-            // Not started yet
-            const daysToStart = daysDifference(today, startDate);
-            const text = isArabic ? 
-                `سيبدأ ${arabicDaysStr(daysToStart)}` :
-                `Will start ${englishDaysStr(daysToStart)}`;
-            badgeHtml = createBadge(text, 'info');
-            
+            const days = daysDiff(today, startDate);
+            const text = isArabic ? `سيبدأ بعد ${arabicDays(days)}` : `Starts in ${days} day${days === 1 ? '' : 's'}`;
+            badgeHtml = `<span class="badge bg-info ms-2">${text}</span>`;
         } else if (today >= startDate && today <= endDate) {
-            // Currently running
-            const daysToEnd = daysDifference(today, endDate);
-            const text = isArabic ? 
-                `سينتهي ${arabicDaysStr(daysToEnd)}` :
-                `Will finish ${englishDaysStr(daysToEnd)}`;
-            badgeHtml = createBadge(text, 'warning');
-            
+            const days = daysDiff(today, endDate);
+            const text = isArabic ? `سينتهي بعد ${arabicDays(days)}` : `Ends in ${days} day${days === 1 ? '' : 's'}`;
+            badgeHtml = `<span class="badge bg-warning ms-2">${text}</span>`;
         }
         
-        // Add the badge to the awards cell
         if (badgeHtml) {
-            awardsElement.innerHTML += badgeHtml;
+            awardsEl.insertAdjacentHTML('beforeend', badgeHtml);
         }
     });
 }
-document.addEventListener('DOMContentLoaded', refresh_tags);
+
+document.addEventListener('DOMContentLoaded', init);
 </script>

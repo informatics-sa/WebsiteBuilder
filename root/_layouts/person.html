@@ -1,45 +1,73 @@
 ---
 layout: default
-usechartjs: false
+usechartjs: true
 ---
 
-<div class="row mt-3">
-    <h2>{{ page.full_name }}</h2>
-    <div class="col-md-3 col-sm-12 p-1">
+<div class="row">
+    <div class="col-md-6 col-sm-12 p-1 ">
+        {% if page.lang == "en" %}
         <ul>
+            <h2>Name: {{ page.full_name }}</h2>
             {% if page.graduation %}
-            <li>{{ site.data[page.lang].graduation }}: {{ page.graduation }}</li>
+            <li>Graduation year: {{ page.graduation }}</li>
             {% endif %}
             {% if page.codeforces %}
-            <li>{{ site.data[page.lang].codeforces }}: <a href="https://codeforces.com/profile/{{ page.codeforces }}">@{{ page.codeforces }}</a></li>
+            <li>Codeforces account: <a href="https://codeforces.com/profile/{{ page.codeforces }}">@{{ page.codeforces }}</a></li>
             {% endif %}
         </ul>
+        {% else %}
+        <ul>
+            <h2>الاسم: {{ page.full_name }}</h2>
+            {% if page.graduation %}
+            <li>سنة التخرج: {{ page.graduation }}</li>
+            {% endif %}
+            {% if page.codeforces %}
+            <li>كودفورسيس: <a href="https://codeforces.com/profile/{{ page.codeforces }}">@{{ page.codeforces }}</a></li>
+            {% endif %}
+        </ul>
+        {% endif %}
     </div>
     {% if page.participations.count > 0 %}
-    <div class="col-md-6 col-sm-12 p-1">
-        <table class="table table-bordered">
-            <thead>
-                <th>{{ site.data[page.lang].participations }}</th>
-            </thead>
-            <tbody>
-                {% for i in (1..page.participations.count) %}
-                <tr style="background-color: var(--medal-{{ page.participations[i].award }});">
-                    <td style="background-color: inherit;">
-                        <a href="{% if page.lang != site.data.build.primary_lang %}/{{ page.lang }}{% endif %}/olympiads/{{ page.participations[i].olympiad }}/{{ page.participations[i].year }}">
-                            {% if page.lang == "en" %} 
-                                {{ page.participations[i].enname }} 
-                            {% else %}
+    <div class="col-md-6 col-sm-12 p-1 ">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <th>{% if page.lang == "en" %} Name {% else %} الاسم {% endif %}</th>
+                    <th>{% if page.lang == "en" %} Award {% else %} الجائزة {% endif %}</th>
+                </thead>
+                <tbody>
+                    {% for i in (1..page.participations.count) %}
+                    <tr>
+                        <td>
+                            <a href="{% if page.lang == 'en' %}/en{% endif %}/participations/{{ page.participations[i].olympiad }}_{{ page.participations[i].year }}">
+                                {% if page.lang == "en" %}
+                                {{ page.participations[i].enname }}
+                                {% else %}
                                 {{ page.participations[i].arname }}
+                                {% endif %}
+        
+                                ({{ page.participations[i].olympiad | upcase }} {{ page.participations[i].year }})
+                            </a>
+        
+                        </td>
+                        <td>
+                            {% if page.participations[i].award == 'gold' %}
+                            <span class="bi-award-fill medal-gold"></span>
+                            {% elsif page.participations[i].award == 'silver' %}
+                            <span class="bi-award-fill medal-silver"></span>
+                            {% elsif page.participations[i].award == 'bronze' %}
+                            <span class="bi-award-fill medal-bronze"></span>
+                            {% elsif page.participations[i].award == 'hm' %}
+                            <span class="bi-hm medal-hm"></span>
+                            {% else %}
+                            -
                             {% endif %}
-
-                            ({{ page.participations[i].olympiad | upcase }} {{ page.participations[i].year }})
-                        </a>
-
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
     {% endif %}
 </div>
@@ -70,3 +98,4 @@ usechartjs: false
     </div>
 </div>
 {% endif %}
+
