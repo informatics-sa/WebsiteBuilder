@@ -25,6 +25,8 @@ def get_members():
             members[str(person['iid'])]['codeforces'] = None
         if 'graduation' not in members[str(person['iid'])]:
             members[str(person['iid'])]['graduation'] = None
+        if 'level' not in members[str(person['iid'])]:
+            members[str(person['iid'])]['level'] = -1
 
     for participation in load_json('participations'):
         for member_id in participation['participants']:
