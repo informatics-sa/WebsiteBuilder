@@ -39,7 +39,7 @@ usechartjs: true
                     {% for i in (1..page.participations.count) %}
                     <tr>
                         <td>
-                            <a href="{% if page.lang == 'en' %}/en{% endif %}/participations/{{ page.participations[i].olympiad }}_{{ page.participations[i].year }}">
+                            <a href="{% if page.lang == 'en' %}/en{% endif %}/olympiads/{{ page.participations[i].olympiad }}/{{ page.participations[i].year }}">
                                 {% if page.lang == "en" %}
                                 {{ page.participations[i].enname }}
                                 {% else %}

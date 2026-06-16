@@ -530,8 +530,8 @@ def main():
     build_members()
     print("Built members")
 
-    # build_members_index()
-    # print("Built members index")
+    build_members_index()
+    print("Built members index")
 
     build_olympiads()
     print("Built olympiads")
