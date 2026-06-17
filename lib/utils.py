@@ -52,6 +52,10 @@ def format_yml(data: dict, indent_level: int = 0) -> str:
     indent = " " * indent_level
 
     for key, val in data.items():
+
+        if isinstance(key, str) and key.isdigit():
+            key = f'"{key}"'
+
         if type(val) is dict:
             res += indent + f"{str(key)}:\n"
             res += format_yml(val, indent_level + 2)
@@ -62,7 +66,7 @@ def format_yml(data: dict, indent_level: int = 0) -> str:
                 res += format_yml({i + 1: val[i]}, indent_level + 2)
         elif val is None:
             res += indent + f"{str(key)}: null\n"
-        elif type(val) is bool or type(val) is int:
+        elif isinstance(val, (bool, int, float)):
             res += indent + f"{str(key)}: {str(val).lower()}\n"
         else:
             res += indent + f"{str(key)}: \"{str(val)}\"\n"

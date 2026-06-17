@@ -259,24 +259,32 @@ def build_members_index():
         'levels': levels
     } )
 
-def build_olympiads():
-    write_file('./olympiads.html', {
+def build_olympiads_index():
+    write_file('./olympiads/index.html', {
         'layout': 'olympiads',
         'lang': 'ar',
         'title': translations['ar']['olympiads'],
         'olympiads': list(olympiads.values())
     })
-    write_file('en/olympiads.html', {
+    write_file('en/olympiads/index.html', {
         'layout': 'olympiads',
         'lang': 'en',
         'title': translations['en']['olympiads'],
         'olympiads': list(olympiads.values())
     })
 
-def build_participations():
+def build_olympiads():
+
+    for id, oly in olympiads.items():
+        write_page(f'olympiads/{id}/index', {
+            'layout': 'olympiad',
+            'title': id.upper(),
+            'olympiad': oly,
+            'participations': [participation for participation in participations if participation['name'] == id]
+        })
+
     for participation in participations:
-        filename = f"{participation['name']}_{participation['year']}"
-        write_file(f'participations/{filename}.html', {
+        write_file(f'olympiads/{participation["name"]}/{participation["year"]}.html', {
             'layout': 'participation',
             'lang': 'ar',
             'title': f"{participation['name'].upper()} {participation['year']}",
@@ -287,10 +295,11 @@ def build_participations():
             'country_arname': participation['country_arname'],
             'country_enname': participation['country_enname'],
             'participants': participation['ar_participants'],
+            'scores': participation.get('scores', None),
             'website': participation['website'],
             'online': participation['online'] if 'online' in participation else False
         })
-        write_file(f'en/participations/{filename}.html', {
+        write_file(f'en/olympiads/{participation["name"]}/{participation["year"]}.html', {
             'layout': 'participation',
             'lang': 'en',
             'title': f"{participation['name'].upper()} {participation['year']}",
@@ -301,11 +310,12 @@ def build_participations():
             'country_arname': participation['country_arname'],
             'country_enname': participation['country_enname'],
             'participants': participation['en_participants'],
+            'scores': participation.get('scores', None),
             'website': participation['website'],
             'online': participation['online'] if 'online' in participation else False
         })
 
-def build_participations_index():
+def build_participations():
     stats = {
         'total_participations': len(participations),
         'total_gold': 0,
@@ -323,27 +333,25 @@ def build_participations_index():
         'stats': stats
     }
 
-    min_year = 3000
-    max_year = 2000
+    years = [participation['year'] for participation in participations]
+
     for participation in participations:
         for award in participation['participants'].values():
             if award:
                 stats[f'total_{award}'] += 1
                 stats['total_awards'] += 1
         year = participation['year']
-        min_year = min(year, min_year)
-        max_year = max(year, max_year)
         if year not in page:
             page[year] = []
 
         page[year].append(participation)
-    page['start_year'] = min_year
-    page['last_year'] = max_year
+    page['start_year'] = min(years)
+    page['last_year'] = max(years)
 
-    write_file('participations/index.html', page)
+    write_file('participations.html', page)
     page['lang'] = 'en'
     page['title'] = translations['en']['participations']
-    write_file('en/participations/index.html', page)
+    write_file('en/participations.html', page)
 
 def build_tst_index():
     tsts = load_json('tsts')
@@ -501,7 +509,7 @@ def build_exams():
         })
 
 import subprocess
-def build_data_vairables():
+def build_data_variables():
     write_text('./root/_data/build.yml', format_yml({
         'last_update': datetime.datetime.now().strftime('%Y/%-m/%-d %-H:%-M:%-S'),
         'commit_index': subprocess.getoutput('git rev-list --count main'),
@@ -512,7 +520,7 @@ def build_data_vairables():
 def main():
     test_utils()
 
-    build_data_vairables()   
+    build_data_variables()   
     print("Built _data/build.yml")
 
     build_contact()
@@ -533,13 +541,13 @@ def main():
     build_members_index()
     print("Built members index")
 
-    build_olympiads()
+    build_olympiads_index()
     print("Built olympiads")
 
-    build_participations()
+    build_olympiads()
     print("Built participations")
 
-    build_participations_index()
+    build_participations()
     print("Built participations index")
 
     build_tst_index()

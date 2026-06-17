@@ -52,7 +52,7 @@ layout: default
         <thead>
         <th width="5%">#</th>
         <th sort-value="string">{{site.data[page.lang].name}}</th>
-        <th sort-value="num" sort-state="desc" width="5%" class="text-center">{{site.data[page.lang].sum}}</th>
+        <th sort-value="num" sort-state="desc" width="5%" class="text-center">{% if page.lang == "en" %} Total {% else %} المجموع {% endif %}</th>
             {% for probidx in (1..page.exam.problems.count) %}
         <th sort-value="num" width="10%" class="text-center">{{ page.exam.problems[probidx] }}</th>
             {% endfor %}

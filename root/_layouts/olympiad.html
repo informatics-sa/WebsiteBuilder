@@ -1,39 +1,170 @@
 ---
 layout: default
 ---
-{% if page.lang == 'ar' %}
-<h1>{{ page.olympiad.arname }} ({{ page.olympiad.id | upcase }})</h1>
-{% else %}
-<h1>{{ page.olympiad.enname }} ({{ page.olympiad.id | upcase }})</h1>
-{% endif %}
 
-<table class="table table-bordered">
-    <thead>
-        <th width="5%">Year</th>
-        <th>Participant</th>
-        {% for p in (1..page.olympiad.problems_count) %}
-        <th width="5%">P{{p}}</th>
-        {% endfor %}
-    </thead>
-    <tbody>
-        {% for i in (1..page.olympiad.participations.count) %}
-            {% for s in page.olympiad.participations[i].participants %}
-            <tr style="background-color: var(--medal-{{s[1]}}) !important;">
-                {% if forloop.index == 1 %}
-                <td class="text-center" style="vertical-align: middle;" rowspan="{{ page.olympiad.participations[i].participants.size }}">
-                    <a href="{% if page.lang != site.data.build.primary_lang %}{{ page.lang }}/{% endif %}/olympiads/{{page.olympiad.id}}/{{ page.olympiad.participations[i].year }}">{{ page.olympiad.participations[i].year }}</a>
-                </td>
-                {% endif %}
-                {% assign id = s[0] %}
-                <td style="background-color: inherit;">
-                    <a href="/{% if page.lang != site.data.build.primary_lang %}{{ page.lang }}/{% endif %}members/{{id}}">{{id}}</a>
-                </td>
-            
-                {% for k in (1..page.olympiad.problems_count) %}
-                <td style="background-color: inherit;">{{ page.olympiad.participations[i].scores[id][k] }}</td>
-                {% endfor %}
-            </tr>
-            {% endfor %}
-        {% endfor %}
-    </tbody>
-</table>
+<style>
+.year-cell {
+    font-weight: bold;
+    --bs-table-bg-state: transparent;
+}
+</style>
+
+<div class="container-fluid px-3 px-lg-4">
+
+    <div class="row g-3 g-lg-4 mb-4">
+        <div class="col-12 col-md-6">
+            {% if page.lang == 'ar' %}
+            <h1>{{ page.olympiad.arname }} ({{ page.olympiad.id | upcase }})</h1>
+            <p>{{ page.olympiad.ardescription }}</p>
+            {% else %}
+            <h1>{{ page.olympiad.enname }} ({{ page.olympiad.id | upcase }})</h1>
+            <p>{{ page.olympiad.endescription }}</p>
+            {% endif %}
+
+        </div>
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="row">
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-gold" id="goldMedals">{{ page.olympiad.gold }}</span>
+                            <div class="stats-icon medal-gold">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-silver" id="silverMedals">{{ page.olympiad.silver }}</span>
+                            <div class="stats-icon medal-silver">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-bronze" id="bronzeMedals">{{ page.olympiad.bronze }}</span>
+                            <div class="stats-icon medal-bronze">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block medal-hm" id="honorableMentions">{{ page.olympiad.hm }}</span>
+                            <div class="stats-icon medal-hm">
+                                <i class="bi bi-hm"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col mb-2">
+                    <div class="card h-100">
+                        <div class="card-body text-center h3">
+                            <span class="fw-bold d-block text-success" id="participations">{{ page.olympiad.participations }}</span>
+                            <div class="stats-icon text-success">
+                                <span class="fw-bold fs-4 text-success">∑</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card overflow-hidden mb-4">
+        <div class="table-responsive">
+            <table class="table table-striped mb-0" id="olympiadTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col" class="text-center" width="8%">
+                            {% if page.lang == 'ar' %}السنة{% else %}Year{% endif %}
+                        </th>
+                        <th scope="col">
+                            {% if page.lang == 'ar' %}المشارك{% else %}Participant{% endif %}
+                        </th>
+
+                        {% if page.participations[1].scores %}
+                        {% for p in (1..page.olympiad.problems_count) %}
+                        <th scope="col" class="text-center" width="5%">P{{ p }}</th>
+                        {% endfor %}
+                        <th scope="col" class="text-center">
+                            {% if page.lang == 'ar' %}المجموع{% else %}Total{% endif %}
+                        </th>
+                        {% endif %}
+
+                        <th scope="col" class="text-center">
+                            {% if page.lang == 'ar' %}الجائزة{% else %}Award{% endif %}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in (1..page.participations.count) %}
+                        {% assign part = page.participations[i] %}
+                        {% assign participants = part.ar_participants %}
+                        {% if page.lang == 'en' %}
+                            {% assign participants = part.en_participants %}
+                        {% endif %}
+
+                        {% for j in (1..participants.count) %}
+                            {% assign participant = participants[j] %}
+                            {% assign pid = participant.id %}
+                            <tr>
+                                {% if j == 1 %}
+                                <td class="text-center year-cell align-middle fw-bold" rowspan="{{ participants.count }}">
+                                    <a href="/{% if page.lang != 'ar' %}en/{% endif %}olympiads/{{ page.olympiad.id }}/{{ part.year }}" class="text-decoration-none fw-semibold">
+                                        {{ part.year }}
+                                    </a>
+                                </td>
+                                {% endif %}
+
+                                <td>
+                                    <a href="/{% if page.lang != 'ar' %}en/{% endif %}members/{{ pid }}" class="text-decoration-none fw-semibold">
+                                        {{ participant.name }}
+                                    </a>
+                                </td>
+
+                                {% if part.scores %}
+                                {% for k in (1..page.olympiad.problems_count) %}
+                                <td class="text-center">{{ part.scores[pid][k] }}</td>
+                                {% endfor %}
+                                
+                                <td class="text-center fw-bold">
+                                    {% assign total = 0 %}
+                                    {% for k in (1..page.olympiad.problems_count) %}
+                                    {% assign score = part.scores[pid][k] | plus: 0 %}
+                                    {% assign total = total | plus: score %}
+                                    {% endfor %}
+                                    {{ total }}
+                                </td>
+                                {% endif %}
+
+                                <td class="text-center" style="font-size: 18px;">
+                                    {% if participant.award == '🥇' %}
+                                        <span class="bi-award-fill medal-gold"></span>
+                                    {% elsif participant.award == '🥈' %}
+                                        <span class="bi-award-fill medal-silver"></span>
+                                    {% elsif participant.award == '🥉' %}
+                                        <span class="bi-award-fill medal-bronze"></span>
+                                    {% elsif participant.award == '📜' %}
+                                        <span class="bi-hm medal-hm"></span>
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
