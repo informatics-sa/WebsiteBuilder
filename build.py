@@ -517,6 +517,11 @@ def build_data_variables():
         'jekyll_version': subprocess.getoutput('bundle exec jekyll --version')
     }))
 
+    for lang, texts in translations.items():
+        write_text(f'./root/_data/{lang}.yml', format_yml(texts))
+
+    write_text('./root/_data/settings.yml', format_yml(settings))
+
 def main():
     test_utils()
 
