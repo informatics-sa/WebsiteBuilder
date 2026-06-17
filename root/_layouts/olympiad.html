@@ -27,7 +27,7 @@ layout: default
                 <div class="col mb-2">
                     <div class="card h-100">
                         <div class="card-body text-center h3">
-                            <span class="fw-bold d-block medal-gold" id="goldMedals">{{ page.olympiad.gold }}</span>
+                            <span class="fw-bold d-block medal-gold">{{ page.olympiad.gold }}</span>
                             <div class="stats-icon medal-gold">
                                 <i class="bi bi-award-fill"></i>
                             </div>
@@ -37,7 +37,7 @@ layout: default
                 <div class="col mb-2">
                     <div class="card h-100">
                         <div class="card-body text-center h3">
-                            <span class="fw-bold d-block medal-silver" id="silverMedals">{{ page.olympiad.silver }}</span>
+                            <span class="fw-bold d-block medal-silver">{{ page.olympiad.silver }}</span>
                             <div class="stats-icon medal-silver">
                                 <i class="bi bi-award-fill"></i>
                             </div>
@@ -47,7 +47,7 @@ layout: default
                 <div class="col mb-2">
                     <div class="card h-100">
                         <div class="card-body text-center h3">
-                            <span class="fw-bold d-block medal-bronze" id="bronzeMedals">{{ page.olympiad.bronze }}</span>
+                            <span class="fw-bold d-block medal-bronze">{{ page.olympiad.bronze }}</span>
                             <div class="stats-icon medal-bronze">
                                 <i class="bi bi-award-fill"></i>
                             </div>
@@ -57,7 +57,7 @@ layout: default
                 <div class="col mb-2">
                     <div class="card h-100">
                         <div class="card-body text-center h3">
-                            <span class="fw-bold d-block medal-hm" id="honorableMentions">{{ page.olympiad.hm }}</span>
+                            <span class="fw-bold d-block medal-hm">{{ page.olympiad.hm }}</span>
                             <div class="stats-icon medal-hm">
                                 <i class="bi bi-hm"></i>
                             </div>
@@ -67,7 +67,7 @@ layout: default
                 <div class="col mb-2">
                     <div class="card h-100">
                         <div class="card-body text-center h3">
-                            <span class="fw-bold d-block text-success" id="participations">{{ page.olympiad.participations }}</span>
+                            <span class="fw-bold d-block text-success">{{ page.olympiad.gold | plus: page.olympiad.silver | plus: page.olympiad.bronze | plus: page.olympiad.hm }}</span>
                             <div class="stats-icon text-success">
                                 <span class="fw-bold fs-4 text-success">∑</span>
                             </div>
