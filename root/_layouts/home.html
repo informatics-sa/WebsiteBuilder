@@ -4,193 +4,443 @@ id: home
 title: "Saudi Informatics Team"
 description: "Official website"
 ---
+
+<style>
+.hero-section {
+    background: linear-gradient(165deg, var(--theme-color) 10%, var(--theme-color-dark) 90%);
+    color: #ffffff ;
+    padding: clamp(60px, 15vh, 100px) 0;
+    position: relative;
+    overflow: hidden;
+    min-height: clamp(50vh, 55vh, 80vh);
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(15px, 5vw, 40px);
+}
+
+.hero-section h1 {
+    font-size: clamp(2rem, 6.5vw, 4.5rem);
+    font-weight: 800;
+    margin-bottom: clamp(1rem, 4vw, 2rem);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+.hero-section .lead {
+    font-size: clamp(1rem, 3.5vw, 1.8rem);
+    font-weight: 500;
+    opacity: 0.95;
+    max-width: 700px;
+    margin: 0 auto clamp(1.5rem, 4vw, 2.5rem);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    line-height: 1.4;
+}
+
+.btn {
+    font-family: 'Tajawal', sans-serif;
+    font-weight: 600;
+    border-radius: 25px;
+    padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 30px);
+    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    text-decoration: none;
+    display: inline-block;
+    margin: clamp(5px, 2vw, 8px);
+    min-width: 160px;
+    text-align: center;
+}
+
+.btn-light {
+    background: rgb(255, 255, 255);
+    border-color: rgb(255, 255, 255);
+    color: var(--theme-color);
+}
+
+.btn-light:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.85);
+    color: var(--theme-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.btn-outline-light {
+    background: transparent;
+    color: rgb(255,255,255);
+    border-color: rgb(255,255,255) ;
+}
+
+.btn-outline-light:hover {
+    background: rgb(255,255,255) ;
+    color: var(--theme-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.btn-success {
+    background: var(--theme-color);
+    color: var(--bs-body-bg);
+    border-color: var(--theme-color);
+}
+
+.btn-success:hover {
+    background: var(--theme-color-dark);
+    border-color: var(--theme-color-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(26, 135, 84, 0.3);
+}
+
+.btn-outline-success {
+    background: transparent;
+    color: var(--theme-color);
+    border-color: var(--theme-color);
+}
+
+.btn-outline-success:hover {
+    background: var(--theme-color);
+    color: var(--bs-body-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(26, 135, 84, 0.3);
+}
+
+.stats-section .container,
+.join-section .container {
+    max-width: 1200px;
+    padding: 0 clamp(15px, 5vw, 40px);
+}
+
+.stats-section {
+    padding: clamp(50px, 10vh, 80px) 0;
+    background: var(--bs-body-bg);
+}
+
+.stats-section h2 {
+    font-size: clamp(1.8rem, 6vw, 3rem);
+    font-weight: 800;
+    color: var(--bs-body-color);
+    margin-bottom: clamp(2rem, 6vw, 3rem);
+    position: relative;
+    text-align: center;
+}
+
+.stats-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: clamp(60px, 15vw, 80px);
+    height: 4px;
+    background: var(--theme-color);
+    border-radius: 2px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -10px;
+    justify-content: center;
+}
+
+.col {
+    padding: 0 10px;
+    margin-bottom: clamp(1rem, 4vw, 2rem);
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+}
+
+.stats-card {
+    background-color: var(--bs-secondary-bg);;
+    padding: clamp(30px, 6vw, 40px) clamp(15px, 4vw, 20px);
+    border-radius: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stats-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--theme-color);
+    box-shadow: 0 20px 40px rgba(26, 135, 84, 0.1);
+}
+
+.stats-icon {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: clamp(1rem, 3vw, 1.5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: clamp(60px, 15vw, 80px);
+    width: clamp(60px, 15vw, 80px);
+    margin: 0 auto clamp(1rem, 3vw, 1.5rem);
+}
+
+.stats-card h3 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--bs-body-color);
+    margin: clamp(0.5rem, 2vw, 1rem) 0;
+}
+
+.stats-card p {
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    font-weight: 500;
+    color: var(--bs-body-color);
+    opacity: 0.8;
+    margin: 0;
+}
+
+.join-section {
+    padding: clamp(50px, 10vh, 80px) 0;
+    background: var(--bs-body-bg);
+}
+
+.join-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(2rem, 5vw, 4rem);
+}
+
+.join-image, .join-content {
+    flex: 1;
+    min-width: 300px;
+}
+
+.join-section img {
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+.join-section img:hover {
+    transform: scale(1.03);
+}
+
+.join-section h2 {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 800;
+    color: var(--bs-body-color);
+    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+}
+
+.join-section .lead {
+    font-size: clamp(1.2rem, 3vw, 1.3rem);
+    color: var(--bs-body-color);
+    font-weight: 500;
+}
+
+.join-section ul li {
+    font-size: clamp(1.2rem, 2.5vw, 1.1rem);
+    color: var(--bs-body-color);
+    padding: clamp(10px, 3vw, 15px) 0;
+    display: flex;
+    align-items: flex-start;
+}
+
+.join-section ul li i {
+    margin-top: 5px;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    margin-left: clamp(8px, 2vw, 10px);
+    flex-shrink: 0;
+}
+
+.link-success {
+    color: var(--theme-color);
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.link-success:hover {
+    color: var(--theme-color-dark);
+    border-bottom-color: var(--theme-color-dark);
+}
+
+/* Button container for hero section */
+.btn-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(10px, 3vw, 15px);
+    margin-top: clamp(1.5rem, 4vw, 2rem);
+}
+</style>
+
+
 <section class="hero-section text-center">
+    
     <div class="container">
-        <h1 class="display-4 fw-bold mb-4">
-            {% if page.lang == "en" %}
-            Saudi Informatics Team
-            {% else %}
-            فريق المعلوماتية السعودي
-            {% endif %}
-        </h1>
-        <p class="lead mb-4">
-            {% if page.lang == "en" %}
-            We represent Saudi Arabia in International Olympiad in Informatics (IOI), and work to develop competitive programming skills
-            {% else %}
-            نمثل المملكة العربية السعودية في أولمبياد المعلوماتية الدولي ونعمل على تطوير مهارات البرمجة التنافسية
-            {% endif %}
-        </p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-            <a href="#join" class="btn btn-light btn-lg px-4 gap-3">
+        <h1 class="display-4 fw-bold mb-4"> {{ site.data[page.lang].website_name}}</h1>
+        <p class="lead mb-4"> {{ site.data[page.lang].team_desc}} </p>
+        <div class="btn-container">
+            <a href="{%if page.lang=='en'%}/en{%endif%}/participations" class="btn btn-light btn-lg">
                 {% if page.lang == "en" %}
-                How to join the team?
+                Past participations 
                 {% else %}
-                كيف أنضم للفريق؟
+                مشاركاتنا السابقة
                 {% endif %}
             </a>
-            {% if page.lang == "en" %}
-            <a href="/en/participations" class="btn btn-outline-light btn-lg px-4">
-                Past participations 
-            </a>
-            {% else %}
-            <a href="/participations" class="btn btn-outline-light btn-lg px-4">
-                مشاركاتنا السابقة
-            </a>
-            {% endif %}
+            <a href="{%if page.lang=='en'%}/en{%endif%}/hall-of-fame" class="btn btn-outline-light btn-lg"> {{ site.data[page.lang].hall_of_fame}} </a>
         </div>
     </div>
 </section>
-<div class="container">
-    <!-- Stats Section -->
-    <section class="py-5">
-        <div class="row text-center" data-aos="fade-up">
-            <h2 class="fw-bold mb-4">
-                {% if page.lang == "en" %} 
-                Our team's achievements
-                {% else %}
-                إنجازات الفريق 
-                {% endif %}    
-            </h2>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="stats-card">
-                    <i class="bi bi-trophy-fill medal-icon medal-gold"></i>
-                    <h3 class="fw-bold">{{ page.stats.gold }}</h3>
-                    {% if page.lang == "en" %}
-                    <p class="mb-0">Gold medals</p>
-                    {% else %}
-                    <p class="mb-0">ميداليات ذهبية</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="stats-card">
-                    <i class="bi bi-trophy-fill medal-icon medal-silver"></i>
-                    <h3 class="fw-bold">{{ page.stats.silver }}</h3>
-                    {% if page.lang == "en" %}
-                    <p class="mb-0">Silver medals</p>
-                    {% else %}
-                    <p class="mb-0">ميداليات فضية</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-6 mb-4">
-                <div class="stats-card">
-                    <i class="bi bi-trophy-fill medal-icon medal-bronze"></i>
-                    <h3 class="fw-bold">{{ page.stats.bronze }}</h3>
-                    {% if page.lang == "en" %}
-                    <p class="mb-0">Bronze medals</p>
-                    {% else %}
-                    <p class="mb-0">ميداليات برونزية</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 mb-4">
-                <div class="stats-card enable-debugger">
-                    <i class="bi bi-award-fill medal-icon medal-hm"></i>
-                    <h3 class="fw-bold">{{ page.stats.hm }}</h3>
-                    {% if page.lang == "en" %}
-                    <p class="mb-0">Honarable mention</p>
-                    {% else %}
-                    <p class="mb-0">شهادات تقدير</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12 mb-4">
-                <div class="stats-card">
-                    <i class="bi bi-globe medal-icon"></i>
-                    <h3 class="fw-bold">{{ page.stats.participations }}</h3>
-                    {% if page.lang == "en" %}
-                    <p class="mb-0">International participation</p>
-                    {% else %}
-                    <p class="mb-0">مشاركة دولية</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </section>
 
+<div class="container-fluid">
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="row" >
+                    <div class="col" style="flex: 1 1 100%; margin-bottom: 3rem;">
+                        <h2 class="fw-bold">
+                            {% if page.lang == "en" %} 
+                            Our team's achievements
+                            {% else %}
+                            إنجازات الفريق 
+                            {% endif %}    
+                        </h2>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col">
+                        <div class="stats-card">
+                            <div class="stats-icon medal-gold">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                            <h3 class="fw-bold">{{ page.stats.gold }}</h3>
+                            {% if page.lang == "en" %}
+                            <p class="mb-0">Gold medals</p>
+                            {% else %}
+                            <p class="mb-0">ميدالية ذهبية</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="stats-card">
+                            <div class="stats-icon medal-silver">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                            <h3 class="fw-bold">{{ page.stats.silver }}</h3>
+                            {% if page.lang == "en" %}
+                            <p class="mb-0">Silver medals</p>
+                            {% else %}
+                            <p class="mb-0">ميدالية فضية</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="stats-card">
+                            <div class="stats-icon medal-bronze">
+                                <i class="bi bi-award-fill"></i>
+                            </div>
+                            <h3 class="fw-bold">{{ page.stats.bronze }}</h3>
+                            {% if page.lang == "en" %}
+                            <p class="mb-0">Bronze medals</p>
+                            {% else %}
+                            <p class="mb-0">ميدالية برونزية</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="col">
+                        <div class="stats-card enable-debugger">
+                            <div class="stats-icon medal-hm">
+                                <i class="bi bi-hm"></i>
+                            </div>
+                            <h3 class="fw-bold">{{ page.stats.hm }}</h3>
+                            {% if page.lang == "en" %}
+                            <p class="mb-0">Honorable mentions</p>
+                            {% else %}
+                            <p class="mb-0">شهادة تقدير</p>
+                            {% endif %}
+                        </div>
+                    </div>
 
-    <!-- Info Section -->
-    <section class="py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="info-card">
-                    <div class="text-center mb-4">
-                        <i class="bi bi-code-slash feature-icon"></i>
+                    <div class="col">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="color: var(--theme-color);">
+                                <span class="fw-bold">∑</span>
+                            </div>
+                            <h3 class="fw-bold">{{ page.stats.gold | plus: page.stats.silver | plus: page.stats.bronze | plus: page.stats.hm }}</h3>
+                            {% if page.lang == "en" %}
+                            <p class="mb-0">Total awards</p>
+                            {% else %}
+                            <p class="mb-0">مجموع الجوائز</p>
+                            {% endif %}
+                        </div>
                     </div>
-                    {% if page.lang == "en" %}
-                    <h3 class="text-center">What are informatics olympiads?</h3>
-                    <p>Informatics olympiads are competitive programming competitions for students under the age of 20. A competition consists of analytical, mathematical, and logical problems, where the contestant is required to write code to solve the presented problems.</p>
-                    <p>This e-sport relies on analytical, mathematical, and logical skills to deconstruct the problem and write its code efficiently and within a limited time.</p>
-                    <a href="/en/olympiads" class="btn btn-outline-success">See olympiads</a>
-                    {% else %}
-                    <h3 class="text-center">ما هي أولمبيادات المعلوماتية؟</h3>
-                    <p>أولمبيادات المعلوماتية هي مسابقات للبرمجة التنافسية للطلاب دون سن 20 عامًا. تتألف المسابقة من مسائل تحليلية ورياضية ومنطقية، حيث يُطلب من المتسابق كتابة كود برمجي لحل المشكلات المطروحة.</p>
-                    <p>تعتمد هذه الرياضة الإلكترونية على المهارات التحليلية والرياضية والمنطقية، في تفكيك المسألة وكتابة كودها البرمجي بكفاءة عالية وفي وقت محدود.</p>
-                    <a href="/olympiads" class="btn btn-outline-success">تعرف على الأولمبياد</a>
-                    {% endif %}
+                    
+                    <div class="col">
+                        <div class="stats-card">
+                            <div class="stats-icon" style="color: var(--theme-color)">
+                                <i class="bi bi-globe-americas"></i>
+                            </div>
+                            <h3 class="fw-bold">{{ page.stats.participations }}</h3>
+                            {% if page.lang == "en" %}
+                            <p class="mb-0">International participations</p>
+                            {% else %}
+                            <p class="mb-0">مشاركة دولية</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="info-card">
-                    <div class="text-center mb-4">
-                        <i class="bi bi-people-fill feature-icon"></i>
-                    </div>
-                    {% if page.lang == "en" %}
-                    <h3 class="text-center">Why informatics team?</h3>
-                    <p>The Saudi Informatics Team includes the strongest interests in competitive programming in the Kingdom of Saudi Arabia. Team members are selected through a rigorous selection process that includes competitions and intensive training.</p>
-                    <p>The team represents the Kingdom in the International Olympiad in Informatics (IOI) and the Regional Olympiad (APIO), and has achieved many accomplishments at the global level.</p>
-                    <a href="/en/members" class="btn btn-outline-success">Take a look on the members</a>
-                    {% else %}
-                    <h3 class="text-center">لماذا فريق المعلوماتية؟</h3>
-                    <p>يضم فريق المعلوماتية السعودي أقوى المهتمين في البرمجة التنافسية في المملكة العربية السعودية. يتم اختيار أعضاء الفريق من خلال عملية انتقاء صارمة تشمل مسابقات وتدريبات مكثفة.</p>
-                    <p>يمثل الفريق المملكة في أولمبياد المعلوماتية الدولي (IOI) والإقليمي (APIO)، وقد حقق العديد من الإنجازات على المستوى العالمي.</p>
-                    <a href="/members" class="btn btn-outline-success">تعرف على أعضاء الفريق</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
 
 
     <!-- Join Section -->
-    <section id="join" class="join-section" data-aos="fade-up">
+    <section id="join" class="join-section" >
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 text-center text-lg-end mb-4 mb-lg-0">
-                    <img src="/img/naser_md_thinking.jpg" alt="طلاب يشاركون في مسابقة برمجية" class="img-fluid rounded shadow">
+            <div class="join-row">
+                <div class="join-image text-center">
+                    <img src="/img/naser_md_thinking.jpg" alt="طلاب يشاركون في مسابقة رياضية" class="img-fluid rounded shadow">
                 </div>
-                <div class="col-lg-6">
+                <div class="join-content text-center text-lg-start">
                     {% if page.lang == "en" %}
                     <h2 class="fw-bold mb-4">How to join the team?</h2>
-                    <p class="lead">You can join Saudi Informatics Team through:</p>
+                    <p class="lead">You can join Saudi Math Team through:</p>
                     {% else %}
                     <h2 class="fw-bold mb-4">كيف أنضم إلى الفريق؟</h2>
-                    <p class="lead">يمكنك الانضمام إلى فريق المعلوماتية السعودي من خلال:</p>
+                    <p class="lead">يمكنك الانضمام إلى فريق الرياضيات السعودي من خلال:</p>
                     {% endif %}
-                    <ul class="list-unstyled">
+                    <ul class="list-unstyled text-start">
                         <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            {% if page.lang == "en" %}
-                            Qualification via <a href="https://s.mawhiba.sa/NSMO" class="link-success">National Science and Mathematics Olympiad (NSMO)</a> which is organized by Mawhiba and MOE
-                            {% else %}
-                            التأهل عبر <a href="https://s.mawhiba.sa/NSMO" class="link-success">أولمبياد العلوم والرياضيات الوطني (نسمو)</a> التي تنظمها مؤسسة موهبة بالشراكة مع وزارة التعليم
-                            {% endif %}
-                        </li>
-                        <li class="mb-3">
-                            <i class="bi bi-check-circle-fill text-success me-2"></i>
-                            {% if page.lang == "en" %}
-                            Participating in <a href="https://bebrasksa.org/" class="link-success">Bebras competition</a> and getting a medal
-                            {% else %}
-                            المشاركة في <a href="https://bebrasksa.org/" class="link-success">مسابقة بيبراس</a> وتحقيق نتائج متميزة
-                            {% endif %}
+                            <i class="bi bi-check-circle-fill text-success"></i>
+                            <span class="ms-2">
+                                {% if page.lang == "en" %}
+                                Qualification via <a href="https://s.mawhiba.sa/NSMO" target="_blank" class="link-success">National Science and Mathematics Olympiad (NSMO)</a> which is organized by Mawhiba and MOE
+                                {% else %}
+                                التأهل عبر <a href="https://s.mawhiba.sa/NSMO" target="_blank" class="link-success">أولمبياد العلوم والرياضيات الوطني (نسمو)</a> التي تنظمها مؤسسة موهبة بالشراكة مع وزارة التعليم
+                                {% endif %}
+                            </span>
                         </li>
                     </ul>
-                    {% if page.lang == "en" %}
-                    <a href="/en/contact" class="btn btn-success mt-3">Contact us</a>
-                    {% else %}
-                    <a href="/contact" class="btn btn-success mt-3">تواصل معنا للاستفسار</a>
-                    {% endif %}
+                    <div class="text-center text-lg-start">
+                        {% if page.lang == "en" %}
+                        <a href="/en/contact" class="btn btn-success mt-3">Contact us</a>
+                        {% else %}
+                        <a href="/contact" class="btn btn-success mt-3">تواصل معنا للاستفسار</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -208,17 +458,4 @@ description: "Official website"
     });
 </script>
 
-<script>
-    // Initialize AOS
-    AOS.init({
-        duration: 800,
-        once: true
-    });
-    
-    // Initialize code highlighting
-    document.addEventListener('DOMContentLoaded', (event) => {
-        document.querySelectorAll('pre code').forEach((block) => {
-            hljs.highlightBlock(block);
-        });
-    });
-</script>
+

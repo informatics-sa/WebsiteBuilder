@@ -4,9 +4,9 @@ layout: base
 <nav class="navbar navbar-expand-md navbar-dark bg-success shadow-sm sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="/{% if page.lang == 'en' %}en{% endif %}">
-            <img src="/img/{{ site.data.settings.logo }}" alt="{{ site.data[page.lang].logo }} {{ site.data[page.lang].site_name }}" height="40" class="me-2">
+            <img src="/img/{{ site.data.settings.logo }}" alt="{{ site.data[page.lang].logo }} {{ site.data[page.lang].website_name }}" height="40" class="me-2">
             <b>
-                {{ site.data[page.lang].site_name }}
+                {{ site.data[page.lang].website_name }}
             </b>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,24 +23,24 @@ layout: base
             <ul class="navbar-nav ms-auto">
                 {% assign min_tst_year = site.data.tst.min_year %}
                 {% assign max_tst_year = site.data.tst.max_year %}
-                <li class="nav-item"><a class="nav-link {% if page.id == 'participations' %} active {% endif %}" href="/participations"> {{ site.data[page.lang].participations }}</a></li>
-                <li class="nav-item"><a class="nav-link {% if page.id == 'olympiads' %} active {% endif %}" href="/olympiads"> {{ site.data[page.lang].olympiads }}</a></li>
-                <li class="nav-item"><a class="nav-link {% if page.id == 'halloffame' %} active {% endif %}" href="/hall-of-fame"> {{ site.data[page.lang].hall_of_fame }}</a></li>
+                <li class="nav-item"><a class="nav-link {% if page.id == 'participations' %} active {% endif %}" href="{%if page.lang=='en'%}/en{%endif%}/participations"> {{ site.data[page.lang].participations }}</a></li>
+                <li class="nav-item"><a class="nav-link {% if page.id == 'olympiads' %} active {% endif %}" href="{%if page.lang=='en'%}/en{%endif%}/olympiads"> {{ site.data[page.lang].olympiads }}</a></li>
+                <li class="nav-item"><a class="nav-link {% if page.id == 'halloffame' %} active {% endif %}" href="{%if page.lang=='en'%}/en{%endif%}/hall-of-fame"> {{ site.data[page.lang].hall_of_fame }}</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false ">{{ site.data[page.lang].exams }}</a>
                     <ul class="dropdown-menu">
                         {% for i in (min_tst_year..max_tst_year) %}
-                        <li><a class="dropdown-item" href="/en/tst/{{ i }}">{{ i }}</a></li>
+                        <li><a class="dropdown-item" href="{%if page.lang=='en'%}/en{%endif%}/tst/{{ i }}">{{ i }}</a></li>
                         {% endfor %}
                     </ul>
                 </li>
                 {% if site.data.settings.enable_members_index %}
-                <li class="nav-item"><a class="nav-link {% if page.id == 'members' %} active {% endif %}" href="/members/"> {{ site.data[page.lang].members }}</a></li>
+                <li class="nav-item"><a class="nav-link {% if page.id == 'members' %} active {% endif %}" href="{%if page.lang=='en'%}/en{%endif%}/members/"> {{ site.data[page.lang].members }}</a></li>
                 {% endif %}
                 {% if site.data.settings.enable_image_library %}
-                <li class="nav-item"><a class="nav-link {% if page.id == 'images' %} active {% endif %}" href="/images"> {{ site.data[page.lang].images }}</a></li>
+                <li class="nav-item"><a class="nav-link {% if page.id == 'images' %} active {% endif %}" href="{%if page.lang=='en'%}/en{%endif%}/images"> {{ site.data[page.lang].images }}</a></li>
                 {% endif %}
-                <li class="nav-item"><a class="nav-link {% if page.id == 'contact' %} active {% endif %}" href="/contact"> {{ site.data[page.lang].contact }}</a></li>
+                <li class="nav-item"><a class="nav-link {% if page.id == 'contact' %} active {% endif %}" href="{%if page.lang=='en'%}/en{%endif%}/contact"> {{ site.data[page.lang].contact }}</a></li>
 
                 <li class="nav-item">
                     {% if page.lang == "ar" %}

@@ -162,18 +162,12 @@ def build_hall_of_fame():
     })
 
 def build_home():
-    # Needs a discussion about official/nonofficial
     stats = {
         'gold': 0,
         'silver': 0,
         'bronze': 0,
         'hm': 0,
         'participations': 0,
-        #'distinct_participants': 0,
-        #'current_members': 0,
-        #'historic_members': 0,
-        #'trainers': 0,
-        #'historic_camps': 0,
     }
 
     for olympiad in olympiads.values():
