@@ -234,23 +234,24 @@ def build_members():
         })
 
 def build_members_index():
-    #constants = load_json('constants')
-    levels = {1: [], 2: [], 3: [], 4: []}
+    levels = {}
     for member in members.values():
-        if 1 <= member['level'] <= 4:
-            levels[member['level']].append(member)
+        if 1 <= member['level']:
+            levels.setdefault(member['level'], []).append(member)
 
     write_file("./members/index.html", {
         'layout': 'members',
         'lang': 'ar',
         'title': translations['ar']['members_list'],
-        'levels': levels
+        'levels': levels,
+        'max_level': max(levels.keys())
     })
     write_file("en/members/index.html", {
         'layout': 'members',
         'lang': 'en',
         'title': translations['en']['members_list'],
-        'levels': levels
+        'levels': levels,
+        'max_level': max(levels.keys())
     } )
 
 def build_olympiads_index():
