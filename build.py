@@ -37,7 +37,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id]['email']
+            'email': members[member_id].get('email', '')
         }
         realcontact['maintainers'].append(person)
 
@@ -46,7 +46,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id]['email']
+            'email': members[member_id].get('email', '')
         }
         realcontact['developers'].append(person)
 
@@ -55,7 +55,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id]['email']
+            'email': members[member_id].get('email', '')
         }
         realcontact['admins'].append(person)
 

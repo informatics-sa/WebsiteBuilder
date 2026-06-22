@@ -11,8 +11,11 @@ def load_secret_json(filename):
         return json.load(f)
 
 def load_json(filename):
-    with open(f'{ROOT_DIR}/data/{filename}.json', 'r', encoding='utf-8') as f:
-        return json.load(f)
+    try:
+        with open(f'{ROOT_DIR}/data/{filename}.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
 
 translations = load_json('translations')
 
