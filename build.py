@@ -218,7 +218,7 @@ def build_members():
             'title': member['arname'],
             'full_name': member['arname'],
             'graduation': member['graduation'],
-            'codeforces': member['codeforces'],
+            'codeforces': member.get('codeforces', None),
             'participations': member['participations']
         })
 
@@ -228,7 +228,7 @@ def build_members():
             'title': member['enname'],
             'full_name': member['enname'],
             'graduation': member['graduation'],
-            'codeforces': member['codeforces'],
+            'codeforces': member.get('codeforces', None),
             'participations': member['participations'],
             'exams': member['exams']
         })

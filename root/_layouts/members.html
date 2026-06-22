@@ -26,7 +26,7 @@ layout: default
                     <thead>
                         {% if page.lang == "en" %} 
                         <th>Name</th>
-                        <th>Codeforces</th>
+                        {% if site.data.settings.codeforces %}<th>Codeforces</th>{% endif %}
                         <th>Participations count</th>
                         {% else %}
                         <th>الاسم</th>
@@ -44,7 +44,9 @@ layout: default
                                 <a href="/members/{{ page.levels[lvl][i].iid }}">{{ page.levels[lvl][i].arname }}</a>
                                 {% endif %}
                             </td>
+                            {% if site.data.settings.codeforces %}
                             <td><a href="https://codeforces.com/profile/{{ page.levels[lvl][i].codeforces }}">@{{ page.levels[lvl][i].codeforces }}</a></td>
+                            {% endif %}
                             <td>{{ page.levels[lvl][i].participations.count }}</td>
                         </tr>
                         {% endfor %}
