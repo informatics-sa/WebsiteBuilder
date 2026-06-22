@@ -37,7 +37,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id].get('email', '')
+            'email': members[member_id].get('email', None)
         }
         realcontact['maintainers'].append(person)
 
@@ -46,7 +46,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id].get('email', '')
+            'email': members[member_id].get('email', None)
         }
         realcontact['developers'].append(person)
 
@@ -55,7 +55,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id].get('email', '')
+            'email': members[member_id].get('email', None)
         }
         realcontact['admins'].append(person)
 
@@ -244,14 +244,14 @@ def build_members_index():
         'lang': 'ar',
         'title': translations['ar']['members_list'],
         'levels': levels,
-        'max_level': max(levels.keys())
+        'max_level': max(levels.keys(), default=0)
     })
     write_file("en/members/index.html", {
         'layout': 'members',
         'lang': 'en',
         'title': translations['en']['members_list'],
         'levels': levels,
-        'max_level': max(levels.keys())
+        'max_level': max(levels.keys(), default=0)
     } )
 
 def build_olympiads_index():

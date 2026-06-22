@@ -8,6 +8,7 @@ layout: default
     </div>
 </div>
 <div class="row p-2">
+    {% if page.developers.count > 0 %}
     <div class="col-sm-12 col-md-4">
         <h2>
             {% if page.lang == 'ar' %}
@@ -19,7 +20,7 @@ layout: default
         <ul>
             {% for i in (1..page.developers.count) %}
             <li>
-                <a {% if page.developers[i].email != '' %} href="mailto:{{ page.developers[i].email }}" {% endif %}>
+                <a {% if page.developers[i].email %} href="mailto:{{ page.developers[i].email }}" {% endif %}>
                     {% if page.lang == 'ar' %}
                     {{ page.developers[i].arname }}
                     {% else %}
@@ -30,6 +31,8 @@ layout: default
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
+    {% if page.maintainers.count > 0 %}
     <div class="col-sm-12 col-md-4">
         <h2>
             {% if page.lang == 'ar' %}
@@ -41,7 +44,7 @@ layout: default
         <ul>
             {% for i in (1..page.maintainers.count) %}
             <li>
-                <a {% if page.maintainers[i].email != '' %} href="mailto:{{ page.maintainers[i].email }}" {% endif %}>
+                <a {% if page.maintainers[i].email %} href="mailto:{{ page.maintainers[i].email }}" {% endif %}>
                     {% if page.lang == 'ar' %}
                     {{ page.maintainers[i].arname }}
                     {% else %}
@@ -52,6 +55,8 @@ layout: default
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
+    {% if page.admins.count > 0 %}
     <div class="col-sm-12 col-md-4">
         <h2>
             {% if page.lang == 'ar' %}
@@ -63,7 +68,7 @@ layout: default
         <ul>
             {% for i in (1..page.admins.count) %}
             <li>
-                <a {% if page.admins[i].email != '' %} href="mailto:{{ page.admins[i].email }}" {% endif %}>
+                <a {% if page.admins[i].email %} href="mailto:{{ page.admins[i].email }}" {% endif %}>
                     {% if page.lang == 'ar' %}
                     {{ page.admins[i].arname }}
                     {% else %}
@@ -74,4 +79,5 @@ layout: default
             {% endfor %}
         </ul>
     </div>
+    {% endif %}
 </div>
