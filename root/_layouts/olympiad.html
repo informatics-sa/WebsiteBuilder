@@ -92,12 +92,14 @@ layout: default
                             {% if page.lang == 'ar' %}المشارك{% else %}Participant{% endif %}
                         </th>
 
-                        {% for p in (1..page.olympiad.problems_count) %}
-                        <th scope="col" class="text-center" width="5%">P{{ p }}</th>
-                        {% endfor %}
-                        <th scope="col" class="text-center">
-                            {% if page.lang == 'ar' %}المجموع{% else %}Total{% endif %}
-                        </th>
+                        {% if page.olympiad.problems_count %}
+                            {% for p in (1..page.olympiad.problems_count) %}
+                            <th scope="col" class="text-center" width="5%">P{{ p }}</th>
+                            {% endfor %}
+                            <th scope="col" class="text-center">
+                                {% if page.lang == 'ar' %}المجموع{% else %}Total{% endif %}
+                            </th>
+                        {% endif %}
 
                         <th scope="col" class="text-center">
                             {% if page.lang == 'ar' %}الجائزة{% else %}Award{% endif %}
@@ -130,23 +132,25 @@ layout: default
                                     </a>
                                 </td>
 
-                                {% if part.scores %}
-                                    {% for k in (1..page.olympiad.problems_count) %}
-                                    <td class="text-center">{{ part.scores[pid][k] }}</td>
-                                    {% endfor %}
-                                    <td class="text-center fw-bold">
-                                        {% assign total = 0 %}
+                                {% if page.olympiad.problems_count %}
+                                    {% if part.scores %}
                                         {% for k in (1..page.olympiad.problems_count) %}
-                                        {% assign score = part.scores[pid][k] | plus: 0 %}
-                                        {% assign total = total | plus: score %}
+                                        <td class="text-center">{{ part.scores[pid][k] }}</td>
                                         {% endfor %}
-                                        {{ total }}
-                                    </td>
-                                {% else %}
-                                    {% for k in (1..page.olympiad.problems_count) %}
-                                    <td class="text-center">-</td>
-                                    {% endfor %}
-                                    <td class="text-center">-</td>
+                                        <td class="text-center fw-bold">
+                                            {% assign total = 0 %}
+                                            {% for k in (1..page.olympiad.problems_count) %}
+                                            {% assign score = part.scores[pid][k] | plus: 0 %}
+                                            {% assign total = total | plus: score %}
+                                            {% endfor %}
+                                            {{ total }}
+                                        </td>
+                                    {% else %}
+                                        {% for k in (1..page.olympiad.problems_count) %}
+                                        <td class="text-center">-</td>
+                                        {% endfor %}
+                                        <td class="text-center">-</td>
+                                    {% endif %}
                                 {% endif %}
 
                                 <td class="text-center" style="font-size: 18px;">
