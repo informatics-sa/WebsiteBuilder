@@ -8,15 +8,13 @@ id: olympiads
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">
-                    <a href="/{% if page.lang != 'ar' %}en/{% endif %}olympiads/{{ page.olympiads[i].id }}" class="text-decoration-none fs-2">
-                        {% if page.lang == "en" %}
-                            {{ page.olympiads[i].enname }}
-                        {% else %}
-                            {{ page.olympiads[i].arname }}
-                        {% endif %}
-                        ({{ page.olympiads[i].id | upcase }})
-                    </a>
+                <h5 class="card-title fs-3">
+                    {% if page.lang == "en" %}
+                        {{ page.olympiads[i].enname }}
+                    {% else %}
+                        {{ page.olympiads[i].arname }}
+                    {% endif %}
+                    <span class="text-muted fs-5">({{ page.olympiads[i].id | upcase }})</span>
                 </h5>
                 {% if page.olympiads[i].website != null %}
                 <p class="card-text">
@@ -33,26 +31,19 @@ id: olympiads
                     {{ page.olympiads[i].ardescription }}
                     {% endif %}
                 </p>
-                <div class="card-footer">
-                    <div class="table-responsive">
-                        <table class="table table-bordered d-inline">
-                            <thead>
-                                <th><span class="bi-award-fill medal-gold"></span></th>
-                                <th><span class="bi-award-fill medal-silver"></span></th>
-                                <th><span class="bi-award-fill medal-bronze"></span></th>
-                                <th><span class="bi-hm medal-hm"></span></th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{{ page.olympiads[i].gold }}</td>
-                                    <td>{{ page.olympiads[i].silver }}</td>
-                                    <td>{{ page.olympiads[i].bronze }}</td>
-                                    <td>{{ page.olympiads[i].hm }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="me-3"><span class="bi-award-fill medal-gold"></span> {{ page.olympiads[i].gold }}</span>
+                        <span class="me-3"><span class="bi-award-fill medal-silver"></span> {{ page.olympiads[i].silver }}</span>
+                        <span class="me-3"><span class="bi-award-fill medal-bronze"></span> {{ page.olympiads[i].bronze }}</span>
+                        <span class="me-3"><span class="bi-hm medal-hm"></span> {{ page.olympiads[i].hm }}</span>
+                        <span class="me-3"><span class="fw-bold text-success">∑</span> {{ page.olympiads[i].gold | plus: page.olympiads[i].silver | plus: page.olympiads[i].bronze | plus: page.olympiads[i].hm }}</span>
+                        <span class="me-3"><span class="bi-globe-americas text-success"></span> {{ page.olympiads[i].participations }}</span>
                     </div>
-                </div>            
+                    <a href="/{% if page.lang != 'ar' %}en/{% endif %}olympiads/{{ page.olympiads[i].id }}" class="btn btn-outline-success btn-sm">
+                        {% if page.lang == "en" %}View{% else %}عرض{% endif %}
+                    </a>
+                </div>          
             </div>
         </div>        
     </div>
