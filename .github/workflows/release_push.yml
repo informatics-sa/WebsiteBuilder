@@ -15,16 +15,23 @@ jobs:
       fail-fast: false 
 
     steps:
-      - name: Push empty commit to ${{ matrix.target_repo }}
+      - name: Checkout downstream repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ matrix.target_repo }}
+          token: ${{ secrets.ORG_PAT }}
+          path: repo-dir # This places the cloned repo into a folder named 'repo-dir'
+
+      - name: Push empty commit
         run: |
-          # Clone the repo using the PAT
-          git clone https://x-access-token:${{ secrets.ORG_PAT }}@github.com/${{ matrix.target_repo }}.git repo-dir
           cd repo-dir
           
           # Set up git config (appears as a bot commit)
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Create and push the empty commit
-          git commit --allow-empty -m "auto: trigger workflow for release ${{ github.event.release.tag_name }}"
-          git push origin main
+          # Create the empty commit
+          git commit --allow-empty -m "chore: trigger workflow from upstream release ${{ github.event.release.tag_name }}"
+          
+          # Push back to the repository
+          git push
