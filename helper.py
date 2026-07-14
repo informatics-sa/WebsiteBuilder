@@ -73,7 +73,7 @@ def generate_members_names():
             p['arname'] = p['id']
     write_text('./root/data/people.json', json.dumps(members))
 
-def sort_by_date(date_format="%Y/%m/%d"):
+def sort_by_date(date_format="%Y-%m-%d"):
     # Read JSON file
     from datetime import datetime
     with open('./root/data/participations.json', 'r', encoding='utf-8') as f:
