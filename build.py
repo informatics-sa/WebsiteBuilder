@@ -6,7 +6,14 @@ from lib.utils import * # target to remove this.
 import datetime
 import math
 
+VERSION = '1.0.0'
+
 settings = load_json('settings')
+repo_version = settings.get('version', '0.0.0')
+
+if repo_version.split('.')[0] != VERSION.split('.')[0]:
+    print(f"Incompatible versions: Builder={VERSION}, Repo={repo_version}")
+    exit(1)
 
 if settings.get('old_id_system', False):
     from helper import update_participations, sort_by_date, generate_members, update_exams
