@@ -563,5 +563,19 @@ def main():
     build_exams()
     print("Built exams")
 
+    if settings.get('enable_compare_page', False):
+        write_page('compare', {
+            '$title': 'compare_students',
+            'layout': 'compare'
+        })
+        print("Built compare page")
+
+    if settings.get('enable_stats_page', False):
+        write_page('stats', {
+            '$title': 'stats',
+            'layout': 'stats'
+        })
+        print("Built statistics page")
+
 if __name__ == '__main__':
     main()
