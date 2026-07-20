@@ -30,7 +30,7 @@ layout: default
                         <th>Participations count</th>
                         {% else %}
                         <th>الاسم</th>
-                        <th>كودفورسيس</th>
+                        {% if site.data.settings.codeforces %}<th>كودفورسيس</th>{% endif %}
                         <th>عدد المشاركات</th>
                         {% endif %}
                     </thead>
