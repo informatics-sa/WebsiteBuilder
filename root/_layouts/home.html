@@ -1,7 +1,6 @@
 ---
 layout: defaultnocontainer
 id: home
-title: "Saudi Informatics Team"
 description: "Official website"
 ---
 
@@ -300,7 +299,7 @@ description: "Official website"
 <section class="hero-section text-center">
     
     <div class="container">
-        <h1 class="display-4 fw-bold mb-4"> {{ site.data[page.lang].website_name}}</h1>
+        <h1 class="display-4 fw-bold mb-4">{{ site.data[page.lang].website_name}}</h1>
         <p class="lead mb-4"> {{ site.data[page.lang].team_desc}} </p>
         <div class="btn-container">
             <a href="{%if page.lang=='en'%}/en{%endif%}/participations" class="btn btn-light btn-lg">
@@ -425,15 +424,17 @@ description: "Official website"
         <div class="container">
             <div class="join-row">
                 <div class="join-image text-center">
+                    {% if site.data.settings.home_image %}
                     <img src="/img/{{site.data.settings.home_image}}" alt="طلاب يشاركون في مسابقة رياضية" class="img-fluid rounded shadow">
+                    {% endif %}
                 </div>
                 <div class="join-content text-center text-lg-start">
                     {% if page.lang == "en" %}
                     <h2 class="fw-bold mb-4">How to join the team?</h2>
-                    <p class="lead">You can join Saudi Math Team through:</p>
+                    <p class="lead">You can join {{ site.data[page.lang].website_name}} through:</p>
                     {% else %}
                     <h2 class="fw-bold mb-4">كيف أنضم إلى الفريق؟</h2>
-                    <p class="lead">يمكنك الانضمام إلى فريق الرياضيات السعودي من خلال:</p>
+                    <p class="lead">يمكنك الانضمام إلى {{ site.data[page.lang].website_name}} من خلال:</p>
                     {% endif %}
                     <ul class="list-unstyled text-start">
                         <li class="mb-3">
