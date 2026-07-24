@@ -5,10 +5,10 @@ LANGS = ['ar', 'en']
 BLOCKED_FLAGS = ['se']
 
 def load_secret_json(filename):
+    if os.path.isfile(f'./lib/Database/{filename}.json'):
+        with open(f'./lib/Database/{filename}.json', 'r', encoding='utf-8') as f:
+            return json.load(f)
     return {}
-    # TEMP
-    with open(f'./lib/Database/{filename}.json', 'r', encoding='utf-8') as f:
-        return json.load(f)
 
 def load_json(filename):
     try:

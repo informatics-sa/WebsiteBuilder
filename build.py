@@ -454,7 +454,7 @@ def build_tst_index():
             max_team_size = tst[oly].get('participants_count', olympiads[oly].get('participants_count', 0))
             top = list(lists)[0:max_team_size]
             for team_member in top:
-                lists[team_member]['background_color'] = '82f482'
+                lists[team_member]['background_color'] = '1a8754'
 
             if max_team_size < len(lists) and lists[top[max_team_size - 1]]['grades'][0] == lists[list(lists)[max_team_size]]['grades'][0]:
                 for uid in lists.keys():
