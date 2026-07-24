@@ -372,7 +372,7 @@ def build_tst_index():
         for oly in list(tst.keys()):
             if oly[0] == '_':
                 continue
-            
+
             lists = {}
 
             tsts[oly] = {
@@ -387,8 +387,8 @@ def build_tst_index():
                 exam_index += 1
                 if eid not in exams:
                     continue
-                ar_exam_names[eid] = exams[eid]['arname']
-                en_exam_names[eid] = exams[eid]['enname']
+                ar_exam_names[eid] = exams[eid].get('arname', exams[eid]['name'])
+                en_exam_names[eid] = exams[eid].get('enname', exams[eid]['name'])
                 for uid, res in exams[eid]['participants'].items():
                     if uid in members:
                         # if members[uid]['level'] < 0:
@@ -450,7 +450,7 @@ def build_tst_index():
                     if uid in lists:
                         del lists[uid]
             lists = dict(sorted(lists.items(), key=lambda person: (-person[1]['grades'][0])))
-            
+
             max_team_size = tst[oly].get('participants_count', olympiads[oly].get('participants_count', 0))
             top = list(lists)[0:max_team_size]
             for team_member in top:
@@ -543,7 +543,7 @@ def build_data_variables():
 def main():
     test_utils()
 
-    build_data_variables()   
+    build_data_variables()
     print("Built _data/build.yml")
 
     build_contact()

@@ -11,8 +11,10 @@ jobs:
     strategy:
       matrix:
         target_repo:
-          - 'informatics-sa/Website'
+          - 'informatics-sa/informatics-website'
           - 'informatics-sa/math-website'
+          - 'informatics-sa/physics-website'
+          - 'informatics-sa/ai-website'
       fail-fast: false 
 
     steps:
