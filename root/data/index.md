@@ -35,9 +35,9 @@ Each repository has its own [`/data/settings.json`](/data/people.json) which cou
 - `icon`: String, filename of favicon inside `/img` folder. **(optional)**
 - `logo`: String, filename of logo inside `/img` folder. Recommended to be SVG. **(optional)**
 - `home_image`: String, filename of an image inside `/img`.
-- `enable_exams_page`: Boolean
-- `enable_members_index`: Boolean
-- `enable_image_library`: Boolean
+- `enable_exams_page`: Boolean, default false
+- `enable_members_index`: Boolean, default false
+- `enable_image_library`: Boolean, default false
 
 ## [`/data/people.json`](/data/people.json)
 An array of people, each person has the following:
@@ -68,9 +68,9 @@ An array of olympiads SIT participated in, each olympiad has the following:
 An array of olympiads SIT participated in, each olympiad has the following:
 - `id`: String, Should be lowercase, 3/4-letters short olympiad name (i.e. `ioi`, `imo`, `egoi`) **(unique)**
 - `arname`: String, Full name in Arabic
-- `enname`: String, Full name in English 
+- `enname`: String, Full name in English
 - `official`: Boolean, is Saudi Arabia an official country or not
-- `participations_count`: Integer, How many students participate per year (optional, needed when it's used in `tsts.json`)
+- `participations_count`: Integer, How many students participate per year needed when it's used in `tsts.json`. **(optional)**
 - `website`: URL, General Olympiad website, shouldn't be a specific year website except if it was the first version of the olympiad **(nullable)**
 
 ## [`/data/images.json`](/data/images.json)
@@ -97,7 +97,12 @@ A dictionary of exam IDs, where every exam has:
 - `participants`: Dictionary of student ID and an array of floats which is score per task
 
 ## [`/data/tsts.json`](/data/tsts.json)
-A dictionary of year and olympiad IDs, and every olympiad ID contains a set of exams, and set of excluded students, for example:
+A dictionary of year and olympiad IDs, and every olympiad ID contains:
+- `exams`: An array of exam IDs, or a dictionary in case of different weights
+- `min_birthdate`: Date, minimum eligable birthdate for participants, works only in Informatics currently (Optional)
+- `female_only`: Boolean, True if only female is eligable for this olympiad, default false (Optional)
+- `execluded`: Array of student ID, members who are execluded from the page
+- `participants_count`: Integer, count of participants, default is taken from `olympiads.json` file (Optional)
 ```json
 {
     "2025": {

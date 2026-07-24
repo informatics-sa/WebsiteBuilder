@@ -6,7 +6,7 @@ from lib.utils import * # target to remove this.
 import datetime
 import math
 
-VERSION = '1.0.0'
+VERSION = '1.0.1'
 
 settings = load_json('settings')
 repo_version = settings.get('version', '0.0.0')
@@ -359,9 +359,6 @@ def build_tst_index():
     tsts = load_json('tsts')
     exams = load_json('exams')
 
-
-    
-
     arname = {}
     enname = {}
 
@@ -380,6 +377,7 @@ def build_tst_index():
 
             tsts[oly] = {
                 'exams': tst[oly]['exams'],
+                'weighted': type(tst[oly]['exams']) is dict,
                 'participants_count': olympiads[oly]['participants_count'],
                 'lists': None,
             }
@@ -389,8 +387,8 @@ def build_tst_index():
                 exam_index += 1
                 if eid not in exams:
                     continue
-                ar_exam_names[eid] = exams[eid]['name'] 
-                en_exam_names[eid] = exams[eid]['name']
+                ar_exam_names[eid] = exams[eid]['arname']
+                en_exam_names[eid] = exams[eid]['enname']
                 for uid, res in exams[eid]['participants'].items():
                     if uid in members:
                         # if members[uid]['level'] < 0:
@@ -403,9 +401,12 @@ def build_tst_index():
                         # arname[uid] = uid
                         # enname[uid] = uid
                     if uid not in lists:
-                        lists[uid] = [0]*(len(tst[oly]['exams'])+1)
-                    lists[uid][0] += sum(res)
-                    lists[uid][exam_index] = sum(res)
+                        lists[uid] = {'grades': [0]*(len(tst[oly]['exams'])+1)}
+                    weight = tsts[oly]['exams'][eid] if tsts[oly]['weighted'] else 1.0
+                    lists[uid]['grades'][0] += weight * sum(res)
+                    lists[uid]['grades'][exam_index] = sum(res)
+                    if lists[uid]['grades'][0] == math.floor(lists[uid]['grades'][0]):
+                        lists[uid]['grades'][0] = int(lists[uid]['grades'][0])
 
             if 'female_only' in tst[oly] and tst[oly]['female_only'] == True:
                 to_be_removed = []
@@ -430,6 +431,16 @@ def build_tst_index():
                 for uid in to_be_removed:
                     del lists[uid]
 
+            if 'min_birthdate' in tst[oly]:
+                eligibility_date = datetime.date.fromisoformat(tst[oly]['min_birthdate'])
+                to_be_removed = []
+                for uid in lists:
+                    if is_older(uid, eligibility_date):
+                        to_be_removed.append(uid)
+
+                for uid in to_be_removed:
+                    del lists[uid]
+
             if 'execluded' in tst[oly]:
                 for uid in tst[oly]['execluded']:
                     if uid in lists:
@@ -438,10 +449,22 @@ def build_tst_index():
                 for uid in tst['_general_execluded']:
                     if uid in lists:
                         del lists[uid]
-            lists = dict(sorted(lists.items(), key=lambda person: (-person[1][0])))
+            lists = dict(sorted(lists.items(), key=lambda person: (-person[1]['grades'][0])))
+            
+            max_team_size = tst[oly].get('participants_count', olympiads[oly].get('participants_count', 0))
+            top = list(lists)[0:max_team_size]
+            for team_member in top:
+                lists[team_member]['background_color'] = '82f482'
+
+            if max_team_size < len(lists) and lists[top[max_team_size - 1]]['grades'][0] == lists[list(lists)[max_team_size]]['grades'][0]:
+                for uid in lists.keys():
+                    if lists[uid]['grades'][0] == lists[top[max_team_size - 1]]['grades'][0]:
+                        lists[uid]['background_color'] = 'fff717'
 
             tsts[oly]['lists'] = lists
-        
+            if tsts[oly]['weighted']:
+                tsts[oly]['exams'] = list(map(lambda x: {x[0]: x[1]}, tsts[oly]['exams'].items()))
+
         write_file(f'./tst/{year}.html', {
             'lang': 'ar',
             'layout': 'tst',
@@ -465,19 +488,12 @@ def build_tst_index():
         'min_year': mn_year,
         'max_year': mx_year
     }))
-    write_file('tst/index.html', {
-        'lang': 'ar',
-        'title': translations['ar']['team_selection_tests'],
+
+    write_page('tst/index', {
+        '$title': 'team_selection_tests',
         'layout': 'tstindex',
         'min_year': mn_year,
-        'max_year': mx_year,
-    })
-    write_file('en/tst/index.html', {
-        'lang': 'en',
-        'title': translations['en']['team_selection_tests'],
-        'layout': 'tstindex',
-        'min_year': mn_year,
-        'max_year': mx_year,
+        'max_year': mx_year
     })
 
 def build_exams():
