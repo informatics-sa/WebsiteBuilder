@@ -15,6 +15,7 @@ jobs:
           - 'informatics-sa/math-website'
           - 'informatics-sa/physics-website'
           - 'informatics-sa/ai-website'
+          - 'informatics-sa/WebsiteTemplate'
       fail-fast: false 
 
     steps:
