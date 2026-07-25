@@ -4,7 +4,7 @@ title: Public Data API
 layout: default
 ---
 # Public Data API
-Version: {{ site.data.settings.version }}
+WebsiteBuiler: {{ site.data.settings.resolved_builder }}
 
 ## How to read documentation
 this document is a description of a series of json files, every field is defined as `name: `[`Type`](#data-types)`, <general description> `[`<optional set of properties>`](#properties). any reference to the keyword `self` in the description should be interpretted as the value of the field defined in the file by the user.

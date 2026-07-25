@@ -519,8 +519,9 @@ def build_exams():
             'sums': sums
         })
 
-import subprocess
 def build_data_variables():
+    import subprocess
+
     write_text('./root/_data/build.yml', format_yml({
         'last_update': datetime.datetime.now().strftime('%Y/%-m/%-d %-H:%-M:%-S'),
         'commit_index': subprocess.getoutput('git rev-list --count main'),
@@ -530,6 +531,13 @@ def build_data_variables():
 
     for lang, texts in translations.items():
         write_text(f'./root/_data/{lang}.yml', format_yml(texts))
+
+    settings['resolved_builder'] = "[unresolved]"
+    try:
+        with open('.resolved-builder', 'r') as file:
+            settings['resolved_builder'] = file.read()
+    except:
+        pass
 
     write_text('./root/_data/settings.yml', format_yml(settings))
 
