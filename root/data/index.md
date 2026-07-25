@@ -19,34 +19,43 @@ this document is a description of a series of json files, every field is defined
 - Dictionary/Object: JSON object `{...}`
 
 #### Custom defined
-<details>
-    <summary>Emum: MetaType</summary>
-    A MetaType is the underlying Type of some custom defined Type, for example, `Date` is Type with `String` being its MetaType, but with the additional semantics that it's a `String` that holds an ISO 8601 formatted `Date`. <br>
-    `Enum` is a MetaType, that is used to describe other types which are effectively an enum. it's followed by a set of `case`s, a `case` has a `name` and a `type`, which is described like other fields. Later in some file, when a field (F) has a type (T), such that T has `Enum` as its MetaType, F's type is effectively the `type` of **one** of the cases. (note: each case has `name` and `type`, but only `type` is relevent to the actual data files, `name` is only used for documention purposes. more details on this in the example bellow)<br>
-    For example, we can define a Type `Image` that has the MetaType `Enum`. with cases:
-    - case `remote`: Dictionary, containing:
-      - `url`: URL, referencing some image on the web.
-    - case `local`: Dictionary, containing:
-      - `file_path`: String, relative filepath from `/img` folder.
-    Later we can have a field use this Type as follows:
-    - `logo`: Image, logo used in navbar of website.
-    This field, `logo`, can **either** be of the type declared by `Image:url` **or** `Image:local` (also note this is how we can refer to cases by name in documentation. we can also refer to cases of certain fields, for example `logo:url` or `logo:local`).
-    valid examples:
-    ```json
-    logo: {
-        url: "https://example.com/image.png"
-    }
-    ```
-    **or**
-    ```json
-    logo: {
-        file_path: "./image.png"
-    }
-    ```
-    Note that having both `url` and `file_path` in one Dictionary will result in an error. <br>
-    We can also have a shorthand syntax for "initializing" Types with `Enum` MetaType for use in documentation, the syntax is `T:C(V)` for a Type `T` with MetaType `Enum`, and case `C`, and value `V`. For example, if we want to document that it's forbidden to set `logo` to a local image called "forbidden.png", we can say:
-    "it's not allowed for `logo` to be `Image:local({file_path: "./forbidden.png"})`". <br>
+<details markdown="block">
+<summary>Emum: MetaType</summary>
+
+A MetaType is the underlying Type of some custom defined Type, for example, `Date` is Type with `String` being its MetaType, but with the additional semantics that it's a `String` that holds an ISO 8601 formatted `Date`.
+
+`Enum` is a MetaType, that is used to describe other types which are effectively an enum. it's followed by a set of cases, a `case` has a `name` and a `type`, which is described like other fields. Later in some file, when a field (F) has a type (T), such that T has `Enum` as its MetaType, F's type is effectively the `type` of **one** of the cases. (note: each case has `name` and `type`, but only `type` is relevent to the actual data files, `name` is only used for documention purposes. more details on this in the example bellow)
+
+For example, we can define a Type `Image` that has the MetaType `Enum`. with cases:
+- case `remote`: Dictionary, containing:
+  - `url`: URL, referencing some image on the web.
+- case `local`: Dictionary, containing:
+  - `file_path`: String, relative filepath from `/img` folder.
+
+Later we can have a field use this Type as follows:
+- `logo`: Image, logo used in navbar of website.
+
+This field, `logo`, can **either** be of the type declared by `Image:url` **or** `Image:local` (also note this is how we can refer to cases by their `name` in documentation. we can also refer to cases of certain fields, for example `logo:url` or `logo:local`).
+valid examples:
+```json
+logo: {
+    url: "https://example.com/image.png"
+}
+```
+**or**
+```json
+logo: {
+    file_path: "./image.png"
+}
+```
+Note that having both `url` and `file_path` in one Dictionary will result in an error.
+
+We can also have a shorthand syntax for "initializing" Types with `Enum` MetaType for use in documentation, the syntax is `T:C(V)` for a Type `T` with MetaType `Enum`, and case `C`, and value `V`. For example, if we want to document that it's forbidden to set `logo` to a local image called "forbidden.png", we can say:
+"it's not allowed for `logo` to be `Image:local({file_path: "./forbidden.png"})`".
+
+---
 </details>
+
 - Date: String, gregorian date in[ ](https://xkcd.com/1179/)[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format (`yyyy-mm-dd`)
 - URL: String, starts with prefix `https://` and without suffix `/` except when required
 - Email: String, an email
