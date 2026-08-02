@@ -12,9 +12,10 @@ this document is a description of a series of json files, every field is defined
 ### Data types
 #### JSON datatypes
 - String
-- Integer
+- Number
+  - Integer: A number without floating point
+  - Float: A number with floating point
 - Boolean
-- Float
 - Array: JSON array `[...]`
 - Dictionary/Object: JSON object `{...}`
 
@@ -56,7 +57,7 @@ We can also have a shorthand syntax for "initializing" Types with `Enum` MetaTyp
 ---
 </details>
 
-- Date: String, gregorian date in[ ](https://xkcd.com/1179/)[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format (`yyyy-mm-dd`)
+- Date: String, Gregorian date in[ ](https://xkcd.com/1179/)[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format (`yyyy-mm-dd`)
 - URL: String, starts with prefix `https://` and without suffix `/` except when required
 - Email: String, an email
 - BuilderVersion: Enum
@@ -79,32 +80,32 @@ By default each property is required, here are the additional properties:
 Each repository has its own [`/data/settings.json`](/data/settings.json) which could have these fields:
 - `website_builder`: BuilderVersion, this is used by `prebuild.py` to decide which version of WebsiteBuilder is suitable for the website, and fetch it. Default is `BuilderVersion:branch({branch:"main"})` **(optional)**
 - `version`: String, this is an alias to `website_builder:release({version: self})`. **(optional, note that either this or `website_builder` can exist, but not both.)**
-- `old_id_system`: Boolean, using `id` instead of `iid`. Default false.  **(optional)**
-- `codeforces`: Boolean, in case each user has a Codeforces account. Default false. **(optional)**
-- `icon`: String, filename of favicon inside `/img` folder. **(optional)**
-- `logo`: String, filename of logo inside `/img` folder. Recommended to be SVG. **(optional)**
-- `home_image`: String, filename of an image inside `/img`.
-- `enable_exams_page`: Boolean, default false
-- `enable_members_index`: Boolean, default false
-- `enable_image_library`: Boolean, default false
+- `old_id_system`: Boolean, using `id` instead of `iid`. Default false **(optional)**
+- `codeforces`: Boolean, in case each user has a Codeforces account. Default false **(optional)**
+- `icon`: String, filename of favicon inside `/img` folder **(optional)**
+- `logo`: String, filename of logo inside `/img` folder. Recommended to be SVG **(optional)**
+- `home_image`: String, filename of an image inside `/img`
+- `enable_exams_page`: Boolean, shows exams tab in navbar. Default false
+- `enable_members_index`: Boolean, shows members tab in navbar. Default false
+- `enable_image_library`: Boolean, shows images tab in navbar. Default false
 
 ## [`/data/people.json`](/data/people.json)
 An array of people, each person has the following:
-- `iid`: Integer, informatics ID of the student, currently fetched from IDs assigned by Marko **(unique)**
-- `id`: String, lowercase with no spaces ID usually in format `firstname_lastname`, not used anymore and shouldn't be written, it will be removed by devleopers when not needed anymore **(deprecated)**
+- `iid`: Integer, Numerical ID of the student. [Marko ID System](/data/marko) is recommended. **(unique)**
+- `id`: String, lowercase with no spaces ID usually in format `firstname_lastname`, Used if `settings.old_id_system` was enabled **(deprecated)**
 - `arname`: String, Name in Arabic
 - `enname`: String, Name in English
 - `level`: Integer, current SIT Level ("`-1`" if he/she graduated, "`-2`" if he/she disqualified/left before graduating, "`-3`" if he/she was never a student)
-- `graduation`: Integer, graduation year **(optional)**
+- `graduation`: Integer, highschool graduation year, should be the last year that participant can qualify to olympiads **(optional)**
 - `codeforces`: String, Codeforces username. Used only with `codeforces: true` in `settings.json` **(optional)**
 - `email`: Email, most official email, usually `...@sainformatics.org`, used in case of [contact page](https://sainformatics.org/contact) **(optional)**
 - `female`: Boolean, used in girls competitions, default is `false` **(optional)**
 
-## [`/data/participations.json`](/data/participations.json)
+## [`/data/participations.json`](/data/participations.json`)
 An array of olympiads SIT participated in, each olympiad has the following:
 - `name`: String, An id of an olympiad that exists in `olympiads.json`
-- `year`: Integer, year
-- `country`: String, the 2-letters country code of the host country of the olympiad.
+- `year`: Integer, olympiad official year, not necessarily same as `start`/`end` date year
+- `country`: String, the 2-letters lowercase country code of the host country of the olympiad
 - `start`: Date, The start day of the olympiad
 - `end`: Date, the end day of the olympiad
 - `participants`: Dictionary of `<member_id>: <award_name>` of the participants __in SAU order__.
@@ -115,11 +116,12 @@ An array of olympiads SIT participated in, each olympiad has the following:
 
 ## [`/data/olympiads.json`](/data/olympiads.json)
 An array of olympiads SIT participated in, each olympiad has the following:
-- `id`: String, Should be lowercase, 3/4-letters short olympiad name (i.e. `ioi`, `imo`, `egoi`) **(unique)**
+- `id`: String, lowercase 3/4-letters short olympiad name (i.e. `ioi`, `imo`, `egoi`) **(unique)**
 - `arname`: String, Full name in Arabic
 - `enname`: String, Full name in English
 - `official`: Boolean, is Saudi Arabia an official country or not
 - `participations_count`: Integer, How many students participate per year needed when it's used in `tsts.json`. **(optional)**
+- `problems_count`: Integer, How many problems in the competition in a single year. 
 - `website`: URL, General Olympiad website, shouldn't be a specific year website except if it was the first version of the olympiad **(nullable)**
 
 ## [`/data/images.json`](/data/images.json)
@@ -134,24 +136,29 @@ An array of images, each image consist of these labels:
 - `ardescription`: String, Arabic description
 - `endescription`: String, English description
 - `date`: Date, the date of this image
+- `proposed_by`: Integer, User ID **(future)**
 
 ## [`/data/contact.json`](/data/contact.json)
 A dictionary of (`developers`/`maintainers`/`admin`), each having an array of person ID
 
 ## [`/data/exams.json`](/data/exams.json)
-A dictionary of exam IDs, where every exam has:
-- `name`: String, Name of exam in English
+A dictionary of exam IDs in format (`exam_2_2025`) or similar, where every exam has:
+- `id`: String, the ID of the exam, same as its ID above. TODO: Should be removed **(unique)**
+- `name`: String, Name of exam. TODO: Should be deprecated
+- `arname`: String, Name of exam in Arabic
+- `enname`: String, Name of exam in Arabic
 - `date`: Date, The day of the exam
-- `problems`: Array of problem ID
-- `participants`: Dictionary of student ID and an array of floats which is score per task
+- `problems`: Array of problem ID, currently not used anywhere but it could be useful for archiving in future
+- `participants`: Dictionary of student ID and an array of numbers which is score per task
+- `url`: URL, source/archive of the exam if possible **(optional)**
 
 ## [`/data/tsts.json`](/data/tsts.json)
 A dictionary of year and olympiad IDs, and every olympiad ID contains:
 - `exams`: An array of exam IDs, or a dictionary in case of different weights
-- `min_birthdate`: Date, minimum eligable birthdate for participants, works only in Informatics currently (Optional)
-- `female_only`: Boolean, True if only female is eligable for this olympiad, default false (Optional)
+- `min_birthdate`: Date, minimum eligible birthdate for participants, works only in Informatics currently **(Optional)**
+- `female_only`: Boolean, True if only female is eligible for this olympiad, default false **(Optional)**
 - `execluded`: Array of student ID, members who are execluded from the page
-- `participants_count`: Integer, count of participants, default is taken from `olympiads.json` file (Optional)
+- `participants_count`: Integer, count of participants, default is taken from `olympiads.json` file **(Optional)**
 ```json
 {
     "2025": {
@@ -180,14 +187,16 @@ additionally, if the TSTs for a certain olympiad is weighted, you can use a dict
 }
 ```
 
-Additional rules (Optional):
-- `excluded`: Array, of strings student ID
-- `min_graduation`: Integer, minimum graduation year to be eligable
-- `female_only`: Boolean, true if the competition is female only
-- `min_birthdate`: Date, the minimum birthdate for eligibility
-
+## [`/data/contact.json`](/data/contact.json)
+A dictionary with three possible arrays of User ID as a string:
+- `admins`: Official admins of the olympiad
+- `developers`: Web developers
+- `maintainers`: Data maintainers
 
 # Constant files
 These files are needed, but they aren't database kind.
 ## [`/data/countries.json`](/data/countries.json)
 ## [`/data/translations.json`](/data/translations.json)
+A dictionary with its fields being supported languages, currently `ar`, `en`.
+
+Each text should be translated in all languages and its accessed in Jekyll liquid using `site.data[page.lang].text_name`.
