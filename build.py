@@ -6,14 +6,7 @@ from lib.utils import * # target to remove this.
 import datetime
 import math
 
-VERSION = '1.0.1'
-
 settings = load_json('settings')
-repo_version = settings.get('version', '0.0.0')
-
-if repo_version.split('.')[0] != VERSION.split('.')[0]:
-    print(f"Incompatible versions: Builder={VERSION}, Repo={repo_version}")
-    exit(1)
 
 if settings.get('old_id_system', False):
     from helper import update_participations, sort_by_date, generate_members, update_exams
@@ -526,8 +519,9 @@ def build_exams():
             'sums': sums
         })
 
-import subprocess
 def build_data_variables():
+    import subprocess
+
     write_text('./root/_data/build.yml', format_yml({
         'last_update': datetime.datetime.now().strftime('%Y/%-m/%-d %-H:%-M:%-S'),
         'commit_index': subprocess.getoutput('git rev-list --count main'),
@@ -537,6 +531,13 @@ def build_data_variables():
 
     for lang, texts in translations.items():
         write_text(f'./root/_data/{lang}.yml', format_yml(texts))
+
+    settings['resolved_builder'] = "[unresolved]"
+    try:
+        with open('.resolved-builder', 'r') as file:
+            settings['resolved_builder'] = file.read()
+    except:
+        pass
 
     write_text('./root/_data/settings.yml', format_yml(settings))
 

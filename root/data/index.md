@@ -4,9 +4,11 @@ title: Public Data API
 layout: default
 ---
 # Public Data API
-Version: {{ site.data.settings.version }}
+WebsiteBuiler: {{ site.data.settings.resolved_builder }}
 
 ## How to read documentation
+this document is a description of a series of json files, every field is defined as `name: `[`Type`](#data-types)`, <general description> `[`<optional set of properties>`](#properties). any reference to the keyword `self` in the description should be interpretted as the value of the field defined in the file by the user.
+
 ### Data types
 #### JSON datatypes
 - String
@@ -15,10 +17,56 @@ Version: {{ site.data.settings.version }}
 - Float
 - Array: JSON array `[...]`
 - Dictionary/Object: JSON object `{...}`
+
 #### Custom defined
+<details markdown="block">
+<summary>Emum: MetaType</summary>
+
+A MetaType is the underlying Type of some custom defined Type, for example, `Date` is Type with `String` being its MetaType, but with the additional semantics that it's a `String` that holds an ISO 8601 formatted `Date`.
+
+`Enum` is a MetaType, that is used to describe other types which are effectively an enum. it's followed by a set of cases, a `case` has a `name` and a `type`, which is described like other fields. Later in some file, when a field (F) has a type (T), such that T has `Enum` as its MetaType, F's type is effectively the `type` of **one** of the cases. (note: each case has `name` and `type`, but only `type` is relevent to the actual data files, `name` is only used for documention purposes. more details on this in the example bellow)
+
+For example, we can define a Type `Image` that has the MetaType `Enum`. with cases:
+- case `remote`: Dictionary, containing:
+  - `url`: URL, referencing some image on the web.
+- case `local`: Dictionary, containing:
+  - `file_path`: String, relative filepath from `/img` folder.
+
+Later we can have a field use this Type as follows:
+- `logo`: Image, logo used in navbar of website.
+
+This field, `logo`, can **either** be of the type declared by `Image:url` **or** `Image:local` (also note this is how we can refer to cases by their `name` in documentation. we can also refer to cases of certain fields, for example `logo:url` or `logo:local`).
+valid examples:
+```json
+logo: {
+    url: "https://example.com/image.png"
+}
+```
+**or**
+```json
+logo: {
+    file_path: "./image.png"
+}
+```
+Note that having both `url` and `file_path` in one Dictionary will result in an error.
+
+We can also have a shorthand syntax for "initializing" Types with `Enum` MetaType for use in documentation, the syntax is `T:C(V)` for a Type `T` with MetaType `Enum`, and case `C`, and value `V`. For example, if we want to document that it's forbidden to set `logo` to a local image called "forbidden.png", we can say:
+"it's not allowed for `logo` to be `Image:local({file_path: "./forbidden.png"})`".
+
+---
+</details>
+
 - Date: String, gregorian date in[ ](https://xkcd.com/1179/)[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format (`yyyy-mm-dd`)
 - URL: String, starts with prefix `https://` and without suffix `/` except when required
 - Email: String, an email
+- BuilderVersion: Enum
+  - case `release`: Dictionary, containing:
+    - `version`: String, version number in the [Semantic Versioning](https://semver.org) format, minimum version of [WebsiteBuilder](https://github.com/informatics-sa/WebsiteBuilder) required to successfully build the website.
+    - `nightly`: Boolean, whether or not to consider nightly releases of WebsiteBuilder (prerelease). default is `false`, unless `version` is refering to a prerelease, in which case `true` will be the default. **(optional)**
+  - case `branch`: Dictionary, containing:
+    - `branch`: String, will fetch WebsiteBuilder from this branch.
+  - case `commit`: Dictionary, containing:
+    - `commit`: String, will fetch WebsiteBuilder from this exact commit.
 
 ### Properties
 By default each property is required, here are the additional properties:
@@ -28,8 +76,9 @@ By default each property is required, here are the additional properties:
 - **future**: The field isn't used in any current data, but could be useful in the future development
 
 ## Settings file
-Each repository has its own [`/data/settings.json`](/data/people.json) which could have these fields:
-- `version`: String, version number in format `x.x.x` where x is an integer same as [SemVer](https://semver.org/). the data API version used in your files . Default is `0.0.0` **(optional)**
+Each repository has its own [`/data/settings.json`](/data/settings.json) which could have these fields:
+- `website_builder`: BuilderVersion, this is used by `prebuild.py` to decide which version of WebsiteBuilder is suitable for the website, and fetch it. Default is `BuilderVersion:branch({branch:"main"})` **(optional)**
+- `version`: String, this is an alias to `website_builder:release({version: self})`. **(optional, note that either this or `website_builder` can exist, but not both.)**
 - `old_id_system`: Boolean, using `id` instead of `iid`. Default false.  **(optional)**
 - `codeforces`: Boolean, in case each user has a Codeforces account. Default false. **(optional)**
 - `icon`: String, filename of favicon inside `/img` folder. **(optional)**
@@ -44,7 +93,7 @@ An array of people, each person has the following:
 - `iid`: Integer, informatics ID of the student, currently fetched from IDs assigned by Marko **(unique)**
 - `id`: String, lowercase with no spaces ID usually in format `firstname_lastname`, not used anymore and shouldn't be written, it will be removed by devleopers when not needed anymore **(deprecated)**
 - `arname`: String, Name in Arabic
-- `enname`: String, Name in English 
+- `enname`: String, Name in English
 - `level`: Integer, current SIT Level ("`-1`" if he/she graduated, "`-2`" if he/she disqualified/left before graduating, "`-3`" if he/she was never a student)
 - `graduation`: Integer, graduation year **(optional)**
 - `codeforces`: String, Codeforces username. Used only with `codeforces: true` in `settings.json` **(optional)**
