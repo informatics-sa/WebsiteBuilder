@@ -1,3 +1,9 @@
+---
+lang: en
+title: "Marko ID System"
+layout: default
+---
+
 ## Marko ID System
 - ID is an integer consists of 4 digits
 - First 2 digits is year ID where `01` is the first year
