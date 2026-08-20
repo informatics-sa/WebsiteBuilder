@@ -105,7 +105,7 @@ layout: default
                         <tr {% if bgc != null %} style="background-color: #{{ bgc }} !important;" {% endif %}>
                             <td style="background-color: inherit;">{{ forloop.index }}</td>
                             <td style="background-color: inherit;">
-                                <a href="{% if page.lang != site.data.build.primary_lang %}/{{ page.lang }}{% endif %}/members/{{ j[0] }}">{{ page.names[uid] }}</a>
+                                <a href="{% if page.lang != "ar" %}/{{ page.lang }}{% endif %}/members/{{ j[0] }}">{{ page.names[uid] }}</a>
                             </td>
                             <td style="background-color: inherit;" class="text-center">
                                 <b>{{ res[1] | round: 3 }}</b>
