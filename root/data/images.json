@@ -1,0 +1,68 @@
+[
+    {
+        "src": "boi_2025.jpeg",
+        "artitle": "الفائزين في BOI 2025",
+        "entitle": "Winners of BOI 2025",
+        "ardescription": "المنتخب بعد تحقيق نتائج تاريخية في أولمبياد البلقان",
+        "endescription": "The team after getting historical results in Balkan Olympiad",
+        "date": "2025-09-30",
+        "proposed_by": 311
+    },
+    {
+        "src": "ejoi_2025.jpg",
+        "artitle": "صورة المشاركين في EJOI 2025",
+        "ardescription": "",
+        "entitle": "EJOI 2025 participants",
+        "endescription": "",
+        "date": "2025-09-04"
+    },
+    {
+        "src": "ioi_2025.jpg",
+        "artitle": "صورة المشاركين في IOI 2025",
+        "ardescription": "",
+        "entitle": "IOI 2025 participants", 
+        "endescription": "",
+        "date": "2025-08-03"
+    },
+    {
+        "src": "intensive_1_2025_group_photo.jpg",
+        "artitle": "صورة جماعية لشباب المستقبل",
+        "entitle": "Group photo of future youth",
+        "ardescription": "طلاب ومدربين سعيدين",
+        "endescription": "Happy students and trainers",
+        "date": "2025-02-02",
+        "proposed_by": 607
+    },
+    {
+        "src": "ioi_2024.jpeg",
+        "artitle": "صورة الفائزين في IOI 2024",
+        "ardescription": "فاز الطالبان أحمد الهاشم وأديب الشهري بميداليتين برونزية في مصر.",
+        "entitle": "IOI 2024 medalists",
+        "endescription": "Ahmad Alhashim and Adeeb Alshehri were awarded 2 bronze medals in Egypt.",
+        "date": "2024-09-06"
+    },
+    {
+        "src": "ioi_2023.jpeg",
+        "artitle": "صورة المشاركين في IOI 2023", 
+        "ardescription": "",
+        "entitle": "IOI 2023 participants", 
+        "endescription": "",
+        "date": "2023-08-29"
+    },
+    {
+        "src": "winning_jboi_2023.jpg",
+        "artitle": "صورة جماعية بعد JBOI 2023", 
+        "ardescription": "",
+        "entitle": "Group photo after JBOI 2023", 
+        "endescription": "",
+        "date": "2023-11-28"
+    },
+    {
+        "src": "boi_2023.jpeg",
+        "artitle": "BOI 2023", 
+        "ardescription": "أحمد الهاشم يرفع علم المملكة في سلوفينيا.",
+        "entitle": "BOI 2023", 
+        "endescription": "Ahmad Alhashim raising the kingdom flag in Slovenia.",
+        "date": "2023-11-02"
+    }
+]

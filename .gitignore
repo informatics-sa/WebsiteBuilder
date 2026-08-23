@@ -1,0 +1,34 @@
+.ruby-version
+.jekyll-cache
+__pycache__
+_site
+vendor/bundle/
+.bundle/
+lib/Database/
+
+# build artifacts
+root/*
+
+!root/_config.yml
+!root/_includes
+!root/_includes/*
+!root/_layouts
+!root/_layouts/*
+
+!root/files
+!root/files/*
+!root/img
+!root/img/*
+!root/data
+!root/data/*
+!root/resources
+!root/resources/*
+!root/404.html
+!root/debug.html
+!root/compare.html
+!root/en/compare.html
+
+# OS / Editor Specific
+.DS_Store
+flake.nix
+Thumbs.db

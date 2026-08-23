@@ -1,0 +1,994 @@
+[
+    {
+        "iid": 701,
+        "arname": "عبدالله الرويس",
+        "enname": "Abdullah Alruwais",
+        "graduation": 2028,
+        "codeforces": "Abmr59",
+        "level": 1
+    },
+    {
+        "iid": 702,
+        "arname": "فارس المطاوعه",
+        "enname": "Fares Almatawah",
+        "graduation": 2028,
+        "codeforces": "Fares77",
+        "level": -1
+    },
+    {
+        "iid": 703,
+        "arname": "علي حسين السلمان",
+        "enname": "Ali Hussain Alsalman",
+        "graduation": 2028,
+        "codeforces": "Ali.cpp",
+        "level": 1
+    },
+    {
+        "iid": 704,
+        "arname": "إبراهيم بن حفيظ",
+        "enname": "Ibrahim Binhafeez",
+        "graduation": 2030,
+        "codeforces": "ibrahimhafeez",
+        "level": 1
+    },
+    {
+        "iid": 705,
+        "arname": "مشاري العتيبي",
+        "enname": "Mashari Alotaibi",
+        "graduation": 2028,
+        "codeforces": "Meshari88",
+        "level": 1
+    },
+    {
+        "iid": 706,
+        "arname": "ريان الحمد",
+        "enname": "Rayan Alhamad",
+        "graduation": 2028,
+        "codeforces": "RayBolt",
+        "level": 1
+    },
+    {
+        "iid": 707,
+        "arname": "حمزة البراهيم",
+        "enname": "Hamza Albrahim",
+        "graduation": 2028,
+        "codeforces": "Hamza_Albrahim",
+        "level": 1
+    },
+    {
+        "iid": 708,
+        "arname": "محمد الزهراني",
+        "enname": "Mohammed Alzahrani",
+        "graduation": 2028,
+        "codeforces": "m.alzahrani04m",
+        "level": -2
+    },
+    {
+        "iid": 709,
+        "arname": "لين الصالب",
+        "enname": "Leen Alsaleb",
+        "graduation": 2029,
+        "codeforces": "Leen_Alsaleb",
+        "level": 1,
+        "female": true
+    },
+    {
+        "iid": 710,
+        "arname": "مريم آل جواد",
+        "enname": "Maryam Al Jawad",
+        "graduation": 2028,
+        "codeforces": "PinkyMe2",
+        "level": 1,
+        "female": true
+    },
+    {
+        "iid": 711,
+        "arname": "ريان العباد",
+        "enname": "Rayan Alabbad",
+        "graduation": 2029,
+        "codeforces": "kingoftech",
+        "level": 1
+    },
+    {
+        "iid": 712,
+        "arname": "عبدالملك العثمان",
+        "enname": "Abdulmalik Aluthman",
+        "graduation": 2028,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 713,
+        "arname": "فيصل المشرف",
+        "enname": "Faisal Almusharraf",
+        "graduation": 2029,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 714,
+        "arname": "تميم الزهراني",
+        "enname": "Tamim Alzahrani",
+        "graduation": 2028,
+        "codeforces": "Azzahrani",
+        "level": -2
+    },
+    {
+        "iid": 715,
+        "arname": "سامي العتيبي",
+        "enname": "Sami Alotaibi",
+        "graduation": 2029,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 716,
+        "arname": "جوانا الجهني",
+        "enname": "Juana Aljohani",
+        "graduation": 2029,
+        "codeforces": "jujusniper314",
+        "level": 1,
+        "female": true
+    },
+    {
+        "iid": 717,
+        "arname": "عبدالله الجطيل",
+        "enname": "Abdullah Aljuatil",
+        "graduation": 2028,
+        "codeforces": "Abdullah-Al-jutail",
+        "level": -2
+    },
+    {
+        "iid": 718,
+        "arname": "خالد الشريف",
+        "enname": "Khaled Alsharif",
+        "graduation": 2029,
+        "codeforces": "theflipcat",
+        "level": -2
+    },
+    {
+        "iid": 719,
+        "arname": "محمد الاسود",
+        "enname": "Mohammed Alaswad",
+        "graduation": 2029,
+        "codeforces": "MohammedAlaswad",
+        "level": 1
+    },
+    {
+        "iid": 720,
+        "arname": "عبدالعزيز الصغير",
+        "enname": "Abdulaziz Alsagier",
+        "graduation": 2029,
+        "codeforces": "aziz.alsagier",
+        "level": 1
+    },
+    {
+        "iid": 721,
+        "arname": "نواف الحربي",
+        "enname": "Nawaf Alharbi",
+        "graduation": 2028,
+        "codeforces": "onlynawaf",
+        "level": 1
+    },
+    {
+        "iid": 722,
+        "arname": "يوسف الشريف",
+        "enname": "Yousef Alsharif",
+        "graduation": 2028,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 723,
+        "arname": "يوسف الكحيلي",
+        "enname": "Yousef Alkuhaili",
+        "graduation": 2028,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 724,
+        "arname": "معتز كريم",
+        "enname": "Mutaz Kareem",
+        "graduation": 2028,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 725,
+        "arname": "إيلاف القحطاني",
+        "enname": "Elaf Alqahtani",
+        "graduation": 2028,
+        "codeforces": "Elaf_Q",
+        "level": 1,
+        "female": true
+    },
+    {
+        "iid": 311,
+        "id": "muaath_alqarni",
+        "arname": "معاذ القرني",
+        "enname": "Muaath Alqarni",
+        "graduation": 2025,
+        "codeforces": "Muaath_5",
+        "level": -1,
+        "email": "muaath@sainformatics.org"
+    },
+    {
+        "iid": 356,
+        "id": "essa_almousa",
+        "arname": "عيسى الموسى",
+        "enname": "Essa Almousa",
+        "graduation": 2024,
+        "codeforces": "Essa2006",
+        "level": -1
+    },
+    {
+        "iid": 353,
+        "id": "ahmad_alhashim",
+        "arname": "أحمد الهاشم",
+        "enname": "Ahmad Alhashim",
+        "graduation": 2024,
+        "codeforces": "vahmad",
+        "level": -1
+    },
+    {
+        "iid": 201,
+        "id": "adeeb_alshehri",
+        "arname": "أديب الشهري",
+        "enname": "Adeeb Alshehri",
+        "graduation": 2024,
+        "codeforces": "MrDeboo",
+        "level": -1
+    },
+    {
+        "iid": 304,
+        "id": "emad_alharbi",
+        "arname": "عماد الحربي",
+        "enname": "Emad Alharbi",
+        "graduation": 2025,
+        "codeforces": "Emad234",
+        "level": -1
+    },
+    {
+        "iid": 106,
+        "id": "fares_basuni",
+        "arname": "فارس بسيوني",
+        "enname": "Fares Basuni",
+        "graduation": 2021,
+        "codeforces": "faresbasbas",
+        "level": -1
+    },
+    {
+        "iid": 360,
+        "id": "yazan_ashy",
+        "arname": "يزن آشي",
+        "enname": "Yazan Ashy",
+        "graduation": 2025,
+        "codeforces": "ayazashy",
+        "level": -2
+    },
+    {
+        "iid": 101,
+        "id": "abdulaziz_alshibli",
+        "arname": "عبدالعزيز الشبلي",
+        "enname": "Abdulaziz Alshibli",
+        "graduation": 2022,
+        "codeforces": "Bishean",
+        "level": -1
+    },
+    {
+        "iid": 108,
+        "id": "humaid_alhuthali",
+        "arname": "حميد الهذلي",
+        "enname": "Humaid Alhuthali",
+        "graduation": 2024,
+        "codeforces": "heqr",
+        "level": -1
+    },
+    {
+        "iid": 105,
+        "id": "almothana_alzahrani",
+        "arname": "المثنى الزهراني",
+        "enname": "Almothana Alzahrani",
+        "graduation": 2023,
+        "codeforces": "almothana",
+        "level": -1
+    },
+    {
+        "iid": 111,
+        "id": "mohammad_alsaad",
+        "arname": "محمد السعد",
+        "enname": "Mohammed Alsaad",
+        "graduation": 2021,
+        "codeforces": null,
+        "level": -1
+    },
+    {
+        "iid": 404,
+        "id": "saad_alarifi",
+        "arname": "سعد العريفي",
+        "enname": "Saad Alarifi",
+        "graduation": 2027,
+        "codeforces": "Erering",
+        "level": 4
+    },
+    {
+        "iid": 455,
+        "id": "sultan_alaiban",
+        "arname": "سلطان العيبان",
+        "enname": "Sultan Alaiban",
+        "graduation": 2026,
+        "codeforces": "Sul_A.",
+        "level": 4,
+        "email": "sultan@sainformatics.org"
+    },
+    {
+        "iid": 401,
+        "id": "mohammad_bashkail",
+        "arname": "محمد باشكيل",
+        "enname": "Mohammad Bashkail",
+        "graduation": 2027,
+        "codeforces": "mohammadyay",
+        "level": 3
+    },
+    {
+        "iid": 501,
+        "id": "mohammad_alasmari",
+        "arname": "محمد الأسمري",
+        "enname": "Mohammed Alasmari",
+        "graduation": 2026,
+        "codeforces": "m5588ohammed",
+        "level": 4
+    },
+    {
+        "iid": 213,
+        "id": "rifal_alhazmi",
+        "arname": "ريفال الحازمي",
+        "enname": "Rifal Alhazmi",
+        "graduation": 2025,
+        "codeforces": "rifal",
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 355,
+        "id": "munther_alzayer",
+        "arname": "منذر الزاير",
+        "enname": "Munther Alzayer",
+        "graduation": 2024,
+        "codeforces": "MuntherCarrot",
+        "level": -1
+    },
+    {
+        "iid": 358,
+        "id": "mohammad_alyousef",
+        "arname": "محمد اليوسف",
+        "enname": "Mohammad Alyousef",
+        "graduation": 2024,
+        "codeforces": "MrM7mD",
+        "level": -1
+    },
+    {
+        "iid": 407,
+        "id": "abdulrahman_alghamdi",
+        "arname": "عبد الرحمن الغامدي",
+        "enname": "Abdulrahman Alghamdi",
+        "graduation": 2026,
+        "codeforces": "ibsha",
+        "level": 3
+    },
+    {
+        "iid": 453,
+        "id": "abdullah_alodaibi",
+        "arname": "عبدالله العضيبي",
+        "enname": "Abdullah Alodaibi",
+        "graduation": 2027,
+        "codeforces": "Abdullah_Alodaibi",
+        "level": 4
+    },
+    {
+        "iid": 461,
+        "id": "bassmah_mansour",
+        "arname": "بسمة منصور",
+        "enname": "Bassmah Mansour",
+        "graduation": 2025,
+        "codeforces": "B.M._.74",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 204,
+        "id": "juri_aljohani",
+        "arname": "جوري الجهني",
+        "enname": "Juri Aljohani",
+        "graduation": 2023,
+        "codeforces": "MonstrousKookie",
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 102,
+        "id": "abdulmohsen_mohammadsaleh",
+        "arname": "عبدالمحسن محمدصالح",
+        "enname": "Abdulmohsen Mohammedsaleh",
+        "graduation": 2023,
+        "codeforces": "Abdulmohsen1284",
+        "level": -1
+    },
+    {
+        "iid": 210,
+        "id": "zaid_alshinqiti",
+        "arname": "زيد الشنقيطي",
+        "enname": "Zaid Alshinqiti",
+        "graduation": 2023,
+        "codeforces": "1zaid1",
+        "level": -1
+    },
+    {
+        "iid": 354,
+        "id": "naser_almasoud",
+        "arname": "ناصر آل مسعود",
+        "enname": "Naser Almasoud",
+        "graduation": 2024,
+        "codeforces": "Naser_md",
+        "level": -1
+    },
+    {
+        "iid": 174,
+        "id": "abdullah_aljohani",
+        "arname": "عبد الله الجهني",
+        "enname": "Adullah Aljohani",
+        "graduation": null,
+        "codeforces": "Abdullahs_Turtle",
+        "level": -1
+    },
+    {
+        "iid": 112,
+        "id": "yaser_balamash",
+        "arname": "ياسر بلمش",
+        "enname": "Yaser Balamash",
+        "graduation": null,
+        "codeforces": "YaserFaisal",
+        "level": -1
+    },
+    {
+        "iid": 171,
+        "id": "mohammad_alrefaei",
+        "arname": "محمد الرفاعي",
+        "enname": "Mohammed Alrefaei",
+        "graduation": null,
+        "codeforces": "DEDA",
+        "level": -1
+    },
+    {
+        "iid": 172,
+        "id": "raya_abualjamal",
+        "arname": "رايا أبوالجمال",
+        "enname": "Raya Abualjamal",
+        "graduation": null,
+        "codeforces": null,
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 173,
+        "id": "ziyad_alomari",
+        "arname": "زياد العمري",
+        "enname": "Ziyad Alomari",
+        "graduation": null,
+        "codeforces": null,
+        "level": -1
+    },
+    {
+        "iid": 1,
+        "id": "esraa_almajhad",
+        "arname": "إسراء المجحد",
+        "enname": "Esraa Almajhad",
+        "graduation": null,
+        "codeforces": null,
+        "level": -3,
+        "email": "emajhad@mawhiba.org.sa"
+    },
+    {
+        "iid": 451,
+        "id": "ali_alsalman",
+        "arname": "علي عبدالهادي السلمان",
+        "enname": "Ali Abdulhadi Alsalman",
+        "graduation": 2026,
+        "codeforces": "AliMark71",
+        "level": 3,
+        "email": "ali@sainformatics.org"
+    },
+    {
+        "iid": 459,
+        "id": "maria_alramadan",
+        "arname": "ماريا الرمضان",
+        "enname": "Maria Alramadan",
+        "graduation": 2025,
+        "codeforces": "Aria_lix19",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 405,
+        "id": "lamar_alhebshi",
+        "arname": "لمار الحبشي",
+        "enname": "Lamar Alhebshi",
+        "graduation": 2026,
+        "codeforces": "Lamar_Alhebshi",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 206,
+        "id": "leen_qanash",
+        "arname": "لين قنش",
+        "enname": "Leen Qanash",
+        "graduation": 2023,
+        "codeforces": "RealSnake",
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 313,
+        "id": "uzouf_baagil",
+        "arname": "عزوف باعقيل",
+        "enname": "Uzouf Baagil",
+        "graduation": 2023,
+        "codeforces": "Uzouf",
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 109,
+        "id": "jana_alzahrani",
+        "arname": "جنا الزهراني",
+        "enname": "Jana Alzahrani",
+        "graduation": 2022,
+        "codeforces": null,
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 503,
+        "id": "almonther_alghamdi",
+        "arname": "المنذر الغامدي",
+        "enname": "Almonther Alghamdi",
+        "graduation": 2027,
+        "codeforces": "Almonther",
+        "level": 4
+    },
+    {
+        "iid": 511,
+        "id": "ziyad_alharbi",
+        "arname": "زياد الحربي",
+        "enname": "Ziyad Alharbi",
+        "graduation": 2027,
+        "codeforces": "ziyad_alharbi09",
+        "level": 3
+    },
+    {
+        "iid": 505,
+        "id": "ali_al_yousef",
+        "arname": "علي آل يوسف",
+        "enname": "Ali Al Yousef",
+        "graduation": 2026,
+        "codeforces": "Ali.m.yousef",
+        "level": -2
+    },
+    {
+        "iid": 507,
+        "id": "sami_basubrain",
+        "arname": "سامي باصبرين",
+        "enname": "Sami Basubrain",
+        "graduation": 2026,
+        "codeforces": "SamiBasubrain",
+        "level": -2
+    },
+    {
+        "iid": 506,
+        "id": "abdulmjeed_albrgash",
+        "arname": "عبدالمجيد البرغش",
+        "enname": "Abdulmjeed Albrgash",
+        "graduation": 2026,
+        "codeforces": "idk__",
+        "level": -2
+    },
+    {
+        "iid": 509,
+        "id": "mishari_alhussain",
+        "arname": "مشاري الحسين",
+        "enname": "Mishari Alhussain",
+        "graduation": 2026,
+        "codeforces": "Guymmk",
+        "level": -2
+    },
+    {
+        "iid": 504,
+        "id": "yousef_basuni",
+        "arname": "يوسف بسيوني",
+        "enname": "Yousef Basuni",
+        "graduation": 2027,
+        "codeforces": "yousef.basuni",
+        "level": -2
+    },
+    {
+        "iid": 502,
+        "id": "hisham_alshehri",
+        "arname": "هشام الشهري",
+        "enname": "Hisham Alshehri",
+        "graduation": 2027,
+        "codeforces": "HishamAlshehri1",
+        "level": 4
+    },
+    {
+        "iid": 471,
+        "id": "raed_tayyib",
+        "arname": "رائد طيب",
+        "enname": "Raed Tayyib",
+        "graduation": 2026,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 510,
+        "id": "eyad_alkhalifa",
+        "arname": "إياد الخليفة",
+        "enname": "Eyad Alkhalifa",
+        "graduation": 2028,
+        "codeforces": "Eyadooz1",
+        "level": 3
+    }, 
+    {
+        "iid": 514,
+        "id": "ziyad_alhadyan",
+        "arname": "زياد الهديان",
+        "enname": "Ziyad Alhadyan",
+        "graduation": 2026,
+        "codeforces": "ZyadH1",
+        "level": -2
+    },
+    {
+        "iid": 508,
+        "id": "fares_alraddadi",
+        "arname": "فارس الردادي",
+        "enname": "Fares Alraddadi",
+        "graduation": 2028,
+        "codeforces": "Fares_alraddadi",
+        "level": 3
+    },
+    {
+        "iid": 512,
+        "id": "hussain_shaiban",
+        "arname": "حسين شيبان",
+        "enname": "Hussain Shaiban",
+        "graduation": 2026,
+        "codeforces": "Has2008",
+        "level": -2
+    },
+    {
+        "iid": 516,
+        "id": "roaa_alakhdhar",
+        "arname": "رؤى الاخضر",
+        "enname": "Roaa Alakhdhar",
+        "graduation": 2026,
+        "codeforces": "em4ma2",
+        "level": 3,
+        "female": true
+    },
+    {
+        "iid": 515,
+        "id": "jood_sindi",
+        "arname": "جود سندي",
+        "enname": "Jood Sindi",
+        "graduation": 2027,
+        "codeforces": "joodsindi",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 460,
+        "id": "kawther_al_nasser",
+        "arname": "كوثر آل ناصر",
+        "enname": "Kawther Al Nasser",
+        "graduation": 2026,
+        "codeforces": "Hakuna_Matata93",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 458,
+        "id": "hoor_alsadah",
+        "arname": "حور السادة",
+        "enname": "Hoor Alsadah",
+        "graduation": 2026,
+        "codeforces": "hooralsadah919",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 452,
+        "id": "malek_almusaylihi",
+        "arname": "مالك المصيلحي",
+        "enname": "Malek Almusaylihi",
+        "graduation": 2027,
+        "codeforces": "malekloky",
+        "level": -2
+    },
+    {
+        "iid": 457,
+        "id": "mirza_al_qassim",
+        "arname": "ميرزا آل قاسم",
+        "enname": "Mirza Al Qassim",
+        "graduation": 2026,
+        "codeforces": "Mirza_Al_Qassim",
+        "level": -2
+    },
+    {
+        "iid": 456,
+        "id": "ali_alkhabbaz",
+        "arname": "علي الخباز",
+        "enname": "Ali Alkhabbaz",
+        "graduation": 2027,
+        "codeforces": "LyricClamp",
+        "level": -2
+    },
+    {
+        "iid": 454,
+        "id": "qusai_jadallah",
+        "arname": "قصي جادالله",
+        "enname": "Qusai Jadallah",
+        "graduation": 2027,
+        "codeforces": "qusay1",
+        "level": -2
+    },
+    {
+        "iid": 307,
+        "id": "khalid_alabdullatif",
+        "arname": "خالد العبداللطيف",
+        "enname": "Khalid Alabdullatif",
+        "graduation": 2026,
+        "codeforces": "khalid_alabdullatif",
+        "level": -2
+    },
+    {
+        "iid": 601,
+        "id": "omar_muharib",
+        "arname": "عمر المحارب",
+        "enname": "Omar Almuharib",
+        "graduation": 2027,
+        "codeforces": "omar1312",
+        "level": -2,
+        "email": "omar@sainformatics.org"
+    },
+    {
+        "iid": 602,
+        "id": "hashim_basuni",
+        "arname": "هاشم بسيوني",
+        "enname": "Hashim Basuni",
+        "graduation": 2028,
+        "codeforces": "Hashim_Bas",
+        "level": 2
+    },
+    {
+        "iid": 613,
+        "id": "fadak_al_marzooq",
+        "arname": "فدك آل مرزوق",
+        "enname": "Fadak Al Marzooq",
+        "graduation": 2029,
+        "codeforces": "Fadak-14",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 608,
+        "id": "alreem_almutawa",
+        "arname": "الريم المطوع",
+        "enname": "Alreem Almutawa",
+        "graduation": 2028,
+        "codeforces": "Al_reem_Al_mutawa",
+        "level": 2,
+        "female": true
+    },
+    {
+        "iid": 607,
+        "id": "dhia_alnufaili",
+        "arname": "ضياء النفيلي",
+        "enname": "Dhia Alnufaili",
+        "graduation": 2026,
+        "codeforces": "diyah2000d",
+        "level": -2
+    },
+    {
+        "iid": 604,
+        "id": "ahmad_alhussain",
+        "arname": "احمد الحسين",
+        "enname": "Ahmad Alhussain",
+        "graduation": 2028,
+        "codeforces": "AhmadAlhussain",
+        "level": 2
+    },
+    {
+        "iid": 611,
+        "id": "mohammad_albattat",
+        "arname": "محمد البطاط",
+        "enname": "Mohammed Albattat",
+        "graduation": 2028,
+        "codeforces": "moha1111",
+        "level": 2
+    },
+    {
+        "iid": 610,
+        "id": "abdulrahman_wahdain",
+        "arname": "عبدالرحمن وحدين",
+        "enname": "Abdulrahman Wahdain",
+        "graduation": 2027,
+        "codeforces": "amawahdain",
+        "level": -2
+    },
+    {
+        "iid": 615,
+        "id": "ayat_alkhalifah",
+        "arname": "آيات الخليفة",
+        "enname": "Ayat Alkhalifah",
+        "graduation": 2029,
+        "codeforces": "ayat.alkhalifah",
+        "level": 2,
+        "female": true
+    },
+    {
+        "iid": 614,
+        "id": "layth_alzahrani",
+        "arname": "ليث الزهراني",
+        "enname": "Layth Alzahrani",
+        "graduation": 2027,
+        "codeforces": "l.alzahrani04",
+        "level": -2
+    },
+    {
+        "iid": 605,
+        "id": "mohammad_aladaili",
+        "arname": "محمد العديلي",
+        "enname": "Mohammad Aladaili",
+        "graduation": 2029,
+        "codeforces": "Mohammad_Aladaili",
+        "level": 2
+    },
+    {
+        "iid": 603,
+        "id": "nawal_alamri",
+        "arname": "نوال العمري",
+        "enname": "Nawal Alamri",
+        "graduation": 2027,
+        "codeforces": "nawalturki",
+        "level": -2,
+        "female": true
+    },
+    {
+        "iid": 612,
+        "id": "altayeb_alakhdhari",
+        "arname": "الطيب الأخضري",
+        "enname": "Altayeb Alakhdhari",
+        "graduation": 2027,
+        "codeforces": "altayeb_132",
+        "level": 2
+    },
+    {
+        "iid": 609,
+        "id": "ahmad_alturki",
+        "arname": "احمد التركي",
+        "enname": "Ahmad Alturki",
+        "graduation": 2028,
+        "codeforces": "A_turki",
+        "level": 2
+    },
+    {
+        "iid": 616,
+        "id": "hassan_sultan",
+        "arname": "حسن سلطان",
+        "enname": "Hassan Sultan",
+        "graduation": 2028,
+        "codeforces": "hmms127",
+        "level": 2
+    },
+    {
+        "iid": 606,
+        "id": "reda_albinahmad",
+        "arname": "رضا البنأحمد",
+        "enname": "Reda Albinahmad",
+        "graduation": 2027,
+        "codeforces": null,
+        "level": -2
+    },
+    {
+        "iid": 351,        
+        "id": "mohammad_alomar",
+        "arname": "محمد العمر",
+        "enname": "Mohammad Alomar",
+        "graduation": 2024,
+        "codeforces": "Monemo",
+        "level": -1
+    },
+    {
+        "iid": 306,
+        "id": "jassar_alqahtani",
+        "arname": "جسار القحطاني",
+        "enname": "Jassar Alqahtani",
+        "graduation": 2025,
+        "codeforces": "Jassar",
+        "level": -2
+    },
+    {
+        "iid": 310,
+        "id": "mohmmed_fenais",
+        "arname": "محمد فنيس",
+        "enname": "Mohammed Fenais",
+        "graduation": 2023,
+        "codeforces": "MFenais",
+        "level": -1
+    },
+    {
+        "iid": 309,
+        "id": "mohammed_aldubaisi",
+        "arname": "محمد الدبيسي",
+        "enname": "Mohammed Aldubaisi",
+        "graduation": 2023,
+        "codeforces": "mdubaisi",
+        "level": -1
+    },
+    {
+        "iid": 352,
+        "id": "alhassan_almadkhali",
+        "arname": "الحسن المدخلي",
+        "enname": "Alhassan Almadkhali",
+        "graduation": 2024,
+        "codeforces": "7as__7",
+        "level": -2
+    },
+    {
+        "iid": 207,
+        "id": "dhay_shujaa",
+        "arname": "ضي شجاع",
+        "enname": "Dhay Shujaa",
+        "graduation": 2023,
+        "codeforces": null,
+        "level": -1,
+        "female": true
+    },
+    {
+        "iid": 359,
+        "id": "ammar_alharbi",
+        "arname": "عمار الحربي",
+        "enname": "Ammar Alharbi",
+        "graduation": 2024,
+        "codeforces": "ammar124",
+        "level": -2
+    },
+    {
+        "iid": 202,
+        "id": "majid_alburaiky",
+        "arname": "ماجد البريكي",
+        "enname": "Majid Alburaiky",
+        "graduation": 2023,
+        "codeforces": null,
+        "level": -1
+    },
+    {
+        "iid": 305,
+        "id": "fahad_aldossari",
+        "arname": "فهد الدوسري",
+        "enname": "Fahad Aldossari",
+        "graduation": 2023,
+        "codeforces": null,
+        "level": -1
+    },
+    {
+        "iid": 203,
+        "id": "abdullah_al_wazzan",
+        "arname": "عبدالله الوزان",
+        "enname": "ِAbdullah Al Wazzan",
+        "graduation": 2023,
+        "codeforces": null,
+        "level": -1
+    }
+]
