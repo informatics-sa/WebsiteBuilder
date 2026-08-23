@@ -1,0 +1,355 @@
+---
+layout: editor
+title: Participations Editor
+lang: en
+---
+
+<div class="list-container" id="participationsList"></div>
+
+<div class="add-form">
+    <h5>Add New Participation</h5>
+    <form id="addForm">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Olympiad:</label>
+                    <select class="form-control" id="newOlympiad" required></select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Year:</label>
+                    <input type="number" class="form-control" id="newYear" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Country:</label>
+                    <input type="text" class="form-control" id="newCountry" maxlength="2" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Start (YYYY/M/D):</label>
+                    <input type="text" class="form-control" id="newStart" placeholder="2024/7/1" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>End (YYYY/M/D):</label>
+                    <input type="text" class="form-control" id="newEnd" placeholder="2024/7/8" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Website:</label>
+                    <input type="url" class="form-control" id="newWebsite">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group form-check" style="margin-top: 32px;">
+                    <input type="checkbox" class="form-check-input" id="newOnline">
+                    <label class="form-check-label">Online</label>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Participation</button>
+    </form>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Participation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editIndex">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Olympiad:</strong> <span id="editOlympiadName"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Year:</strong> <span id="editYearDisplay"></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Country:</label>
+                            <input type="text" class="form-control" id="editCountry" maxlength="2">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Start:</label>
+                            <input type="text" class="form-control" id="editStart">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>End:</label>
+                            <input type="text" class="form-control" id="editEnd">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Website:</label>
+                    <input type="url" class="form-control" id="editWebsite">
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="editOnline">
+                    <label class="form-check-label">Online</label>
+                </div>
+                
+                <h6 class="mt-3">Participants</h6>
+                <div class="search-dropdown mb-2">
+                    <input type="text" class="form-control" id="participantSearch" placeholder="Search person to add...">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div id="participantsList"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveEdit()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+let participations = [];
+let olympiads = [];
+let people = [];
+
+async function loadData() {
+    try {
+        const [partResp, olyResp, peopleResp] = await Promise.all([
+            fetch('/data/participations.json'),
+            fetch('/data/olympiads.json'),
+            fetch('/data/people.json')
+        ]);
+        participations = await partResp.json();
+        olympiads = await olyResp.json();
+        people = await peopleResp.json();
+        
+        populateOlympiadSelect();
+        document.getElementById('newYear').value = new Date().getFullYear();
+        renderParticipations();
+    } catch (error) {
+        alert('Error loading data: ' + error.message);
+    }
+}
+
+function populateOlympiadSelect() {
+    const select = document.getElementById('newOlympiad');
+    select.innerHTML = '<option value="">Select Olympiad</option>';
+    olympiads.forEach(o => {
+        select.innerHTML += `<option value="${o.id}">${o.id.toUpperCase()}</option>`;
+    });
+}
+
+function renderParticipations() {
+    const list = document.getElementById('participationsList');
+    list.innerHTML = '';
+    
+    participations.forEach((p, idx) => {
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+            <div class="item-header">
+                <div>
+                    <strong>${p.name.toUpperCase()} ${p.year}</strong>
+                    <small class="text-muted ml-2">${p.country} | ${p.start} to ${p.end}</small>
+                    <br>
+                    <small>Participants: ${Object.keys(p.participants || {}).length}</small>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-sm btn-primary" data-idx="${idx}">Edit</button>
+                    <button class="btn btn-sm btn-danger" data-idx="${idx}">Delete</button>
+                </div>
+            </div>
+        `;
+        
+        const editBtn = card.querySelector('.btn-primary');
+        const deleteBtn = card.querySelector('.btn-danger');
+        editBtn.addEventListener('click', () => editParticipation(idx));
+        deleteBtn.addEventListener('click', () => deleteParticipation(idx));
+        
+        list.appendChild(card);
+    });
+}
+
+function editParticipation(idx) {
+    const p = participations[idx];
+    document.getElementById('editIndex').value = idx;
+    document.getElementById('editOlympiadName').textContent = p.name.toUpperCase();
+    document.getElementById('editYearDisplay').textContent = p.year;
+    document.getElementById('editCountry').value = p.country;
+    document.getElementById('editStart').value = p.start;
+    document.getElementById('editEnd').value = p.end;
+    document.getElementById('editWebsite').value = p.website || '';
+    document.getElementById('editOnline').checked = p.online || false;
+    
+    renderParticipantsList(p.participants || {});
+    $('#editModal').modal('show');
+}
+
+let currentParticipants = {};
+
+function renderParticipantsList(participants) {
+    currentParticipants = {...participants};
+    const list = document.getElementById('participantsList');
+    list.innerHTML = '';
+    
+    Object.keys(currentParticipants).forEach(id => {
+        const person = people.find(p => p.id === id || p.iid.toString() === id);
+        const name = person ? person.enname : id;
+        const award = currentParticipants[id];
+        
+        const row = document.createElement('div');
+        row.className = 'participant-row';
+        
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.className = 'form-control';
+        nameInput.value = name;
+        nameInput.readOnly = true;
+        
+        const awardSelect = document.createElement('select');
+        awardSelect.className = 'form-control';
+        awardSelect.innerHTML = `
+            <option value="null" ${award === null ? 'selected' : ''}>No Award</option>
+            <option value="gold" ${award === 'gold' ? 'selected' : ''}>Gold</option>
+            <option value="silver" ${award === 'silver' ? 'selected' : ''}>Silver</option>
+            <option value="bronze" ${award === 'bronze' ? 'selected' : ''}>Bronze</option>
+            <option value="hm" ${award === 'hm' ? 'selected' : ''}>HM</option>
+        `;
+        awardSelect.addEventListener('change', function(e) {
+            const val = e.target.value;
+            currentParticipants[id] = val === 'null' ? null : val;
+        });
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.className = 'btn btn-sm btn-danger remove-btn';
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', () => removeParticipant(id));
+        
+        row.appendChild(nameInput);
+        row.appendChild(awardSelect);
+        row.appendChild(removeBtn);
+        list.appendChild(row);
+    });
+}
+
+document.getElementById('participantSearch').oninput = function(e) {
+    const search = e.target.value.toLowerCase();
+    const results = document.getElementById('searchResults');
+    
+    if (search.length < 2) {
+        results.style.display = 'none';
+        return;
+    }
+    
+    const filtered = people.filter(p => 
+        p.enname.toLowerCase().includes(search) ||
+        p.arname.includes(search) ||
+        (p.id && p.id.includes(search))
+    ).slice(0, 10);
+    
+    if (filtered.length === 0) {
+        results.style.display = 'none';
+        return;
+    }
+    
+    results.innerHTML = filtered.map(p => {
+        const id = p.id || p.iid.toString();
+        return `<div class="search-result-item" onclick="addParticipant('${id}', '${p.enname}')">${p.enname} (${id})</div>`;
+    }).join('');
+    results.style.display = 'block';
+};
+
+window.addParticipant = function(id, name) {
+    if (!currentParticipants[id]) {
+        currentParticipants[id] = null;
+        renderParticipantsList(currentParticipants);
+    }
+    document.getElementById('participantSearch').value = '';
+    document.getElementById('searchResults').style.display = 'none';
+};
+
+function removeParticipant(id) {
+    delete currentParticipants[id];
+    renderParticipantsList(currentParticipants);
+}
+
+function saveEdit() {
+    const idx = parseInt(document.getElementById('editIndex').value);
+    const p = participations[idx];
+    
+    p.country = document.getElementById('editCountry').value.toUpperCase();
+    p.start = document.getElementById('editStart').value;
+    p.end = document.getElementById('editEnd').value;
+    p.website = document.getElementById('editWebsite').value || null;
+    p.online = document.getElementById('editOnline').checked || undefined;
+    p.participants = currentParticipants;
+    
+    $('#editModal').modal('hide');
+    renderParticipations();
+}
+
+function deleteParticipation(idx) {
+    if (confirm('Delete this participation?')) {
+        participations.splice(idx, 1);
+        renderParticipations();
+    }
+}
+
+document.getElementById('addForm').onsubmit = function(e) {
+    e.preventDefault();
+    
+    const newP = {
+        name: document.getElementById('newOlympiad').value,
+        year: parseInt(document.getElementById('newYear').value),
+        country: document.getElementById('newCountry').value.toUpperCase(),
+        start: document.getElementById('newStart').value,
+        end: document.getElementById('newEnd').value,
+        participants: {},
+        website: document.getElementById('newWebsite').value || null
+    };
+    
+    if (document.getElementById('newOnline').checked) {
+        newP.online = true;
+    }
+    
+    participations.push(newP);
+    this.reset();
+    document.getElementById('newYear').value = new Date().getFullYear();
+    renderParticipations();
+};
+
+window.getData = () => participations;
+
+window.validateData = () => {
+    const warnings = [];
+    const seen = new Set();
+    
+    participations.forEach(p => {
+        const key = `${p.name}_${p.year}`;
+        if (seen.has(key)) {
+            warnings.push(`Duplicate: ${p.name} ${p.year} appears multiple times`);
+        }
+        seen.add(key);
+    });
+    
+    return warnings;
+};
+
+loadData();
+</script>

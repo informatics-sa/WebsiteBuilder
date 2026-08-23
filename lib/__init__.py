@@ -24,6 +24,8 @@ def get_members():
             members[str(person['iid'])]['codeforces'] = None
         if 'graduation' not in members[str(person['iid'])]:
             members[str(person['iid'])]['graduation'] = None
+        if 'level' not in members[str(person['iid'])]:
+            members[str(person['iid'])]['level'] = -1
 
     for participation in load_json('participations'):
         for member_id in participation['participants']:
@@ -61,12 +63,12 @@ def get_olympiads():
         olympiads[olympiad['id']]['silver'] = 0
         olympiads[olympiad['id']]['bronze'] = 0
         olympiads[olympiad['id']]['hm'] = 0
-        olympiads[olympiad['id']]['participations'] = []
+        olympiads[olympiad['id']]['participations'] = 0
 
     for participation in load_json('participations'):
-        olympiads[participation['name']]['participations'].append(participation)
+        olympiads[participation['name']]['participations'] += 1
         for award in participation['participants'].values():
-            if award is not None:
+            if award != None:
                olympiads[participation['name']][award] += 1
                 
     return olympiads
@@ -87,8 +89,8 @@ def get_participations():
         enparts = []
         awards = ''
         for mem_id, award in participation['participants'].items():
-            parts.append({'id': mem_id, 'name': members[mem_id]['arname'], 'award': award})
-            enparts.append({'id': mem_id, 'name': members[mem_id]['enname'], 'award': award})
+            parts.append({'id': mem_id, 'name': members[mem_id]['arname'], 'award': award_emoji(award, dashing_none=True)})
+            enparts.append({'id': mem_id, 'name': members[mem_id]['enname'], 'award': award_emoji(award, dashing_none=True)})
             awards += award_emoji(award)
         participation['awards'] = awards
         participation['ar_participants'] = parts

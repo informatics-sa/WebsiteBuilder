@@ -1,0 +1,115 @@
+---
+id: images
+layout: default
+---
+<div id="imageContainer" class="row p-3">
+    {% for i in (1..page.images.count) %}
+        <div class="col-sm-12 col-md-4">
+            <div class="card mb-3">
+                <img src="/img/{{ page.images[i].src }}" class="card-img-top" alt="{{ page.images[i].alt | default: "" }}"> <!-- TODO: Add width/height as parameter -->
+                <div class="card-body">
+                    {% if page.lang == "en" %}
+                    <h5 class="card-title">{{ page.images[i].entitle | default: "" }}</h5>
+                    <p class="card-text">{{ page.images[i].endescription | default: "" }}</p>
+                    {% else %}
+                    <h5 class="card-title">{{ page.images[i].artitle | default: "" }}</h5>
+                    <p class="card-text">{{ page.images[i].ardescription | default: "" }}</p>
+                    {% endif %}
+                    <p class="card-text"><small class="text-body-secondary">{{ page.images[i].date | default: "" }}</small></p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<script>
+
+const konamiCode = [
+    "ArrowUp", "ArrowUp",
+    "ArrowDown", "ArrowDown",
+    "ArrowLeft", "ArrowRight",
+    "ArrowLeft", "ArrowRight",
+    "KeyB", "KeyA", "Enter"
+];
+
+var sequenceIndex = 0;
+
+document.addEventListener('keydown', async (e) => {
+    // console.log(e, sequenceIndex, konamiCode);
+    if (e.code == konamiCode[sequenceIndex])
+        sequenceIndex++;
+    else
+        sequenceIndex = e.code == konamiCode[0] ? 1 : 0;
+
+    if (sequenceIndex == konamiCode.length) {
+        await secretCode();
+        sequenceIndex = 0;
+    }
+});
+
+async function secretCode() {
+    let key = prompt("secret triggered... 🤫, do you know ball?")
+    if (key == null) { return }
+
+    let response = await fetch(`/scol/${key}.json`);
+    if (!response.ok) return;
+
+    let images = await response.json()
+
+    for (let image of images) {
+        imageContainer.prepend(createImageElement(image))
+    }
+}
+
+function createImageElement(image) {
+    //<div class="col-sm-12 col-md-4">
+    //       <div class="card mb-3">
+    //            <img src="${image.src}" class="card-img-top" alt=""> <!-- TODO: Add width/height as parameter -->
+    //            <div class="card-body">
+    //
+    //                <h5 class="card-title">${image.title}</h5>
+    //                <p class="card-text">${image.description}</p>
+    //
+    //                <p class="card-text"><small class="text-body-secondary">${image.date}</small></p>
+    //            </div>
+    //        </div>
+    //    </div>
+
+    let imageNode = document.createElement("img")
+    imageNode.src = `/simg/${image.src}`
+    imageNode.classList = "card-img-top"
+
+    let cardTitle = document.createElement("h5")
+    cardTitle.classList = "card-title"
+    cardTitle.textContent = image.title
+
+    let cardDescription = document.createElement("p")
+    cardDescription.classList = "card-text"
+    cardDescription.textContent = image.description
+
+    let cardDateContent = document.createElement("small")
+    cardDateContent.classList = "text-body-secondary"
+    cardDateContent.textContent = image.date
+
+    let cardDate = document.createElement("p")
+    cardDate.classList = "card-text"
+    cardDate.appendChild(cardDateContent)
+
+    let cardBody = document.createElement("div")
+    cardBody.classList = "card-body"
+    cardBody.appendChild(cardTitle)
+    cardBody.appendChild(cardDescription)
+    cardBody.appendChild(cardDate)
+
+    let card = document.createElement("div")
+    card.classList = "card mb-3"
+    card.appendChild(imageNode)
+    card.appendChild(cardBody)
+
+
+    let container = document.createElement("div")
+    container.classList = "col-sm-12 col-md-4"
+    container.appendChild(card)
+    return container
+}
+
+</script>

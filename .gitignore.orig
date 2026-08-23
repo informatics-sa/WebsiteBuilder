@@ -1,0 +1,57 @@
+<<<<<<< HEAD
+.ruby-version
+.jekyll-cache
+__pycache__
+_site
+vendor/bundle/
+.bundle/
+lib/Database/
+
+# build artifacts
+=======
+# BUILD ARTIFACTS
+>>>>>>> math-website/old-arch
+root/*
+
+!root/_config.yml
+!root/_includes
+!root/_includes/*
+!root/_layouts
+!root/_layouts/*
+
+<<<<<<< HEAD
+!root/files
+!root/files/*
+=======
+>>>>>>> math-website/old-arch
+!root/img
+!root/img/*
+!root/data
+!root/data/*
+!root/resources
+!root/resources/*
+!root/404.html
+!root/debug.html
+<<<<<<< HEAD
+!root/compare.html
+!root/en/compare.html
+
+# OS / Editor Specific
+.DS_Store
+flake.nix
+Thumbs.db
+=======
+!root/editor
+!root/editor/*
+# END BUILD ARTIFACTS
+
+vendor/
+.bundle
+.DS_Store
+.ruby-version
+.jekyll-cache
+__pycache__
+_site
+flake.nix
+
+>>>>>>> math-website/old-arch

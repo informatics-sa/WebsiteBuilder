@@ -1,0 +1,549 @@
+---
+layout: default
+---
+
+<style>
+.statistics-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.stats-section {
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.stats-section h2 {
+    margin-bottom: 20px;
+    /* color: #333; */
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+}
+
+.stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.stats-table th,
+.stats-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+@media screen and (max-width: 768px) {
+  .stats-table th,
+    .stats-table td {
+        padding: 2px !important;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+}
+
+.stats-table th {
+    /* background-color: #f5f5f5; */
+    font-weight: bold;
+}
+/* 
+.stats-table tbody tr:hover {
+    background-color: #f9f9f9;
+} */
+
+/* .stats-table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+} */
+
+.level-header {
+    background-color: #424b43 !important;
+    font-weight: bold;
+}
+
+[data-bs-theme=light] .level-header {
+    background-color: #c0d8c3 !important;
+    font-weight: bold;
+}
+
+
+.year-cell {
+    font-weight: bold;
+    /* background-color: #f5f5f5; */
+}
+
+.total-column {
+    background-color: #555048 !important;
+    font-weight: bold;
+}
+
+[data-bs-theme=light] .total-column {
+    background-color: #d8ccb8 !important;
+    font-weight: bold;
+}
+
+/* Codeforces Rating Colors */
+.cf-newbie {
+    color: #808080;
+    font-weight: bold;
+}
+
+.cf-pupil {
+    color: #008000;
+    font-weight: bold;
+}
+
+.cf-specialist {
+    color: #03a89e;
+    font-weight: bold;
+}
+
+.cf-expert {
+    color: #0000ff;
+    font-weight: bold;
+}
+
+.cf-candidate-master {
+    color: #aa00aa;
+    font-weight: bold;
+}
+
+.cf-master {
+    color: #ff8c00;
+    font-weight: bold;
+}
+
+.cf-international-master {
+    color: #ff8c00;
+    font-weight: bold;
+}
+
+.cf-grandmaster {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.cf-international-grandmaster {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.cf-legendary-grandmaster {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.cf-link {
+    text-decoration: none;
+}
+
+.cf-link:hover {
+    text-decoration: underline;
+}
+
+.loading {
+    text-align: center;
+    padding: 40px;
+    /* color: #666; */
+    font-size: 18px;
+}
+
+.error-message {
+    color: #f44336;
+    padding: 15px;
+    margin: 20px 0;
+    /* background-color: #ffebee; */
+    border-radius: 4px;
+    text-align: center;
+}
+
+.stat-note {
+    font-size: 14px;
+    /* color: #666; */
+    margin-top: 10px;
+    font-style: italic;
+}
+</style>
+
+<div class="statistics-container">
+    {% if page.lang == "ar" %}
+    <h1>إحصائيات الفريق</h1>
+    
+    <div id="loadingMessage" class="loading">جاري تحميل الإحصائيات...</div>
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+    
+    <div id="graduationSection" class="stats-section" style="display: none;">
+        <h2>إحصائيات التخرج</h2>
+        <p class="stat-note">عدد الطلاب حسب سنة التخرج والمستوى</p>
+        <table class="stats-table" id="graduationTable">
+            <thead>
+                <tr>
+                    <th>سنة التخرج</th>
+                    <th class="level-header">المستوى 1</th>
+                    <th class="level-header">المستوى 2</th>
+                    <th class="level-header">المستوى 3</th>
+                    <th class="level-header">المستوى 4</th>
+                    <th class="total-column">المجموع</th>
+                </tr>
+            </thead>
+            <tbody id="graduationTableBody"></tbody>
+        </table>
+    </div>
+
+    <div id="codeforcesSection" class="stats-section" style="display: none;">
+        <h2>إحصائيات كودفورسز</h2>
+        <p class="stat-note">التقييمات الحالية لحسابات كودفورسز للطلاب النشطين</p>
+        <table class="stats-table" id="codeforcesTable">
+            <thead>
+                <tr>
+                    <th>الإحصائية</th>
+                    <th class="level-header">المستوى 1</th>
+                    <th class="level-header">المستوى 2</th>
+                    <th class="level-header">المستوى 3</th>
+                    <th class="level-header">المستوى 4</th>
+                    <th class="total-column">الكل</th>
+                </tr>
+            </thead>
+            <tbody id="codeforcesTableBody"></tbody>
+        </table>
+        <p class="stat-note">يتم جلب التقييمات من API الخاص بكودفورسز</p>
+    </div>
+    {% else %}
+    <h1>Team Statistics</h1>
+    
+    <div id="loadingMessage" class="loading">Loading statistics...</div>
+    <div id="errorMessage" class="error-message" style="display: none;"></div>
+    
+    <div id="graduationSection" class="stats-section" style="display: none;">
+        <h2>Graduation Statistics</h2>
+        <p class="stat-note">Number of students by graduation year and level</p>
+        <table class="stats-table" id="graduationTable">
+            <thead>
+                <tr>
+                    <th>Graduation Year</th>
+                    <th class="level-header">Level 1</th>
+                    <th class="level-header">Level 2</th>
+                    <th class="level-header">Level 3</th>
+                    <th class="level-header">Level 4</th>
+                    <th class="total-column">Total</th>
+                </tr>
+            </thead>
+            <tbody id="graduationTableBody"></tbody>
+        </table>
+    </div>
+
+    <div id="codeforcesSection" class="stats-section" style="display: none;">
+        <h2>Codeforces Statistics</h2>
+        <p class="stat-note">Current ratings for active Codeforces accounts</p>
+        <table class="stats-table" id="codeforcesTable">
+            <thead>
+                <tr>
+                    <th>Statistic</th>
+                    <th class="level-header">Level 1</th>
+                    <th class="level-header">Level 2</th>
+                    <th class="level-header">Level 3</th>
+                    <th class="level-header">Level 4</th>
+                    <th class="total-column">All</th>
+                </tr>
+            </thead>
+            <tbody id="codeforcesTableBody"></tbody>
+        </table>
+        <p class="stat-note">Ratings fetched from Codeforces API</p>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+const IS_ARABIC = getCurLang() == "ar";
+let allPeople = [];
+let cfRatings = {};
+
+const translations = {
+    en: {
+        loading: 'Loading statistics...',
+        loadError: 'Failed to load data. Please refresh the page.',
+        cfError: 'Failed to fetch Codeforces ratings. Displaying without CF data.',
+        max: 'Maximum',
+        min: 'Minimum',
+        avg: 'Average',
+        median: 'Median',
+        graduated: 'Graduated',
+        total: 'Total'
+    },
+    ar: {
+        loading: 'جاري تحميل الإحصائيات...',
+        loadError: 'فشل تحميل البيانات. يرجى تحديث الصفحة.',
+        cfError: 'فشل جلب تقييمات كودفورسز. العرض بدون بيانات CF.',
+        max: 'الأعلى',
+        min: 'الأدنى',
+        avg: 'المتوسط',
+        median: 'الوسيط',
+        graduated: 'متخرج',
+        total: 'المجموع'
+    }
+};
+
+const t = translations[IS_ARABIC ? 'ar' : 'en'];
+
+function getRatingColor(rating) {
+    if (!rating) return 'cf-newbie';
+    if (rating < 1200) return 'cf-newbie';
+    if (rating < 1400) return 'cf-pupil';
+    if (rating < 1600) return 'cf-specialist';
+    if (rating < 1900) return 'cf-expert';
+    if (rating < 2100) return 'cf-candidate-master';
+    if (rating < 2300) return 'cf-master';
+    if (rating < 2400) return 'cf-international-master';
+    if (rating < 2600) return 'cf-grandmaster';
+    if (rating < 3000) return 'cf-international-grandmaster';
+    return 'cf-legendary-grandmaster';
+}
+
+function formatRating(rating, username, name) {
+    const colorClass = getRatingColor(rating);
+    const displayRating = rating || 0;
+    
+    if (username) {
+        return `<a href="https://codeforces.com/profile/${username}" target="_blank" class="cf-link ${colorClass}">${displayRating}</a> <span style="font-size: 0.9em;">(${name})</span>`;
+    }
+    
+    return `<span class="${colorClass}">${displayRating}</span>`;
+}
+
+async function fetchCodeforcesRatings(usernames) {
+    try {
+        const uniqueUsernames = [...new Set(usernames.filter(u => u))];
+        if (uniqueUsernames.length === 0) return {};
+        
+        let handles = uniqueUsernames.join(';');
+        const response = await fetch(`https://codeforces.com/api/user.info?handles=${handles}`);
+        const data = await response.json();
+        
+        if (data.status !== 'OK') {
+            console.error('Codeforces API error:', data);
+            return {};
+        }
+        
+        const ratings = {};
+        data.result.forEach((user, index) => {
+            //console.log(user.rating, user.handle, index, handles[index]);
+            
+            ratings[usernames[index]] = user.rating || 0;
+        });
+        
+        return ratings;
+    } catch (error) {
+        console.error('Error fetching Codeforces ratings:', error);
+        return {};
+    }
+}
+
+async function loadData() {
+    try {
+        const response = await fetch('/data/people.json');
+        allPeople = await response.json();
+        
+        // Filter active students (levels 1-4)
+        const activeStudents = allPeople.filter(p => p.level >= 1 && p.level <= 4);
+        
+        buildGraduationTable();
+
+        // Fetch Codeforces ratings
+        const cfUsernames = activeStudents
+            .filter(p => p.codeforces)
+            .map(p => (p.codeforces == 'm5588ohammed' ? 'GoogleDocs' : p.codeforces));
+        
+        if (cfUsernames.length > 0) {
+            cfRatings = await fetchCodeforcesRatings(cfUsernames);
+        }
+        
+        buildCodeforcesTable();
+        
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('graduationSection').style.display = 'block';
+        document.getElementById('codeforcesSection').style.display = 'block';
+        
+    } catch (error) {
+        document.getElementById('loadingMessage').style.display = 'none';
+        const errorDiv = document.getElementById('errorMessage');
+        errorDiv.textContent = t.loadError;
+        errorDiv.style.display = 'block';
+        console.error('Error loading data:', error);
+    }
+}
+
+function buildGraduationTable() {
+    // Count students by level and graduation year
+    const stats = {};
+    
+    allPeople.forEach(person => {
+        const level = person.level;
+        const graduation = person.graduation;
+        
+        // Only count students with valid levels and graduation years
+        if (level >= 1 && level <= 4 && graduation) {
+            if (!stats[graduation]) {
+                stats[graduation] = { 1: 0, 2: 0, 3: 0, 4: 0 };
+            }
+            stats[graduation][level]++;
+        }
+    });
+    
+    // Sort graduation years
+    const years = Object.keys(stats).map(Number).sort((a, b) => a - b);
+    
+    const tbody = document.getElementById('graduationTableBody');
+    tbody.innerHTML = '';
+    
+    years.forEach(year => {
+        const row = document.createElement('tr');
+        const levelCounts = stats[year];
+        const total = levelCounts[1] + levelCounts[2] + levelCounts[3] + levelCounts[4];
+        
+        row.innerHTML = `
+            <td class="year-cell">${year}</td>
+            <td>${levelCounts[1]}</td>
+            <td>${levelCounts[2]}</td>
+            <td>${levelCounts[3]}</td>
+            <td>${levelCounts[4]}</td>
+            <td class="total-column">${total}</td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+    
+    // Add total row
+    const totalRow = document.createElement('tr');
+    const totals = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    
+    years.forEach(year => {
+        totals[1] += stats[year][1];
+        totals[2] += stats[year][2];
+        totals[3] += stats[year][3];
+        totals[4] += stats[year][4];
+    });
+    
+    const grandTotal = totals[1] + totals[2] + totals[3] + totals[4];
+    
+    totalRow.innerHTML = `
+        <td class="year-cell">${t.total}</td>
+        <td style="font-weight: bold;">${totals[1]}</td>
+        <td style="font-weight: bold;">${totals[2]}</td>
+        <td style="font-weight: bold;">${totals[3]}</td>
+        <td style="font-weight: bold;">${totals[4]}</td>
+        <td class="total-column" style="font-weight: bold;">${grandTotal}</td>
+    `;
+    
+    tbody.appendChild(totalRow);
+}
+
+function buildCodeforcesTable() {
+    // Organize students by level with CF ratings
+    const levelData = { 1: [], 2: [], 3: [], 4: [], all: [] };
+    
+    allPeople.forEach(person => {
+        const level = person.level;
+        
+        if (level >= 1 && level <= 4 && person.codeforces) {
+            const username = person.codeforces == 'm5588ohammed' ? 'GoogleDocs' : person.codeforces;
+            const rating = cfRatings[username] || 0;
+            
+            const studentData = {
+                name: IS_ARABIC ? person.arname : person.enname,
+                username: person.codeforces,
+                rating: rating
+            };
+            
+            levelData[level].push(studentData);
+            levelData.all.push(studentData);
+        }
+    });
+    
+    // Calculate statistics for each level
+    const calculateStats = (students) => {
+        if (students.length === 0) {
+            return { max: null, min: null, avg: 0, median: 0 };
+        }
+        
+        const ratings = students.map(s => s.rating).sort((a, b) => b - a);
+        const maxStudent = students.find(s => s.rating === ratings[0]);
+        const minStudent = students.find(s => s.rating === ratings[ratings.length - 1]);
+        
+        const avg = ratings.reduce((sum, r) => sum + r, 0) / ratings.length;
+        const median = ratings.length % 2 === 0
+            ? (ratings[ratings.length / 2 - 1] + ratings[ratings.length / 2]) / 2
+            : ratings[Math.floor(ratings.length / 2)];
+        
+        return {
+            max: maxStudent,
+            min: minStudent,
+            avg: avg,
+            median: median
+        };
+    };
+    
+    const stats = {
+        1: calculateStats(levelData[1]),
+        2: calculateStats(levelData[2]),
+        3: calculateStats(levelData[3]),
+        4: calculateStats(levelData[4]),
+        all: calculateStats(levelData.all)
+    };
+    
+    const tbody = document.getElementById('codeforcesTableBody');
+    tbody.innerHTML = '';
+    
+    // Maximum row
+    const maxRow = document.createElement('tr');
+    maxRow.innerHTML = `
+        <td class="year-cell">${t.max}</td>
+        <td>${stats[1].max ? formatRating(stats[1].max.rating, stats[1].max.username, stats[1].max.name) : '-'}</td>
+        <td>${stats[2].max ? formatRating(stats[2].max.rating, stats[2].max.username, stats[2].max.name) : '-'}</td>
+        <td>${stats[3].max ? formatRating(stats[3].max.rating, stats[3].max.username, stats[3].max.name) : '-'}</td>
+        <td>${stats[4].max ? formatRating(stats[4].max.rating, stats[4].max.username, stats[4].max.name) : '-'}</td>
+        <td class="total-column">${stats.all.max ? formatRating(stats.all.max.rating, stats.all.max.username, stats.all.max.name) : '-'}</td>
+    `;
+    tbody.appendChild(maxRow);
+    
+    // Median row
+    const medianRow = document.createElement('tr');
+    medianRow.innerHTML = `
+        <td class="year-cell">${t.median}</td>
+        <td><span class="${getRatingColor(stats[1].median)}">${stats[1].median.toFixed(0)}</span></td>
+        <td><span class="${getRatingColor(stats[2].median)}">${stats[2].median.toFixed(0)}</span></td>
+        <td><span class="${getRatingColor(stats[3].median)}">${stats[3].median.toFixed(0)}</span></td>
+        <td><span class="${getRatingColor(stats[4].median)}">${stats[4].median.toFixed(0)}</span></td>
+        <td class="total-column"><span class="${getRatingColor(stats.all.median)}">${stats.all.median.toFixed(0)}</span></td>
+    `;
+    tbody.appendChild(medianRow);
+    
+    // Average row
+    const avgRow = document.createElement('tr');
+    avgRow.innerHTML = `
+        <td class="year-cell">${t.avg}</td>
+        <td><span class="${getRatingColor(stats[1].avg)}">${stats[1].avg.toFixed(0)}</span></td>
+        <td><span class="${getRatingColor(stats[2].avg)}">${stats[2].avg.toFixed(0)}</span></td>
+        <td><span class="${getRatingColor(stats[3].avg)}">${stats[3].avg.toFixed(0)}</span></td>
+        <td><span class="${getRatingColor(stats[4].avg)}">${stats[4].avg.toFixed(0)}</span></td>
+        <td class="total-column"><span class="${getRatingColor(stats.all.avg)}">${stats.all.avg.toFixed(0)}</span></td>
+    `;
+    tbody.appendChild(avgRow);
+    
+    // Minimum row
+    const minRow = document.createElement('tr');
+    minRow.innerHTML = `
+        <td class="year-cell">${t.min}</td>
+        <td>${stats[1].min ? formatRating(stats[1].min.rating, stats[1].min.username, stats[1].min.name) : '-'}</td>
+        <td>${stats[2].min ? formatRating(stats[2].min.rating, stats[2].min.username, stats[2].min.name) : '-'}</td>
+        <td>${stats[3].min ? formatRating(stats[3].min.rating, stats[3].min.username, stats[3].min.name) : '-'}</td>
+        <td>${stats[4].min ? formatRating(stats[4].min.rating, stats[4].min.username, stats[4].min.name) : '-'}</td>
+        <td class="total-column">${stats.all.min ? formatRating(stats.all.min.rating, stats.all.min.username, stats.all.min.name) : '-'}</td>
+    `;
+    tbody.appendChild(minRow);
+}
+
+loadData();
+</script>

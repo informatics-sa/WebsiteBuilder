@@ -1,0 +1,836 @@
+{
+    "2026_IMO_Cancelled_day_1": {
+        "id": "2026_IMO_Cancelled_day_1",
+        "name": "TST 2026 Cancelled Day 1",
+        "date": "2026-03-28",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdulsalam_alsulami":[7,7,1],
+            "abdulelah_assaggaf":[7,7,1],
+            "abdullah_alamer":[3,1,0],
+            "fares_alkanhal":[7,0,0],
+            "yosuf_bakheet": [3,4,0],
+            "elyas_alfaraj":[1,7,0],
+            "yousif_alkhalawi":[7,6,0],
+            "mohammed_shaiban": [3,1,0],
+            "arar_alajmi":[1,1,0],
+            "mohammed_alhassan":[1,1,0],   
+            "ali_alhussain":[1,1,0],
+            "yasir_habibullah":[1,1,0],
+            "abdarahman_mansour":[1,1,0],
+            "belal_alhejaili":[7,1,0]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+    "2026_IMO_day_1": {
+        "id": "2026_IMO_day_1",
+        "name": "TST 2026 Day 1",
+        "date": "2026-04-02",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+             "abdulsalam_alsulami":[7,7,1],
+            "abdulelah_assaggaf":[7,7,1],
+            "abdullah_alamer":[7,4,0],
+            "fares_alkanhal":[7,3,0],
+            "yosuf_bakheet": [7,1,1],
+            "elyas_alfaraj":[7,7,0],
+            "yousif_alkhalawi":[7,7,0],
+            "mohammed_shaiban": [7,2,0],
+            "arar_alajmi":[7,7,0],
+            "mohammed_alhassan":[2,1,0],   
+            "ali_alhussain":[4,0,0],
+            "yasir_habibullah":[7,1,0],
+            "abdarahman_mansour":[4,2,0],
+            "belal_alhejaili":[3,0,0]
+        },
+        "problems": ["Problem 13", "Problem 14", "Problem 15"]
+    },
+    
+    "2026_IMO_day_2": {
+        "id": "2026_IMO_day_2",
+        "name": "TST 2026 Day 2",
+        "date": "2026-03-29",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdulsalam_alsulami":[7,5,0],
+            "abdulelah_assaggaf":[7,6,0],
+            "abdullah_alamer":[4,0,0],
+            "fares_alkanhal":[7,0,0],
+            "yosuf_bakheet": [7,1,0],
+            "elyas_alfaraj":[2,3,0],
+            "yousif_alkhalawi":[2,0,0],
+            "mohammed_shaiban": [7,0,0],
+            "arar_alajmi":[3,0,0],
+            "mohammed_alhassan":[3,0,0],   
+            "ali_alhussain":[2,0,0],
+            "yasir_habibullah":[4,0,0],
+            "abdarahman_mansour":[4,0,0],
+            "belal_alhejaili":[1,0,0]
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+    
+    "2026_IMO_day_3": {
+        "id": "2026_IMO_day_3",
+        "name": "TST 2026 Day 3",
+        "date": "2026-03-31",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdulsalam_alsulami":[7,7,2],
+            "abdulelah_assaggaf":[7,7,0],
+            "abdullah_alamer":[7,7,1],
+            "fares_alkanhal":[7,3,0],
+            "yosuf_bakheet": [7,7,0],
+            "elyas_alfaraj":[7,2,0],
+            "yousif_alkhalawi":[7,3,0],
+            "mohammed_shaiban": [7,0,0],
+            "arar_alajmi":[1,4,0],
+            "mohammed_alhassan":[7,1,0],   
+            "ali_alhussain":[7,0,0],
+            "yasir_habibullah":[6,1,0],
+            "abdarahman_mansour":[6,1,0],
+            "belal_alhejaili":[7,1,0]
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+    
+    "2026_IMO_day_4": {
+        "id": "2026_IMO_day_4",
+        "name": "TST 2026 Day 4",
+        "date": "2026-04-01",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdulsalam_alsulami":[6,7,0],
+            "abdulelah_assaggaf":[7,2,0],
+            "abdullah_alamer":[7,2,0],
+            "fares_alkanhal":[1,2,0],
+            "yosuf_bakheet": [4,7,0],
+            "elyas_alfaraj":[7,1,0],
+            "yousif_alkhalawi":[7,0,0],
+            "mohammed_shaiban": [2,3,0],
+            "arar_alajmi":[1,2,0],
+            "mohammed_alhassan":[2,4,0],   
+            "ali_alhussain":[0,6,0],
+            "yasir_habibullah":[3,2,0],
+            "abdarahman_mansour":[1,3,0],
+            "belal_alhejaili":[1,1,0]
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+    
+    "2025_IMO_day_1": {
+        "id": "2025_IMO_day_1",
+        "name": "TST 2025 Day 1",
+        "date": "2025-02-18",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "yosuf_bakheet": [2,7,0],
+            "ahmed_alkhalawi":[4,1,0],
+            "ahmed_alshehri":[7,0,0],
+            "abdulsalam_alsulami":[7,3,0],
+            "muath_alqahtani":[7,4,0],
+            "mohammed_alghamdi":[2,1,0],
+            "fatimah_buali":[3,1,0],
+            "elyas_alfaraj":[2,0,0],
+            "abdullah_alamer":[3,0,0],
+            "yousif_alkhalawi":[1,2,0]
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+    
+    "2025_IMO_day_2": {
+        "id": "2025_IMO_day_2",
+        "name": "TST 2025 Day 2",
+        "date": "2025-02-19",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "yosuf_bakheet": [7,2,1],
+            "ahmed_alkhalawi":[6,4,2],
+            "ahmed_alshehri":[7,7,0],
+            "abdulsalam_alsulami":[7,4,0],
+            "muath_alqahtani":[7,2,0],
+            "mohammed_alghamdi":[7,2,0],
+            "fatimah_buali":[7,3,0],
+            "elyas_alfaraj":[7,2,0],
+            "abdullah_alamer":[7,2,0],
+            "yousif_alkhalawi":[0,2,0]
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+    
+    "2025_IMO_day_3": {
+        "id": "2025_IMO_day_3",
+        "name": "TST 2025 Day 3",
+        "date": "2025-02-22",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "yosuf_bakheet": [7,7,0],
+            "ahmed_alkhalawi":[7,4,0],
+            "ahmed_alshehri":[5,4,0],
+            "abdulsalam_alsulami":[5,0,0],
+            "muath_alqahtani":[4,0,0],
+            "mohammed_alghamdi":[4,1,0],
+            "fatimah_buali":[0,0,0],
+            "elyas_alfaraj":[6,1,0],
+            "abdullah_alamer":[0,0,0],
+            "yousif_alkhalawi":[7,0,0]
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+    
+    "2025_IMO_day_4": {
+        "id": "2025_IMO_day_4",
+        "name": "TST 2025 Day 4",
+        "date": "2025-02-23",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "yosuf_bakheet": [1,3,0],
+            "ahmed_alkhalawi":[1,7,0],
+            "ahmed_alshehri":[1,0,1],
+            "abdulsalam_alsulami":[1,2,0],
+            "muath_alqahtani":[1,2,0],
+            "mohammed_alghamdi":[7,2,0],
+            "fatimah_buali":[7,1,0],
+            "elyas_alfaraj":[1,0,1],
+            "abdullah_alamer":[1,0,0],
+            "yousif_alkhalawi":[1,0,0]
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+    
+    "2024_IMO_day_1": {
+        "id": "2024_IMO_day_1",
+        "name": "TST 2024 Day 1",
+        "date": "2024-02-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,7,5],
+            "muath_alqahtani":[7,3,0],
+            "yosuf_bakheet":[7,3,0],
+            "mohammed_hafez":[7,0,0],
+            "ahmed_alshehri":[7,3,0],
+            "mohammed_alghamdi":[7,0,0],
+            "ahmed_alkhalawi":[7,0,0],
+            "elyas_alfaraj":[7,0,0],
+            "abdulsalam_alsulami":[7,0,0],
+            "fatimah_buali":[7,0,0]
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+     "2024_IMO_day_2": {
+        "id": "2024_IMO_day_2",
+        "name": "TST 2024 Day 2",
+        "date": "2024-02-27",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,0,4],
+            "muath_alqahtani":[7,1,2],
+            "yosuf_bakheet":[5,2,7],
+            "mohammed_hafez":[6,2,0],
+            "ahmed_alshehri":[5,1,0],
+            "mohammed_alghamdi":[1,2,3],
+            "ahmed_alkhalawi":[5,1,1],
+            "elyas_alfaraj":[6,2,0],
+            "abdulsalam_alsulami":[5,1,3],
+            "fatimah_buali":[1,2,3]
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+     "2024_IMO_day_3": {
+        "id": "2024_IMO_day_3",
+        "name": "TST 2024 Day 3",
+        "date": "2024-03-02",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,7,7],
+            "muath_alqahtani":[7,7,0],
+            "yosuf_bakheet":[7,3,1],
+            "mohammed_hafez":[7,7,4],
+            "ahmed_alshehri":[7,2,1],
+            "mohammed_alghamdi":[6,1,1],
+            "ahmed_alkhalawi":[7,0,3],
+            "elyas_alfaraj":[6,5,0],
+            "abdulsalam_alsulami":[3,2,0],
+            "fatimah_buali":[4,3,0]
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+   "2024_IMO_day_4": {
+        "id": "2024_IMO_day_4",
+        "name": "TST 2024 Day 4",
+        "date": "2024-03-03",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,4,0],
+            "muath_alqahtani":[5,7,0],
+            "yosuf_bakheet":[1,5,0],
+            "mohammed_hafez":[7,1,0],
+            "ahmed_alshehri":[7,1,0],
+            "mohammed_alghamdi":[7,3,0],
+            "ahmed_alkhalawi":[3,3,0],
+            "elyas_alfaraj":[3,0,0],
+            "abdulsalam_alsulami":[3,2,0],
+            "fatimah_buali":[1,1,0]
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+    "2023_IMO_day_1": {
+        "id": "2023_IMO_day_1",
+        "name": "TST 2023 Day 1",
+        "date": "2023-03-01",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,7,2],
+            "ali_alramadan":[7,7,4],
+            "mahdi_albaik":[7,7,4],
+            "muath_alqahtani":[7,7,1],
+            "eyad_alqatari":[7,7,0],
+            "abdulrahman_nassief":[7,4,0],
+            "abdulkareem_alsalem":[4,7,0],
+            "mohammed_alghamdi":[3,4,0],
+            "yosuf_bakheet":[2,7,0],
+            "mohammed_hafez":[7,1,0],
+            "ahmed_alkhalawi":[7,0,1]
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+    "2023_IMO_day_2": {
+        "id": "2023_IMO_day_2",
+        "name": "TST 2023 Day 2",
+        "date": "2023-03-02",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,7,0],
+            "ali_alramadan":[7,2,0],
+            "mahdi_albaik":[7,3,0],
+            "muath_alqahtani":[7,0,0],
+            "eyad_alqatari":[7,0,0],
+            "abdulrahman_nassief":[7,0,1],
+            "abdulkareem_alsalem":[7,0,0],
+            "mohammed_alghamdi":[7,0,0],
+            "yosuf_bakheet":[7,0,0],
+            "mohammed_hafez":[2,0,0],
+            "ahmed_alkhalawi":[2,0,0]
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+   "2023_IMO_day_3": {
+        "id": "2023_IMO_day_3",
+        "name": "TST 2023 Day 3",
+        "date": "2023-03-04",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,3,5],
+            "ali_alramadan":[7,6,3],
+            "mahdi_albaik":[7,0,2],
+            "muath_alqahtani":[7,1,2],
+            "eyad_alqatari":[7,0,3],
+            "abdulrahman_nassief":[7,0,2],
+            "abdulkareem_alsalem":[7,0,7],
+            "mohammed_alghamdi":[6,0,7],
+            "yosuf_bakheet":[7,0,1],
+            "mohammed_hafez":[7,1,0],
+            "ahmed_alkhalawi":[0,0,1]
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+    "2023_IMO_day_4": {
+        "id": "2023_IMO_day_4",
+        "name": "TST 2023 Day 4",
+        "date": "2023-03-05",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hadi_alaithan": [7,0,3],
+            "ali_alramadan":[7,0,0],
+            "mahdi_albaik":[1,0,0],
+            "muath_alqahtani":[7,1,0],
+            "eyad_alqatari":[7,0,0],
+            "abdulrahman_nassief":[7,0,0],
+            "abdulkareem_alsalem":[3,0,0],
+            "mohammed_alghamdi":[7,0,0],
+            "yosuf_bakheet":[7,0,0],
+            "mohammed_hafez":[7,0,0],
+            "ahmed_alkhalawi":[3,0,0]
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+     "2022_IMO_day_1": {
+        "id": "2022_IMO_day_1",
+        "name": "TST 2022 Day 1",
+        "date": "2022-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,7,1],
+            "ali_alramadan":[7,7,0],
+            "mohammed_aldubaisi":[7,7,0],
+            "hadi_alaithan":[7,7,0],
+            "muath_alghamdi":[7,7,0],
+            "mahdi_albaik":[7,7,0],
+            "abdulelah_altaf":[7,0,1],
+            "muath_alqahtani":[7,4,0],
+            "abdulrahman_nassief":[7,2,0],
+            "mohammed_hafez":[7,2,0],
+            "eyad_alqatari":[7,6,0],
+            "abdulkareem_alsalem":[1,7,0],
+            "mohammed_alharbi":[7,0,0],
+            "rafaa_qanash":[7,1,0],
+            "basil_alahmari":[7,1,0],
+            "jana_aldossari":[0,2,0],
+            "haider_alaithan":[7,0,0]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+     "2022_IMO_day_2": {
+        "id": "2022_IMO_day_2",
+        "name": "TST 2022 Day 2",
+        "date": "2022-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,7,0],
+            "ali_alramadan":[7,5,0],
+            "mohammed_aldubaisi":[7,7,0],
+            "hadi_alaithan":[7,7,7],
+            "muath_alghamdi":[7,4,0],
+            "mahdi_albaik":[7,7,0],
+            "abdulelah_altaf":[7,5,0],
+            "muath_alqahtani":[7,4,0],
+            "abdulrahman_nassief":[7,2,0],
+            "mohammed_hafez":[6,2,0],
+            "eyad_alqatari":[7,0,0],
+            "abdulkareem_alsalem":[7,0,0],
+            "mohammed_alharbi":[0,1,0],
+            "rafaa_qanash":[7,1,0],
+            "basil_alahmari":[3,0,0],
+            "jana_aldossari":[3,0,1],
+            "haider_alaithan":[1,0,0]
+            
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+     "2022_IMO_day_3": {
+        "id": "2022_IMO_day_3",
+        "name": "TST 2022 Day 3",
+        "date": "2022-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,0,0],
+            "ali_alramadan":[7,0,0],
+            "mohammed_aldubaisi":[7,0,0],
+            "hadi_alaithan":[7,0,0],
+            "muath_alghamdi":[7,0,1],
+            "mahdi_albaik":[7,2,0],
+            "abdulelah_altaf":[7,0,0],
+            "muath_alqahtani":[7,0,0],
+            "abdulrahman_nassief":[2,0,0],
+            "mohammed_hafez":[2,0,0],
+            "eyad_alqatari":[0,0,0],
+            "abdulkareem_alsalem":[0,0,0],
+            "mohammed_alharbi":[0,1,0],
+            "rafaa_qanash":[0,0,0],
+            "basil_alahmari":[1,1,0],
+            "jana_aldossari":[0,0,0],
+            "haider_alaithan":[0,0,0]
+            
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+     "2022_IMO_day_4": {
+        "id": "2022_IMO_day_4",
+        "name": "TST 2022 Day 4",
+        "date": "2022-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,7,7],
+            "ali_alramadan":[6,7,6],
+            "mohammed_aldubaisi":[7,7,2],
+            "hadi_alaithan":[2,2,1],
+            "muath_alghamdi":[7,6,0],
+            "mahdi_albaik":[2,3,3],
+            "abdulelah_altaf":[7,7,0],
+            "muath_alqahtani":[7,2,0],
+            "abdulrahman_nassief":[0,2,1],
+            "mohammed_hafez":[0,2,0],
+            "eyad_alqatari":[0,1,0],
+            "abdulkareem_alsalem":[0,1,2],
+            "mohammed_alharbi":[7,2,0],
+            "rafaa_qanash":[0,1,0],
+            "basil_alahmari":[0,2,0],
+            "jana_aldossari":[2,2,1],
+            "haider_alaithan":[0,0,0]
+            
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+     "2021_IMO_day_1": {
+        "id": "2021_IMO_day_1",
+        "name": "TST 2021 Day 1",
+        "date": "2021-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,7,0],
+            "hamzah_alshaikhi":[7,7,7],
+            "muath_alghamdi":[3,3,1],
+            "hadi_alaithan":[4,3,0],
+            "mohammed_aldubaisi":[3,5,0],
+            "ali_alramadan":[3,1,0],
+            "ahmed_albahrani":[7,1,0],
+            "khalid_aljabri":[6,0,0],
+            "mahdi_albaik":[7,3,0],
+            "eyad_alqatari":[0,1,0],
+            "abdulelah_altaf":[2,0,0],
+            "mohammed_hafez":[3,3,0],
+            "abdulrahman_nassief":[4,1,0],
+            "basil_alahmari":[4,0,0],
+            "omar_alenezi":[0,4,0],
+            "rafaa_qanash":[0,1,0],
+            "lara_monagel":[0,0,0],
+            "mohammed_alharbi":[0,0,0],
+            "joud_bahuwayni":[0,0,0],
+            "haider_alaithan":[0,0,0]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+     "2021_IMO_day_2": {
+        "id": "2021_IMO_day_2",
+        "name": "TST 2021 Day 2",
+        "date": "2021-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,7,6],
+            "hamzah_alshaikhi":[7,7,0],
+            "muath_alghamdi":[7,7,1],
+            "hadi_alaithan":[7,3,0],
+            "mohammed_aldubaisi":[7,7,0],
+            "ali_alramadan":[5,2,0],
+            "ahmed_albahrani":[7,1,0],
+            "khalid_aljabri":[2,0,0],
+            "mahdi_albaik":[6,0,0],
+            "eyad_alqatari":[4,0,0],
+            "abdulelah_altaf":[7,0,0],
+            "mohammed_hafez":[0,1,0],
+            "abdulrahman_nassief":[0,7,0],
+            "basil_alahmari":[0,0,0],
+            "omar_alenezi":[0,0,0],
+            "rafaa_qanash":[0,1,0],
+            "lara_monagel":[0,1,0],
+            "mohammed_alharbi":[0,0,0],
+            "joud_bahuwayni":[0,1,0],
+            "haider_alaithan":[0,0,0]
+            
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+     "2021_IMO_day_3": {
+        "id": "2021_IMO_day_3",
+        "name": "TST 2021 Day 3",
+        "date": "2021-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,7,0],
+            "hamzah_alshaikhi":[6,5,0],
+            "muath_alghamdi":[7,2,1],
+            "hadi_alaithan":[7,3,0],
+            "mohammed_aldubaisi":[7,4,0],
+            "ali_alramadan":[7,3,0],
+            "ahmed_albahrani":[7,1,0],
+            "khalid_aljabri":[7,2,0],
+            "mahdi_albaik":[6,0,0],
+            "eyad_alqatari":[7,0,0],
+            "abdulelah_altaf":[0,7,0],
+            "mohammed_hafez":[4,3,0],
+            "abdulrahman_nassief":[0,0,0],
+            "basil_alahmari":[4,0,0],
+            "omar_alenezi":[3,0,0],
+            "rafaa_qanash":[4,1,0],
+            "lara_monagel":[4,1,0],
+            "mohammed_alharbi":[1,3,0],
+            "joud_bahuwayni":[3,0,0],
+            "haider_alaithan":[0,1,0]
+            
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+     "2021_IMO_day_4": {
+        "id": "2021_IMO_day_4",
+        "name": "TST 2021 Day 4",
+        "date": "2021-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "marwan_alkhayat": [7,4,0],
+            "hamzah_alshaikhi":[6,0,2],
+            "muath_alghamdi":[7,5,0],
+            "hadi_alaithan":[1,7,0],
+            "mohammed_aldubaisi":[0,0,0],
+            "ali_alramadan":[7,1,1],
+            "ahmed_albahrani":[5,0,0],
+            "khalid_aljabri":[7,1,0],
+            "mahdi_albaik":[6,0,0],
+            "eyad_alqatari":[0,0,0],
+            "abdulelah_altaf":[1,7,1],
+            "mohammed_hafez":[0,0,2],
+            "abdulrahman_nassief":[0,0,0],
+            "basil_alahmari":[1,0,0],
+            "omar_alenezi":[0,0,0],
+            "rafaa_qanash":[0,0,0],
+            "lara_monagel":[0,0,0],
+            "mohammed_alharbi":[0,0,0],
+            "joud_bahuwayni":[0,0,0],
+            "haider_alaithan":[0,0,0]
+            
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+     "2020_IMO_pre_tst": {
+        "id": "2020_IMO_pre_tst",
+        "name": "Pre IMO TST 2020",
+        "date": "2020-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hamzah_alshaikhi":[16],
+            "mohammed_alshehri":[11.45],
+            "khalid_ajran":[14.22],
+            "marwan_alkhayat": [13.6],
+            "thnaa_alhydary":[11.63],
+            "mustafa_alelg":[8.92],
+            "mohammed_aldubaisi":[10.95],
+            "nawaf_alghamdi":[12.55],
+            "ahmed_albahrani":[10.34],
+            "muath_alghamdi":[9.11],
+            "khalid_aljabri":[7.75],
+            "abdulrahman_nassief":[13.35],
+            "abdulrahman_alahmadi":[6.46]
+            
+            
+        },
+        "problems": ["Pre TST After Scaled To 16%"]
+    },
+     "2020_IMO_day_1": {
+        "id": "2020_IMO_day_1",
+        "name": "TST 2020 Day 1",
+        "date": "2020-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hamzah_alshaikhi":[2,7,1],
+            "mohammed_alshehri":[7,0,2],
+            "khalid_ajran":[5,7,2],
+            "marwan_alkhayat": [0,0,4],
+            "thnaa_alhydary":[0,4,1],
+            "mustafa_alelg":[2,7,2],
+            "mohammed_aldubaisi":[7,0,0],
+            "nawaf_alghamdi":[0,0,0],
+            "ahmed_albahrani":[1,0,0],
+            "muath_alghamdi":[1,1,1],
+            "khalid_aljabri":[0,0,2],
+            "abdulrahman_nassief":[0,0,0],
+            "abdulrahman_alahmadi":[0,0,0]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3"]
+    },
+     "2020_IMO_day_2": {
+        "id": "2020_IMO_day_2",
+        "name": "TST 2020 Day 2",
+        "date": "2020-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hamzah_alshaikhi":[7,7,7],
+            "mohammed_alshehri":[7,7,4],
+            "khalid_ajran":[7,0,0],
+            "marwan_alkhayat": [0,6,7],
+            "thnaa_alhydary":[7,0,7],
+            "mustafa_alelg":[7,5,2],
+            "mohammed_aldubaisi":[3,0,0],
+            "nawaf_alghamdi":[7,0,1],
+            "ahmed_albahrani":[7,0,0],
+            "muath_alghamdi":[1,0,1],
+            "khalid_aljabri":[0,0,4],
+            "abdulrahman_nassief":[7,0,0],
+            "abdulrahman_alahmadi":[1,0,1]
+            
+        },
+        "problems": ["Problem 4", "Problem 5", "Problem 6"]
+    },
+      "2020_IMO_day_3": {
+        "id": "2020_IMO_day_3",
+        "name": "TST 2020 Day 3",
+        "date": "2020-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hamzah_alshaikhi":[7,0,7],
+            "mohammed_alshehri":[7,1,0],
+            "khalid_ajran":[7,0,7],
+            "marwan_alkhayat": [7,2,0],
+            "thnaa_alhydary":[3,1,7],
+            "mustafa_alelg":[0,0,7],
+            "mohammed_aldubaisi":[6,3,0],
+            "nawaf_alghamdi":[4,1,7],
+            "ahmed_albahrani":[7,1,0],
+            "muath_alghamdi":[7,0,2],
+            "khalid_aljabri":[1,7,0],
+            "abdulrahman_nassief":[3,2,0],
+            "abdulrahman_alahmadi":[0,0,0]
+            
+        },
+        "problems": ["Problem 7", "Problem 8", "Problem 9"]
+    },
+     "2020_IMO_day_4": {
+        "id": "2020_IMO_day_4",
+        "name": "TST 2020 Day 4",
+        "date": "2020-05-26",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "hamzah_alshaikhi":[7,0,0],
+            "mohammed_alshehri":[7,7,0],
+            "khalid_ajran":[0,0,0],
+            "marwan_alkhayat": [7,0,2],
+            "thnaa_alhydary":[0,0,0],
+            "mustafa_alelg":[0,0,0],
+            "mohammed_aldubaisi":[2,1,0],
+            "nawaf_alghamdi":[0,0,0],
+            "ahmed_albahrani":[4,0,0],
+            "muath_alghamdi":[0,0,0],
+            "khalid_aljabri":[0,1,0],
+            "abdulrahman_nassief":[0,0,0],
+            "abdulrahman_alahmadi":[0,0,0]
+            
+        },
+        "problems": ["Problem 10", "Problem 11", "Problem 12"]
+    },
+     "2025_JBMO_day_1": {
+        "id": "2025_JBMO_day_1",
+        "name": "TST 2025 Day 1",
+        "date": "2025-05-18",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdullah_alamer":[10,10,10,10],
+            "abdulelah_assaggaf":[10,10,10,10],
+            "abdarahman_mansour":[10,4,9,0],
+            "mohammed_shaiban": [10,1,9,0],
+            "yasir_habibullah":[10,10,7,2],
+            "belal_alhejaili":[10,5,2,4],
+            "ali_alhussain":[10,4,4,0],
+            "tala_tulbah":[10,2,4,0],
+            "fares_alkanhal":[10,10,4,0],
+            "mohammed_alhassan":[0,4,4,0],
+            "mohammed_alomran":[8,2,0,0],
+            "sadiq_alsalman":[1,2,1,0],
+            "salma_almutawah":[2,1,2,2],
+            "ammar_aldawood":[1,3,1,0],
+            "shahad_alharbi":[1,0,2,0]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3", "Problem 4"]
+    },
+     "2025_JBMO_day_2": {
+        "id": "2025_JBMO_day_2",
+        "name": "TST 2025 Day 2",
+        "date": "2025-05-19",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdullah_alamer":[10,10,10,10],
+            "abdulelah_assaggaf":[10,10,10,10],
+            "abdarahman_mansour":[10,10,6,5],
+            "mohammed_shaiban": [10,10,10,0],
+            "yasir_habibullah":[3,10,0,4],
+            "belal_alhejaili":[5,1,8,4],
+            "ali_alhussain":[5,10,1,2],
+            "tala_tulbah":[2,10,6,2],
+            "fares_alkanhal":[5,0,6,1],
+            "mohammed_alhassan":[10,10,3,1],
+            "mohammed_alomran":[2,0,10,0],
+            "sadiq_alsalman":[4,0,10,1],
+            "salma_almutawah":[10,2,0,0],
+            "ammar_aldawood":[5,0,4,0],
+            "shahad_alharbi":[0,0,1,2]
+            
+        },
+        "problems": ["Problem 5", "Problem 6", "Problem 7", "Problem 8"]
+    },
+     "2024_JBMO_day_1": {
+        "id": "2024_JBMO_day_1",
+        "name": "TST 2024 Day 1",
+        "date": "2024-02-17",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdullah_alamer":[4,9,10,10],
+            "mohammed_shaiban": [3,9,3,10],
+            "fatimah_almarhoun":[4,1,0,10],
+            "albatool_alaidarous":[3,0,0,10],
+            "arar_alajmi":[6,9,0,4],
+            "belal_alhejaili":[2,0,10,3],
+            "yasir_habibullah":[5,9,0,4],
+            "abdarahman_mansour":[3,1,0,2],
+            "atheer_tounesi":[2,9,0,0]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3", "Problem 4"]
+    },
+     "2024_JBMO_day_2": {
+        "id": "2024_JBMO_day_2",
+        "name": "TST 2024 Day 2",
+        "date": "2024-02-18",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "abdullah_alamer":[10,4,10,0],
+            "mohammed_shaiban": [10,4,10,0],
+            "fatimah_almarhoun":[10,10,10,0],
+            "albatool_alaidarous":[10,10,10,0],
+            "arar_alajmi":[10,0,10,0],
+            "belal_alhejaili":[10,2,10,0],
+            "yasir_habibullah":[10,2,6,0],
+            "abdarahman_mansour":[10,10,8,0],
+            "atheer_tounesi":[3,3,10,0]
+            
+        },
+        "problems": ["Problem 5", "Problem 6", "Problem 7", "Problem 8"]
+    },
+     "2023_JBMO_day_1": {
+        "id": "2023_JBMO_day_1",
+        "name": "TST 2023 Day 1",
+        "date": "2023-02-17",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "ahmed_alshehri":[10,10,10,10],
+            "mohammed_alsaeed":[10,10,10,10],
+            "elyas_alfaraj": [10,10,4,1],
+            "abdulsalam_alsulami":[2,10,10,0],
+            "abdullah_alamer":[2,7,5,2],
+            "ruqaya_alobaidan":[2,0,10,1],
+            "yousif_alkhalawi":[10,0,7,0],
+            "abdarahman_mansour":[0,7,3,0],
+            "lana_nouri":[2,0,3,1],
+            "dhia_alnufaili":[0,5,3,0],
+            "ghadeer_alabdullah":[2,7,2,0],
+            "atheer_tounesi":[2,0,3,1]
+            
+        },
+        "problems": ["Problem 1", "Problem 2", "Problem 3", "Problem 4"]
+    },
+     "2023_JBMO_day_2": {
+        "id": "2023_JBMO_day_2",
+        "name": "TST 2023 Day 2",
+        "date": "2023-02-18",
+        "url": "https://arena.petlja.org/en/competition/2025-05-26-tst-upsolve",
+        "participants": {
+            "ahmed_alshehri":[10,10,10,10],
+            "mohammed_alsaeed":[10,10,10,10],
+            "elyas_alfaraj": [10,10,9,10],
+            "abdulsalam_alsulami":[8,4,4,10],
+            "abdullah_alamer":[9,3,6,10],
+            "ruqaya_alobaidan":[4,3,10,10],
+            "yousif_alkhalawi":[4,7,0,10],
+            "abdarahman_mansour":[4,5,2,10],
+            "lana_nouri":[2,0,8,10],
+            "dhia_alnufaili":[6,1,1,10],
+            "ghadeer_alabdullah":[1,8,2,1],
+            "atheer_tounesi":[1,0,2,10]
+            
+        },
+        "problems": ["Problem 5", "Problem 6", "Problem 7", "Problem 8"]
+    }
+    
+    
+}

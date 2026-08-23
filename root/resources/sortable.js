@@ -70,9 +70,7 @@
 
         // Cycle through states: none -> asc -> desc -> none
         if (currentState === 'none') {
-            newState = 'asc';
-        } else if (currentState === 'asc') {
-            newState = 'desc';
+            newState = 'sort';
         } else {
             newState = 'none';
         }
@@ -103,10 +101,7 @@
     }
 
     function updateIndicator(indicator, state) {
-        if (state === 'asc') {
-            indicator.textContent = '▲';
-            indicator.style.opacity = '1';
-        } else if (state === 'desc') {
+        if (state === 'sort') {
             indicator.textContent = '▼';
             indicator.style.opacity = '1';
         } else {
@@ -153,7 +148,7 @@
                 comparison = aValue.toLowerCase().localeCompare(bValue.toLowerCase());
             }
 
-            return direction === 'asc' ? comparison : -comparison;
+            return sortType === 'num' ? -comparison : comparison;
         });
 
         // Re-append rows in sorted order

@@ -6,6 +6,16 @@ from lib.utils import * # target to remove this.
 import datetime
 import math
 
+settings = load_json('settings')
+
+if settings.get('old_id_system', False):
+    from helper import update_participations, sort_by_date, generate_members, update_exams
+    generate_members()
+    update_participations()
+    update_exams()
+    sort_by_date()
+    print("Applied old ID system")
+
 
 countries = get_countries()
 members = get_members()
@@ -27,7 +37,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id]['email']
+            'email': members[member_id].get('email', None)
         }
         realcontact['maintainers'].append(person)
 
@@ -36,7 +46,7 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id]['email']
+            'email': members[member_id].get('email', None)
         }
         realcontact['developers'].append(person)
 
@@ -45,17 +55,22 @@ def build_contact():
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'email': members[member_id]['email']
+            'email': members[member_id].get('email', None)
         }
         realcontact['admins'].append(person)
 
-    write_page('contact', {
+    written = {
         'layout': 'contact',
-        '$title': 'contact',
+        'lang': 'ar',
+        'title': translations['ar']['contact'],
         'maintainers': realcontact['maintainers'],
         'admins': realcontact['admins'],
         'developers': realcontact['developers']
-    })
+    }
+    write_file('./contact.html', written)
+    written['lang'] = 'en'
+    written['title'] = translations['en']['contact']
+    write_file('en/contact.html', written)
 
 def build_hall_of_fame():
     official_olympiads = list(
@@ -125,9 +140,18 @@ def build_hall_of_fame():
             'hm': stats['hm'],
         })
 
-    write_page('hall-of-fame', {
+    write_file('./hall-of-fame.html', {
         'layout': 'halloffame',
-        '$title': 'hall_of_fame',
+        'lang': 'ar',
+        'title': translations['ar']['hall_of_fame'],
+        'hof': hof,
+        'all_hof': all_hof
+    })
+
+    write_file('en/hall-of-fame.html', {
+        'layout': 'halloffame',
+        'lang': 'en',
+        'title': translations['en']['hall_of_fame'],
         'hof': hof,
         'all_hof': all_hof
     })
@@ -139,6 +163,7 @@ def build_home():
         'bronze': 0,
         'hm': 0,
         'participations': 0,
+	# TODO: maybe add the bellow statistics.
         #'distinct_participants': 0,
         #'current_members': 0,
         #'historic_members': 0,
@@ -151,21 +176,38 @@ def build_home():
         stats['silver'] += olympiad['silver']
         stats['bronze'] += olympiad['bronze']
         stats['hm'] += olympiad['hm']
-        stats['participations'] += len(olympiad['participations'])
+        stats['participations'] += olympiad['participations']
 
-    write_page('index', {
-        '$title': 'website_name',
-        '$description': 'website_description',
+    write_file('./index.html', {
+        'title': translations['ar']['website_name'],
+        'description': translations['ar']['website_description'],
         'id': 'home',
+        'lang': 'ar',
+        'layout': 'home',
+        'stats': stats
+    })
+    write_file('en/index.html', {
+        'title': translations['en']['website_name'],
+        'description': translations['en']['website_description'],
+        'id': 'home',
+        'lang': 'en',
         'layout': 'home',
         'stats': stats
     })
 
 def build_images():
     images = load_json('images')
-    write_page('images', {
+
+    write_file('./images.html', {
         'layout': 'images',
-        '$title': 'images',
+        'lang': 'ar',
+        'title': translations['ar']['images'],
+        'images': images
+    })
+    write_file('en/images.html', {
+        'layout': 'images',
+        'lang': 'en',
+        'title': translations['en']['images'],
         'images': images
     })
 
@@ -177,7 +219,7 @@ def build_members():
             'title': member['arname'],
             'full_name': member['arname'],
             'graduation': member['graduation'],
-            'codeforces': member['codeforces'],
+            'codeforces': member.get('codeforces', None),
             'participations': member['participations'],
             'exams': member['exams']
         })
@@ -188,42 +230,55 @@ def build_members():
             'title': member['enname'],
             'full_name': member['enname'],
             'graduation': member['graduation'],
-            'codeforces': member['codeforces'],
+            'codeforces': member.get('codeforces', None),
             'participations': member['participations'],
             'exams': member['exams']
         })
 
 def build_members_index():
-    #constants = load_json('constants')
-    levels = {1: [], 2: [], 3: [], 4: []}
+    levels = {}
     for member in members.values():
-        if 1 <= member['level'] <= 4:
-            levels[member['level']].append(member)
+        if 1 <= member['level']:
+            levels.setdefault(member['level'], []).append(member)
 
-    write_page('members/index', {
+    write_file("./members/index.html", {
         'layout': 'members',
-        '$title': 'members_list',
-        'levels': levels
+        'lang': 'ar',
+        'title': translations['ar']['members_list'],
+        'levels': levels,
+        'max_level': max(levels.keys(), default=0)
     })
+    write_file("en/members/index.html", {
+        'layout': 'members',
+        'lang': 'en',
+        'title': translations['en']['members_list'],
+        'levels': levels,
+        'max_level': max(levels.keys(), default=0)
+    } )
 
 def build_olympiads_index():
-    write_page('olympiads/index', {
+    write_file('./olympiads/index.html', {
         'layout': 'olympiads',
-        '$title': 'olympiads',
+        'lang': 'ar',
+        'title': translations['ar']['olympiads'],
         'olympiads': list(olympiads.values())
     })
-    
+    write_file('en/olympiads/index.html', {
+        'layout': 'olympiads',
+        'lang': 'en',
+        'title': translations['en']['olympiads'],
+        'olympiads': list(olympiads.values())
+    })
 
 def build_olympiads():
     for id, oly in olympiads.items():
         write_page(f'olympiads/{id}/index', {
             'layout': 'olympiad',
-            'title': id,
+            'title': id.upper(),
             'olympiad': oly,
-            'participations': []
+            'participations': [participation for participation in participations if participation['name'] == id]
         })
 
-def build_participations():
     for participation in participations:
         write_file(f'olympiads/{participation["name"]}/{participation["year"]}.html', {
             'layout': 'participation',
@@ -256,30 +311,43 @@ def build_participations():
             'online': participation['online'] if 'online' in participation else False
         })
 
-def build_participations_index():
-    _olympiads = {}
-    _min_year = 3000
-    _max_year = 2000
-    for participation in participations:
-        year = participation['year']
-        _min_year = min(year, _min_year)
-        _max_year = max(year, _max_year)
-        if year not in _olympiads:
-            _olympiads[year] = []
-
-        _olympiads[year].append(participation)
-
-    written = {
-        'layout': 'participations',
-        '$title': 'participations',
-        'start_year': _min_year,
-        'last_year': _max_year
+def build_participations():
+    stats = {
+        'total_participations': len(participations),
+        'total_gold': 0,
+        'total_silver': 0,
+        'total_bronze': 0,
+        'total_hm': 0,
+        'total_awards': 0
     }
 
-    for year, lst in _olympiads.items():
-        written[year] = lst
+    page = {
+        'layout': 'participations',
+        'lang': 'ar',
+        'title': translations['ar']['participations'],
+        'olympiads': list(get_olympiads().keys()),
+        'stats': stats
+    }
 
-    write_page("participations/index", written)
+    years = [participation['year'] for participation in participations]
+
+    for participation in participations:
+        for award in participation['participants'].values():
+            if award:
+                stats[f'total_{award}'] += 1
+                stats['total_awards'] += 1
+        year = participation['year']
+        if year not in page:
+            page[year] = []
+
+        page[year].append(participation)
+    page['start_year'] = min(years)
+    page['last_year'] = max(years)
+
+    write_file('participations.html', page)
+    page['lang'] = 'en'
+    page['title'] = translations['en']['participations']
+    write_file('en/participations.html', page)
 
 def build_tst_index():
     tsts = load_json('tsts')
@@ -414,12 +482,19 @@ def build_tst_index():
         'min_year': mn_year,
         'max_year': mx_year
     }))
-
-    write_page('tst/index', {
-        '$title': 'team_selection_tests',
+    write_file('tst/index.html', {
+        'lang': 'ar',
+        'title': translations['ar']['team_selection_tests'],
         'layout': 'tstindex',
         'min_year': mn_year,
-        'max_year': mx_year
+        'max_year': mx_year,
+    })
+    write_file('en/tst/index.html', {
+        'lang': 'en',
+        'title': translations['en']['team_selection_tests'],
+        'layout': 'tstindex',
+        'min_year': mn_year,
+        'max_year': mx_year,
     })
 
 def build_exams():
@@ -461,13 +536,16 @@ def build_data_vairables():
         'jekyll_version': subprocess.getoutput('bundle exec jekyll --version'),
         'primary_lang': LANGS[0]
     }))
+
     for lang, texts in translations.items():
         write_text(f'./root/_data/{lang}.yml', format_yml(texts))
+
+    write_text('./root/_data/settings.yml', format_yml(settings))
 
 def main():
     test_utils()
 
-    build_data_vairables()
+    build_data_variables()   
     print("Built _data/build.yml")
 
     build_contact()
@@ -497,9 +575,6 @@ def main():
 
     build_participations()
     print("Built participations")
-
-    build_participations_index()
-    print("Built participations index")
 
     build_tst_index()
     print("Built TST index")

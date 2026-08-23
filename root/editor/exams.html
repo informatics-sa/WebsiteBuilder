@@ -1,0 +1,338 @@
+---
+layout: editor
+title: Exams Editor
+lang: en
+---
+
+<div class="list-container" id="examsList"></div>
+
+<div class="add-form">
+    <h5>Add New Exam</h5>
+    <form id="addForm">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Exam ID:</label>
+                    <input type="text" class="form-control" id="newId" required pattern="[a-z0-9_]+">
+                    <small class="form-text text-muted">Lowercase, numbers, underscores only</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Exam Name:</label>
+                    <input type="text" class="form-control" id="newName" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label>Date (YYYY/M/D):</label>
+                    <input type="text" class="form-control" id="newDate" placeholder="2024/7/15" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Exam</button>
+    </form>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Exam</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editOriginalId">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Exam ID:</label>
+                            <input type="text" class="form-control" id="editId" pattern="[a-z0-9_]+">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Exam Name:</label>
+                            <input type="text" class="form-control" id="editName">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Date:</label>
+                            <input type="text" class="form-control" id="editDate">
+                        </div>
+                    </div>
+                </div>
+                
+                <h6 class="mt-3">Problems</h6>
+                <div class="form-group">
+                    <label>Number of Problems:</label>
+                    <input type="number" class="form-control" id="problemCount" min="1" value="3">
+                    <button type="button" class="btn btn-sm btn-secondary mt-2" onclick="updateProblemCount()">Update Count</button>
+                </div>
+                <div id="problemsList"></div>
+                
+                <h6 class="mt-3">Participants</h6>
+                <div class="search-dropdown mb-2">
+                    <input type="text" class="form-control" id="participantSearch" placeholder="Search person to add...">
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+                <div id="participantsList" style="max-height: 300px; overflow-y: auto;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="saveEdit()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let exams = {};
+let people = [];
+
+async function loadData() {
+    try {
+        const [examResp, peopleResp] = await Promise.all([
+            fetch('/data/exams.json'),
+            fetch('/data/people.json')
+        ]);
+        exams = await examResp.json();
+        people = await peopleResp.json();
+        
+        renderExams();
+    } catch (error) {
+        alert('Error loading data: ' + error.message);
+    }
+}
+
+function renderExams() {
+    const list = document.getElementById('examsList');
+    list.innerHTML = '';
+    
+    Object.keys(exams).sort().forEach(id => {
+        const exam = exams[id];
+        const card = document.createElement('div');
+        card.className = 'item-card';
+        card.innerHTML = `
+            <div class="item-header">
+                <div>
+                    <strong>${exam.name}</strong> <small class="text-muted">(${id})</small>
+                    <br>
+                    <small>Date: ${exam.date} | Problems: ${exam.problems ? exam.problems.length : 0} | Participants: ${exam.participants ? Object.keys(exam.participants).length : 0}</small>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-sm btn-primary" onclick="editExam('${id}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteExam('${id}')">Delete</button>
+                </div>
+            </div>
+        `;
+        list.appendChild(card);
+    });
+}
+
+let currentProblems = [];
+let currentParticipants = {};
+let currentProblemCount = 3;
+
+function editExam(id) {
+    const exam = exams[id];
+    document.getElementById('editOriginalId').value = id;
+    document.getElementById('editId').value = id;
+    document.getElementById('editName').value = exam.name;
+    document.getElementById('editDate').value = exam.date;
+    
+    currentProblems = exam.problems || [];
+    currentProblemCount = currentProblems.length || 3;
+    document.getElementById('problemCount').value = currentProblemCount;
+    renderProblemsList();
+    
+    currentParticipants = exam.participants || {};
+    renderParticipantsList();
+    
+    $('#editModal').modal('show');
+}
+
+function updateProblemCount() {
+    currentProblemCount = parseInt(document.getElementById('problemCount').value);
+    renderProblemsList();
+}
+
+function renderProblemsList() {
+    const list = document.getElementById('problemsList');
+    list.innerHTML = '';
+    
+    // Ensure we have the right number of problems
+    while (currentProblems.length < currentProblemCount) {
+        currentProblems.push('');
+    }
+    if (currentProblems.length > currentProblemCount) {
+        currentProblems = currentProblems.slice(0, currentProblemCount);
+    }
+    
+    currentProblems.forEach((prob, idx) => {
+        const row = document.createElement('div');
+        row.className = 'form-group';
+        row.innerHTML = `
+            <label>Problem ${idx + 1}:</label>
+            <input type="text" class="form-control" value="${prob}" onchange="currentProblems[${idx}] = this.value">
+        `;
+        list.appendChild(row);
+    });
+}
+
+function renderParticipantsList() {
+    const list = document.getElementById('participantsList');
+    list.innerHTML = '';
+    
+    Object.keys(currentParticipants).forEach(id => {
+        const person = people.find(p => p.id === id || p.iid.toString() === id);
+        const name = person ? person.enname : id;
+        const scores = currentParticipants[id] || [];
+        
+        const row = document.createElement('div');
+        row.className = 'participant-row';
+        
+        let scoreInputs = '';
+        for (let i = 0; i < currentProblemCount; i++) {
+            scoreInputs += `<input type="number" class="form-control" placeholder="P${i+1}" value="${scores[i] || '0'}" onchange="updateScore('${id}', ${i}, this.value)" max="100" min="0" step="1">`;
+        }
+        
+        row.innerHTML = `
+            <input type="text" class="form-control" value="${name}" readonly style="flex: 0 0 200px;">
+            ${scoreInputs}
+            <button type="button" class="btn btn-sm btn-danger remove-btn" onclick="removeParticipant('${id}')">Remove</button>
+        `;
+        list.appendChild(row);
+    });
+}
+
+function updateScore(participantId, problemIdx, value) {
+    if (!currentParticipants[participantId]) {
+        currentParticipants[participantId] = [];
+    }
+    currentParticipants[participantId][problemIdx] = value ? parseFloat(value) : 0;
+}
+
+document.getElementById('participantSearch').oninput = function(e) {
+    const search = e.target.value.toLowerCase();
+    const results = document.getElementById('searchResults');
+    
+    if (search.length < 2) {
+        results.style.display = 'none';
+        return;
+    }
+    
+    const filtered = people.filter(p => 
+        p.enname.toLowerCase().includes(search) ||
+        p.arname.includes(search) ||
+        (p.id && p.id.includes(search))
+    ).slice(0, 10);
+    
+    if (filtered.length === 0) {
+        results.style.display = 'none';
+        return;
+    }
+    
+    results.innerHTML = filtered.map(p => {
+        const id = p.iid;
+        return `<div class="search-result-item" onclick="addParticipant('${id}', '${p.enname}')">${p.enname} (${id})</div>`;
+    }).join('');
+    results.style.display = 'block';
+};
+
+function addParticipant(id, name) {
+    if (!currentParticipants[id]) {
+        currentParticipants[id] = new Array(currentProblemCount).fill(0);
+        renderParticipantsList();
+    }
+    document.getElementById('participantSearch').value = '';
+    document.getElementById('searchResults').style.display = 'none';
+}
+
+function removeParticipant(id) {
+    delete currentParticipants[id];
+    renderParticipantsList();
+}
+
+function saveEdit() {
+    const originalId = document.getElementById('editOriginalId').value;
+    const newId = document.getElementById('editId').value;
+    
+    if (!newId.match(/^[a-z0-9_]+$/)) {
+        alert('Exam ID must contain only lowercase letters, numbers, and underscores');
+        return;
+    }
+    
+    if (newId !== originalId && exams[newId]) {
+        alert('An exam with this ID already exists');
+        return;
+    }
+    
+    const exam = {
+        name: document.getElementById('editName').value,
+        date: document.getElementById('editDate').value,
+        problems: currentProblems.filter(p => p),
+        participants: currentParticipants
+    };
+    
+    if (newId !== originalId) {
+        delete exams[originalId];
+    }
+    
+    exams[newId] = exam;
+    
+    $('#editModal').modal('hide');
+    renderExams();
+}
+
+function deleteExam(id) {
+    if (confirm(`Delete exam "${id}"?`)) {
+        delete exams[id];
+        renderExams();
+    }
+}
+
+document.getElementById('addForm').onsubmit = function(e) {
+    e.preventDefault();
+    
+    const id = document.getElementById('newId').value;
+    
+    if (!id.match(/^[a-z0-9_]+$/)) {
+        alert('Exam ID must contain only lowercase letters, numbers, and underscores');
+        return;
+    }
+    
+    if (exams[id]) {
+        alert('An exam with this ID already exists');
+        return;
+    }
+    
+    exams[id] = {
+        name: document.getElementById('newName').value,
+        date: document.getElementById('newDate').value,
+        problems: [],
+        participants: {}
+    };
+    
+    this.reset();
+    renderExams();
+};
+
+window.getData = () => exams;
+
+window.validateData = () => {
+    const warnings = [];
+    const ids = Object.keys(exams);
+    
+    ids.forEach(id => {
+        if (!id.match(/^[a-z0-9_]+$/)) {
+            warnings.push(`Invalid ID format: "${id}"`);
+        }
+    });
+    
+    return warnings;
+};
+
+loadData();
+</script>

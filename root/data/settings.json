@@ -1,0 +1,9 @@
+{
+    "logo": "math_logo.svg",
+    "icon": "math_logo.ico",
+    "home_image": "bakheet_geo.jpg",
+    "old_id_system": true,
+    "enable_exams_page": true,
+    "enable_members_index": false,
+    "enable_image_library": false
+}

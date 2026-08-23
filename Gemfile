@@ -9,3 +9,4 @@ gem "github-pages", "= 232"
 # even though it is included in the original GitHub Pages build infrastructure.
 gem "jekyll-include-cache", "= 0.2.1"
 gem "jekyll-octicons", "~> 14.2"
+gem "erb"

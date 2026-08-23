@@ -25,6 +25,8 @@ root/*
 !root/resources/*
 !root/404.html
 !root/debug.html
+!root/editor
+!root/editor/*
 !root/compare.html
 !root/en/compare.html
 

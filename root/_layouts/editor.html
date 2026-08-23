@@ -1,0 +1,171 @@
+---
+layout: default
+lang: en
+---
+
+<style>
+    .editor-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .editor-header {
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+    }
+    .list-container {
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+    .item-card {
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 8px;
+        /* background: #f8f9fa; */
+    }
+    .item-card:hover {
+        /* background: #e9ecef; */
+    }
+    .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .item-actions {
+        white-space: nowrap;
+    }
+    .add-form {
+        /* background: #f8f9fa; */
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        padding: 15px;
+    }
+    .json-actions {
+        position: sticky;
+        top: 20px;
+    }
+    .participant-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 8px;
+        align-items: center;
+    }
+    .participant-row input, .participant-row select {
+        flex: 1;
+    }
+    .remove-btn {
+        flex-shrink: 0;
+    }
+    .search-dropdown {
+        position: relative;
+    }
+    .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bs-body-bg);
+        border: 1px solid #dee2e6;
+        border-top: none;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+    }
+    .search-result-item {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+    .search-result-item:hover {
+        /* background: #e9ecef; */
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+<div class="editor-container">
+    <div class="editor-header">
+        <h2>{{ page.title }}</h2>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-9">
+            {{ content }}
+        </div>
+        
+        <div class="col-md-3">
+            <div class="json-actions">
+                <h5>Actions</h5>
+                <button class="btn btn-success btn-block mb-2" onclick="copyJSON()">Copy JSON</button>
+                <button class="btn btn-info btn-block mb-2" onclick="viewJSON()">View JSON</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="jsonModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">JSON Output</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="jsonWarnings" class="alert alert-warning" style="display:none;">
+                    <strong>Warnings:</strong>
+                    <ul id="jsonWarningList"></ul>
+                </div>
+                <pre id="jsonOutput" style="max-height:500px; overflow-y:auto; font-size:12px; font-family: 'Courier New', Courier, monospace !important; padding:15px; border-radius:4px;"></pre>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showWarnings() {
+        const warnings = window.validateData ? window.validateData() : [];
+        const warningDiv = document.getElementById('jsonWarnings');
+        const warningList = document.getElementById('jsonWarningList');
+        
+        if (warnings.length > 0) {
+            warningList.innerHTML = warnings.map(w => `<li>${w}</li>`).join('');
+            warningDiv.style.display = 'block';
+        } else {
+            warningDiv.style.display = 'none';
+        }
+    }
+
+    function updateJSON() {
+        if (window.getData) {
+            const data = window.getData();
+            document.getElementById('jsonOutput').textContent = JSON.stringify(data, null, 4);
+        }
+    }
+
+    function viewJSON() {
+        updateJSON();
+        showWarnings();
+        $('#jsonModal').modal('show');
+    }
+
+    function copyJSON() {
+        if (window.getData) {
+            const data = window.getData();
+            const json = JSON.stringify(data, null, 4);
+            navigator.clipboard.writeText(json).then(() => {
+                updateJSON();
+                showWarnings();
+                $('#jsonModal').modal('show');
+            });
+        }
+    }
+</script>
