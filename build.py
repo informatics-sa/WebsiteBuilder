@@ -219,7 +219,8 @@ def build_members():
             'full_name': member['arname'],
             'graduation': member['graduation'],
             'codeforces': member.get('codeforces', None),
-            'participations': member['participations']
+            'participations': member['participations'],
+            'exams': member['exams']
         })
 
         write_file(f'en/members/{member_id}.html', {
