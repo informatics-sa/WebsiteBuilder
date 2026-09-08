@@ -41,8 +41,18 @@ def get_members():
             })
 
     for eid, exam in get_exams().items():
+        standings = sorted(
+            map(sum, exam['participants'].values()),
+            reverse=True
+        )
         for member_id, scores in exam['participants'].items():
-            members[member_id]['exams'].append(scores)
+            members[member_id]['exams'].append({
+                "exam": exam.copy(),
+                "scores": scores,
+                "sum": sum(scores),
+                "rank": standings.index(sum(scores)) + 1
+            })
+            del members[member_id]['exams'][-1]['exam']['participants']
     
     return members
     
