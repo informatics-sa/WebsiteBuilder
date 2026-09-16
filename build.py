@@ -73,76 +73,32 @@ def build_contact():
     write_file('en/contact.html', written)
 
 def build_hall_of_fame():
-    official_olympiads = list(
-        filter(lambda x: x is not None,
-            [id if oly['official'] else None for id, oly in olympiads.items()]
-        )
-    )
-    all_olympiads = list(
-        filter(lambda x: x is not None,
-            [id for id, oly in olympiads.items()]
-        )
-    )
 
     fame = {}
-    all_fame = {}
     for member_id, data in members.items():
-        fame[member_id] = {
-            'gold': 0,
-            'silver': 0,
-            'bronze': 0,
-            'hm': 0,
-            None: 0,
-        }
-        all_fame[member_id] = {
-            'gold': 0,
-            'silver': 0,
-            'bronze': 0,
-            'hm': 0,
-            None: 0,
-        }
+        fame[member_id] = {}
+        for olympiad in olympiads:
+            fame[member_id][olympiad] = {
+                'gold': 0,
+                'silver': 0,
+                'bronze': 0,
+                'hm': 0,
+                None: 0,
+            }
 
+        has_awards = False
         for participation in data['participations']:
-            if participation['olympiad'] in official_olympiads:
-                fame[member_id][participation['award']] += 1
-            all_fame[member_id][participation['award']] += 1
-
-    # list of people who got an award in an official olympiad, sorted lexicographically on awards.
-    fame = sorted(
-        filter(lambda person: person[1]['gold'] + person[1]['silver'] + person[1]['bronze'] + person[1]['hm'] > 0,
-            fame.items()
-        ),
-        key=lambda person: (-person[1]['gold'], -person[1]['silver'], -person[1]['bronze'], -person[1]['hm'])
-    )
-
-    all_fame = sorted(
-        filter(lambda person: person[1]['gold'] + person[1]['silver'] + person[1]['bronze'] + person[1]['hm'] > 0,
-            all_fame.items()
-        ),
-        key=lambda person: (-person[1]['gold'], -person[1]['silver'], -person[1]['bronze'], -person[1]['hm'])
-    )
+            fame[member_id][participation['olympiad']][participation['award']] += 1
+            if participation['award'] != None: has_awards = True
+        if not has_awards: fame.pop(member_id)
 
     hof = []
-    all_hof = []
-    for member_id, stats in fame:
+    for member_id in fame:
         hof.append({
             'id': member_id,
             'arname': members[member_id]['arname'],
             'enname': members[member_id]['enname'],
-            'gold': stats['gold'],
-            'silver': stats['silver'],
-            'bronze': stats['bronze'],
-            'hm': stats['hm'],
-        })
-    for member_id, stats in all_fame:
-        all_hof.append({
-            'id': member_id,
-            'arname': members[member_id]['arname'],
-            'enname': members[member_id]['enname'],
-            'gold': stats['gold'],
-            'silver': stats['silver'],
-            'bronze': stats['bronze'],
-            'hm': stats['hm'],
+            'awards': fame[member_id],
         })
 
     write_file('./hall-of-fame.html', {
@@ -150,7 +106,6 @@ def build_hall_of_fame():
         'lang': 'ar',
         'title': translations['ar']['hall_of_fame'],
         'hof': hof,
-        'all_hof': all_hof
     })
 
     write_file('en/hall-of-fame.html', {
@@ -158,7 +113,6 @@ def build_hall_of_fame():
         'lang': 'en',
         'title': translations['en']['hall_of_fame'],
         'hof': hof,
-        'all_hof': all_hof
     })
 
 def build_home():

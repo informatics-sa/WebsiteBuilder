@@ -2,27 +2,33 @@
 id: halloffame
 layout: default
 ---
-<div class="row p-3">
-    <div class="col">
-        <div class="btn-group" role="group" aria-label="Official vs All">
-            <input type="radio" class="btn-check" name="btnradio" id="all_inp" autocomplete="off" onclick="toggleAll();" checked>
-            <label class="btn btn-outline-success" for="all_inp">
-                 {% if page.lang == "en" %}
-                All Olympiads
-                {% else %}
-                كل الأولمبيادات
-                {% endif %}
-            </label>
+<style>
+.btn:focus-visible,
+.btn:hover {
+    background-color: inherit;
+    border-color: inherit;
+    color: inherit;
+}
 
-            <input type="radio" class="btn-check" name="btnradio" id="official_inp" autocomplete="off" onclick="toggleOfficial();">
-            <label class="btn btn-outline-success" for="official_inp">
-                {% if page.lang == "en" %}
-                Official Olympiads
-                {% else %}
-                الأولمبيادات الرسمية
-                {% endif %}
-            </label>
-        </div>
+.btn.active:focus-visible,
+.btn.active:hover {
+    background-color: var(--bs-success);
+    border-color: inherit;
+    color: inherit;
+}
+
+.medal-header {
+    text-align: center;
+    text-shadow: 0px 0px 4px black;
+}
+</style>
+
+<div class="row p-3">
+    <div class="col" id="filters">
+        <button class="btn btn-outline-success btn-sm active active filter-btn" data-filter="all">{% if page.lang == "ar" %}الكل{% else %}All{% endif %}</button>
+        {% for olympiad in page.hof[1].awards %}
+        <button class="btn btn-outline-success btn-sm filter-btn" data-filter="{{ olympiad[0] }}">{{ olympiad[0] | upcase }}</button>
+        {% endfor %}
     </div>
         
     <div class="table-responsive">
@@ -31,23 +37,23 @@ layout: default
                 {% if page.lang == "ar" %}
                 <th>الترتيب</th>
                 <th>الاسم</th>
-                <th width="5%" style="background-color: var(--medal-gold);">ذهبي</th>
-                <th width="5%" style="background-color: var(--medal-silver);">فضي</th>
-                <th width="5%" style="background-color: var(--medal-bronze);">برونزي</th>
-                <th width="5%" style="background-color: var(--medal-hm);">شهادة</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-gold);">ذهبي</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-silver);">فضي</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-bronze);">برونزي</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-hm);">شهادة</th>
                 {% else %}
                 <th>Rank</th>
                 <th>Name</th>
-                <th width="5%" style="background-color: var(--medal-gold);">G</th>
-                <th width="5%" style="background-color: var(--medal-silver);">S</th>
-                <th width="5%" style="background-color: var(--medal-bronze);">B</th>
-                <th width="5%" style="background-color: var(--medal-hm);">HM</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-gold);">G</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-silver);">S</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-bronze);">B</th>
+                <th width="5%" class="medal-header" style="background-color: var(--medal-hm);">HM</th>
                 {% endif %}
             </thead>
-            <tbody id="official">
+            <tbody class="hof-table">
                 {% for i in (1..page.hof.count) %}
                 <tr>
-                    <td>{{ i }}</td>
+                    <td class="rank">{{ i }}</td>
                     <td>
                         {% if page.lang == "en" %}
                         <a href="/en/members/{{ page.hof[i].id }}">{{ page.hof[i].enname }}</a>
@@ -55,46 +61,117 @@ layout: default
                         <a href="/members/{{ page.hof[i].id }}">{{ page.hof[i].arname }}</a>
                         {% endif %}
                     </td>
-                    <td>{{ page.hof[i].gold }}</td>
-                    <td>{{ page.hof[i].silver }}</td>
-                    <td>{{ page.hof[i].bronze }}</td>
-                    <td>{{ page.hof[i].hm }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-            <tbody id="all">
-                {% for i in (1..page.all_hof.count) %}
-                <tr>
-                    <td>{{ i }}</td>
-                    <td>
-                        {% if page.lang == "en" %}
-                        <a href="/en/members/{{ page.all_hof[i].id }}">{{ page.all_hof[i].enname }}</a>
-                        {% else %}
-                        <a href="/members/{{ page.all_hof[i].id }}">{{ page.all_hof[i].arname }}</a>
-                        {% endif %}
+                    
+
+                    <td class="gold-counts" 
+                        {% for olympiad in page.hof[i].awards %} data-{{ olympiad[0] }}="{{ olympiad[1].gold }}" {% endfor %}>
                     </td>
-                    <td>{{ page.all_hof[i].gold }}</td>
-                    <td>{{ page.all_hof[i].silver }}</td>
-                    <td>{{ page.all_hof[i].bronze }}</td>
-                    <td>{{ page.all_hof[i].hm }}</td>
+                    <td class="silver-counts"
+                        {% for olympiad in page.hof[i].awards %} data-{{ olympiad[0] }}="{{ olympiad[1].silver }}" {% endfor %}>
+                    </td>
+                    <td class="bronze-counts" 
+                        {% for olympiad in page.hof[i].awards %} data-{{ olympiad[0] }}="{{ olympiad[1].bronze }}" {% endfor %}>
+                    </td>
+                    <td class="hm-counts"
+                        {% for olympiad in page.hof[i].awards %} data-{{ olympiad[0] }}="{{ olympiad[1].hm }}" {% endfor %}>
+                    </td>
+
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <script>
-        const tbody_official = document.querySelector("#official");
-        const tbody_all = document.querySelector("#all");
-        function toggleOfficial() {
-            tbody_official.style.display = "";
-            tbody_all.style.display = "none";
-        }
+<script>
+    const tbody = document.querySelector(".hof-table");
+    const buttons = document.querySelectorAll(".filter-btn");
+    const olympiads = [ 
+        {% for olympiad in page.hof[1].awards %}
+            "{{ olympiad[0] }}"{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ];
 
-        function toggleAll() {
-            tbody_official.style.display = "none";
-            tbody_all.style.display = "";
-        }
-        toggleAll();
-    </script>
+    update_table()
+
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const filter = button.dataset.filter;
+            if (filter == "all"){
+                buttons.forEach(button => {
+                    button.classList.remove("active");
+                });
+                button.classList.add("active");
+            } else {
+                if (button.classList.contains("active")) {
+                    button.classList.remove("active");
+                } else {
+                    button.classList.add("active");
+                }
+                document.querySelector('[data-filter="all"]').classList.remove("active");
+            }
+            update_table()
+        });
+    });
+
+    function update_counts(award){
+        const members = document.querySelectorAll("."+award+"-counts");
+        members.forEach(member => {
+            let count = 0;
+            olympiads.forEach(olympiad => {
+                if (document.querySelector('[data-filter="'+olympiad+'"]').classList.contains("active")
+                    || document.querySelector('[data-filter="all"]').classList.contains("active"))
+                {
+                    count += Number(member.dataset[olympiad]);
+                }
+            });
+            member.textContent = count;
+        });
+    }
+
+    function sort_by_award(award) {
+        const members = document.querySelectorAll("."+award+"-counts");
+        const rows = [];
+
+        members.forEach(member => {
+            const row = member.parentElement;
+            const value = Number(member.textContent);
+
+            rows.push({
+                row: row,
+                value: value
+            });
+        });
+        rows.sort((a, b) => b.value - a.value);
+        rows.forEach(element => tbody.appendChild(element.row));
+    }
+
+    function update_table(){
+        update_counts("gold");
+        update_counts("silver");
+        update_counts("bronze");
+        update_counts("hm");
+        sort_by_award("hm");
+        sort_by_award("bronze");
+        sort_by_award("silver");
+        sort_by_award("gold");
+        const rows = tbody.querySelectorAll("tr");
+        let i = 1;
+        rows.forEach(row => {
+            row.querySelector(".rank").textContent = i;
+            i += 1;
+            if (Number(row.querySelector(".gold-counts").textContent)
+                + Number(row.querySelector(".silver-counts").textContent)
+                + Number(row.querySelector(".bronze-counts").textContent)
+                + Number(row.querySelector(".hm-counts").textContent) > 0){
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+        });
+    }
+
+</script>
+
+
 </div>
