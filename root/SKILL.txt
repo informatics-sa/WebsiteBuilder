@@ -1,4 +1,8 @@
 ---
+layout: null
+permalink: /SKILL.md
+---
+---
 name: saudi-olympiad-data
 description: Answer questions about Saudi olympiad teams, participants, awards, exams, and selection results; help maintain their JSON data and contribute to the shared WebsiteBuilder websites.
 ---
