@@ -73,8 +73,14 @@ layout: default
         {% assign oly = i[0] %}
         {% assign val = i[1] %}
         <div class="tab-pane fade {% if forloop.index == 1 %} show active {% endif %}" id="nav-{{oly}}" role="tabpanel" aria-labelledby="nav-{{oly}}-tab" tabindex="0">
+            <div class="d-flex justify-content-end my-3">
+                <button type="button" class="btn btn-outline-success" data-csv-table="tst-results-{{ oly | escape }}" data-csv-filename="tst-{{ page.year | escape }}-{{ oly | escape }}.csv">
+                    <i class="bi bi-download" aria-hidden="true"></i>
+                    {% if page.lang == "en" %}Download as CSV{% else %}تنزيل بصيغة CSV{% endif %}
+                </button>
+            </div>
             <div class="table-responsive">
-                <table sortable class="table table-bordered table-striped">
+                <table id="tst-results-{{ oly | escape }}" sortable class="table table-bordered table-striped">
                     <thead>
                         <th width="5%">#</th>
                         <th sort-value="string">{{ site.data[page.lang].name }}</th>
@@ -134,3 +140,46 @@ layout: default
 
 <script src="/resources/sortable.js"></script>
 <script src="/resources/modal_settings.js"></script>
+<script>
+// Download a results table in its current sort order, with UTF-8 support for Excel.
+(function () {
+    'use strict';
+
+    function csvCell(cell) {
+        const copy = cell.cloneNode(true);
+        copy.querySelectorAll('.sort-indicator').forEach(indicator => indicator.remove());
+        let text = copy.textContent.replace(/\s+/g, ' ').trim();
+
+        // Keep text from being interpreted as a spreadsheet formula; retain numeric scores.
+        if (/^[=+\-@]/.test(text) && !/^[+\-]?\d+(\.\d+)?$/.test(text)) {
+            text = "'" + text;
+        }
+
+        return '"' + text.replace(/"/g, '""') + '"';
+    }
+
+    function downloadTable(button) {
+        const table = document.getElementById(button.dataset.csvTable);
+        if (!table) return;
+
+        const rows = [
+            ...Array.from(table.tHead ? table.tHead.rows : []),
+            ...Array.from(table.tBodies).flatMap(body => Array.from(body.rows))
+        ].filter(row => !row.classList.contains('stat-row'));
+        const csv = rows.map(row => Array.from(row.cells, csvCell).join(',')).join('\r\n') + '\r\n';
+        const blob = new Blob(['\uFEFF', csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = button.dataset.csvFilename || 'results.csv';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    document.querySelectorAll('button[data-csv-table]').forEach(button => {
+        button.addEventListener('click', () => downloadTable(button));
+    });
+})();
+</script>
