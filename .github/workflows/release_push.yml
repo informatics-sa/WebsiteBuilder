@@ -17,6 +17,7 @@ jobs:
           - 'informatics-sa/ai-website'
           - 'informatics-sa/biology-website'
           - 'informatics-sa/chemistry-website'
+          - 'informatics-sa/science-website'
           - 'informatics-sa/WebsiteTemplate'
       fail-fast: false 
 
