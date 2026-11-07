@@ -535,6 +535,11 @@ def main():
     build_exams()
     print("Built exams")
 
+    for lang, title in (('ar', 'التحقق من سجل الأولمبياد'), ('en', 'Verify olympiad record')):
+        write_file(('en/' if lang == 'en' else '') + 'verify.html', {
+            'layout': 'verify', 'lang': lang, 'id': 'verify', 'title': title
+        })
+
     if settings.get('enable_compare_page', False):
         write_page('compare', {
             '$title': 'compare_students',

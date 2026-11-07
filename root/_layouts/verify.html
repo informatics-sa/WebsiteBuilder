@@ -1,0 +1,168 @@
+---
+layout: default
+id: verify
+---
+<style>
+#verify { max-width: 1050px; margin: 0 auto 3rem; }
+#verify .v-search { display: flex; gap: .75rem; }
+#verify input { min-width: 0; font-family: ui-monospace, monospace !important; }
+#verify [hidden] { display: none !important; }
+@media (max-width: 575px) { #verify .v-search { flex-direction: column; } }
+</style>
+<main id="verify">
+  <header class="card bg-success-subtle mb-4"><div class="card-body p-4">
+    <h1 class="h2" data-text="title">التحقق من سجل الأولمبياد</h1>
+    <p data-text="intro">ابحث بالمعرّف الموحّد في مواقع الفرق السبعة.</p>
+    <form id="v-form" novalidate>
+      <label for="v-input" class="form-label fw-bold">UUID / SOID</label>
+      <div class="v-search"><input id="v-input" class="form-control form-control-lg" dir="ltr" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="v-status" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"><button class="btn btn-success text-nowrap" type="submit" data-text="search">عرض السجل</button></div>
+    </form>
+  </div></header>
+  <noscript><p>فعّل JavaScript للبحث. Enable JavaScript to search.</p></noscript>
+  <p id="v-status" class="alert alert-light border" role="status" aria-live="polite"></p>
+  <section id="v-result" hidden aria-labelledby="v-name">
+    <div class="d-flex justify-content-between gap-3 flex-wrap mb-3"><div><h2 id="v-name" class="h3" tabindex="-1"></h2><code id="v-id" dir="ltr"></code></div><button id="v-copy" class="btn btn-outline-success" type="button" data-text="copy"></button></div>
+    <div id="v-profiles" class="d-flex gap-2 flex-wrap mb-3"></div><p id="v-summary" class="fw-bold"></p>
+    <p id="v-empty" data-text="empty" hidden></p>
+    <div id="v-table" class="table-responsive mb-4" tabindex="0" role="region" aria-labelledby="v-name">
+      <table class="table table-striped"><thead><tr><th scope="col" data-text="year"></th><th scope="col" data-text="subject"></th><th scope="col" data-text="competition"></th><th scope="col" data-text="award"></th><th scope="col" data-text="score"></th></tr></thead><tbody id="v-history"></tbody></table>
+    </div>
+  </section>
+  <section id="v-coverage" hidden><h2 class="h5" data-text="sources"></h2><ul id="v-sources" class="small text-body-secondary"></ul><p class="small text-body-secondary" data-text="note"></p></section>
+</main>
+<script>
+(() => {
+  'use strict';
+  const en = document.documentElement.lang === 'en';
+  const sites = [
+    ['science.sainformatics.org', 'العلوم', 'Science'],
+    ['sainformatics.org', 'المعلوماتية', 'Informatics'],
+    ['mathsa.org', 'الرياضيات', 'Mathematics'],
+    ['physics.sainformatics.org', 'الفيزياء', 'Physics'],
+    ['ai.sainformatics.org', 'الذكاء الاصطناعي', 'AI'],
+    ['bio.sainformatics.org', 'الأحياء', 'Biology'],
+    ['chem.sainformatics.org', 'الكيمياء', 'Chemistry']
+  ].map(([host, ar, name]) => ({origin: 'https://' + host, label: en ? name : ar}));
+  const t = en ? {
+    title: 'Verify an olympiad record', intro: 'Look up a shared UUID across all seven team websites.', search: 'View record',
+    initial: 'Enter a UUID or paste a verification link.', invalid: 'Enter a valid UUID.', loading: 'Searching all seven websites…',
+    found: 'Matching records found.', missing: 'No match in the available sources.', partial: 'Some records could not be checked; see source coverage below.',
+    copy: 'Copy record link', copied: 'Link copied.', year: 'Year', subject: 'Subject', competition: 'Competition', award: 'Award', score: 'Score',
+    gold: 'Gold', silver: 'Silver', bronze: 'Bronze', hm: 'Honorable mention', none: 'No award', unknown: 'Not recorded',
+    sources: 'Source coverage', matched: 'Matching profile', noMatch: 'No matching UUID', unavailable: 'Source unavailable', conflict: 'Duplicate UUID; excluded', historyMissing: 'Profile found; history unavailable',
+    empty: 'No participations are recorded in the available history.', participations: 'participations', medals: 'medals', mentions: 'honorable mentions',
+    note: 'These are published records. Unavailable sources and missing records do not establish that someone never participated.'
+  } : {
+    title: 'التحقق من سجل الأولمبياد', intro: 'ابحث بالمعرّف الموحّد في مواقع الفرق السبعة.', search: 'عرض السجل',
+    initial: 'أدخل المعرّف الموحّد أو الصق رابط التحقق.', invalid: 'أدخل معرّف UUID صالحًا.', loading: 'جارٍ البحث في المواقع السبعة…',
+    found: 'عُثر على سجلات مطابقة.', missing: 'لا يوجد تطابق في المصادر المتاحة.', partial: 'تعذر التحقق من بعض السجلات؛ راجع تغطية المصادر أدناه.',
+    copy: 'نسخ رابط السجل', copied: 'نُسخ الرابط.', year: 'السنة', subject: 'المادة', competition: 'المسابقة', award: 'الجائزة', score: 'الدرجة',
+    gold: 'ذهبية', silver: 'فضية', bronze: 'برونزية', hm: 'شهادة تقدير', none: 'دون جائزة', unknown: 'غير مسجل',
+    sources: 'تغطية المصادر', matched: 'ملف مطابق', noMatch: 'لا يوجد معرّف مطابق', unavailable: 'المصدر غير متاح', conflict: 'معرّف مكرر؛ مستبعد', historyMissing: 'يوجد ملف؛ سجل المشاركات غير متاح',
+    empty: 'لا توجد مشاركات مسجلة في السجلات المتاحة.', participations: 'مشاركة', medals: 'ميدالية', mentions: 'شهادة تقدير',
+    note: 'هذه سجلات منشورة. تعذر الوصول إلى مصدر أو عدم وجود سجل لا يثبت عدم المشاركة.'
+  };
+  const $ = id => document.getElementById(id), cache = new Map();
+  const number = n => new Intl.NumberFormat(en ? 'en' : 'ar-SA').format(n);
+  const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+  let searchId = 0;
+  document.querySelectorAll('#verify [data-text]').forEach(node => { node.textContent = t[node.dataset.text]; });
+  function el(tag, text) { const node = document.createElement(tag); if (text != null) node.textContent = String(text); return node; }
+  function link(text, url) { const node = el('a', text); node.href = url; return node; }
+  function status(text, type = 'light border') { $('v-status').className = 'alert alert-' + type; $('v-status').textContent = text; }
+  function normalise(value) {
+    let id = value.trim();
+    if (/^https?:\/\//i.test(id)) {
+      try { const url = new URL(id); id = url.searchParams.get('id') || url.searchParams.get('uuid') || url.searchParams.get('soid') || ''; } catch { return null; }
+    }
+    id = id.replace(/^urn:uuid:/i, '').replace(/^\{(.*)\}$/, '$1').toLowerCase();
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(id) ? id : null;
+  }
+  function get(url) {
+    if (!cache.has(url)) cache.set(url, (async () => {
+      const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 8000);
+      try {
+        const response = await fetch(url, {signal: controller.signal, credentials: 'omit'});
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error('Expected an array');
+        return data;
+      } catch (error) { cache.delete(url); throw error; }
+      finally { clearTimeout(timer); }
+    })());
+    return cache.get(url);
+  }
+  async function find(site, id) {
+    const result = {...site, state: 'unavailable', events: []};
+    try {
+      const people = await get(site.origin + '/data/people.json');
+      const matches = people.filter(person => String(person.soid || '').trim().toLowerCase() === id);
+      result.state = matches.length > 1 ? 'conflict' : 'noMatch';
+      if (matches.length !== 1) return result;
+      const person = matches[0], localId = person.iid ?? person.id;
+      if (localId == null) { result.state = 'unavailable'; return result; }
+      result.person = person;
+      result.url = site.origin + (en ? '/en' : '') + '/members/' + encodeURIComponent(localId);
+      const [history, definitions] = await Promise.allSettled([get(site.origin + '/data/participations.json'), get(site.origin + '/data/olympiads.json')]);
+      result.state = history.status === 'fulfilled' ? 'matched' : 'historyMissing';
+      if (history.status !== 'fulfilled') return result;
+      const names = new Map((definitions.status === 'fulfilled' ? definitions.value : []).map(item => [item.id, item]));
+      const aliases = [...new Set([person.iid, person.id].filter(value => value != null).map(String))];
+      for (const edition of history.value) {
+        const refs = aliases.filter(ref => own(edition.participants || {}, ref));
+        if (!refs.length) continue;
+        const award = refs.length === 1 ? edition.participants[refs[0]] : 'unknown';
+        const scores = refs.length === 1 ? edition.scores?.[refs[0]] : null;
+        const total = Array.isArray(scores) && scores.length && scores.every(Number.isFinite) ? scores.reduce((a, b) => a + b, 0) : null;
+        const competition = names.get(edition.name);
+        result.events.push({year: edition.year, subject: site.label,
+          name: competition?.[en ? 'enname' : 'arname'] || String(edition.name).toUpperCase(),
+          url: site.origin + (en ? '/en' : '') + '/olympiads/' + encodeURIComponent(edition.name) + '/' + encodeURIComponent(edition.year),
+          award: award === null ? 'none' : ['gold', 'silver', 'bronze', 'hm'].includes(award) ? award : 'unknown', total});
+      }
+    } catch { result.state = 'unavailable'; }
+    return result;
+  }
+  function render(results, id, focus) {
+    $('v-sources').replaceChildren(...results.map(result => { const row = el('li'); row.append(link(result.label, result.origin + '/data/'), ' — ' + t[result.state]); return row; }));
+    $('v-coverage').hidden = false;
+    const profiles = results.filter(result => result.person), partial = results.some(result => !['matched', 'noMatch'].includes(result.state));
+    status((profiles.length ? t.found : t.missing) + (partial ? ' ' + t.partial : ''), partial ? 'warning' : profiles.length ? 'success' : 'light border');
+    if (!profiles.length) return;
+    const name = person => person[en ? 'enname' : 'arname'] || person[en ? 'arname' : 'enname'] || id;
+    $('v-name').textContent = name(profiles[0].person); $('v-id').textContent = id;
+    $('v-profiles').replaceChildren(...profiles.map(profile => { const node = link(profile.label + ': ' + name(profile.person), profile.url); node.className = 'btn btn-outline-success btn-sm'; return node; }));
+    const events = results.flatMap(result => result.events).sort((a, b) => b.year - a.year);
+    const medals = events.filter(event => ['gold', 'silver', 'bronze'].includes(event.award)).length, mentions = events.filter(event => event.award === 'hm').length;
+    $('v-summary').textContent = `${number(events.length)} ${t.participations} · ${number(medals)} ${t.medals} · ${number(mentions)} ${t.mentions}`;
+    $('v-history').replaceChildren(...events.map(event => {
+      const row = el('tr'), competition = el('td'); competition.append(link(event.name, event.url));
+      row.append(el('td', number(event.year)), el('td', event.subject), competition, el('td', t[event.award]), el('td', event.total === null ? '—' : number(event.total))); return row;
+    }));
+    $('v-empty').hidden = events.length > 0; $('v-table').hidden = events.length === 0; $('v-result').hidden = false;
+    if (focus) $('v-name').focus();
+  }
+  async function lookup(value, focus = false) {
+    const token = ++searchId, id = normalise(value);
+    $('v-result').hidden = true; $('v-coverage').hidden = true; $('verify').setAttribute('aria-busy', 'false'); $('v-input').removeAttribute('aria-invalid');
+    const url = new URL(location.href); ['id', 'uuid', 'soid'].forEach(key => url.searchParams.delete(key));
+    if (id) url.searchParams.set('id', id); history.replaceState(null, '', url);
+    if (!id) { status(value.trim() ? t.invalid : t.initial, value.trim() ? 'danger' : 'light border'); if (value.trim()) $('v-input').setAttribute('aria-invalid', 'true'); return; }
+    $('v-input').value = id; $('verify').setAttribute('aria-busy', 'true'); status(t.loading);
+    const results = await Promise.all(sites.map(site => find(site, id)));
+    if (token !== searchId) return;
+    $('verify').setAttribute('aria-busy', 'false'); render(results, id, focus);
+  }
+  $('v-form').addEventListener('submit', event => { event.preventDefault(); lookup($('v-input').value, true); });
+  $('v-copy').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(location.href); $('v-copy').textContent = t.copied; setTimeout(() => { $('v-copy').textContent = t.copy; }, 1500); } catch { window.prompt(t.copy, location.href); }
+  });
+  window.switchLanguage = lang => {
+    if (!['ar', 'en'].includes(lang)) return;
+    if (typeof window.setCookie === 'function') window.setCookie('lang', lang);
+    const url = new URL(location.href); url.pathname = (lang === 'en' ? '/en' : '') + url.pathname.replace(/^\/en(?=\/|$)/, ''); location.assign(url.href);
+  };
+  const params = new URL(location.href).searchParams, initial = params.get('id') || params.get('uuid') || params.get('soid') || '';
+  $('v-input').value = initial; lookup(initial);
+})();
+</script>
